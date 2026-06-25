@@ -17,6 +17,7 @@ Vite + React portfolio project, ready to push to GitHub and deploy on Vercel.
 - In Vercel, add the same `VITE_*` variables in Project Settings -> Environment Variables.
 - Only variables prefixed with `VITE_` are exposed to the client in a Vite app.
 - Update `VITE_SITE_URL`, `VITE_OG_IMAGE`, `VITE_GITHUB_URL`, and `VITE_LINKEDIN_URL` with your real live URLs before production.
+- `.env.production` can safely store public SEO values like site title, canonical URL, and social profile URLs when they are not secrets.
 
 ## GitHub push checklist
 

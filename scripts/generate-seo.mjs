@@ -4,7 +4,10 @@ import path from 'node:path'
 const rootDir = process.cwd()
 const publicDir = path.join(rootDir, 'public')
 
-const envFiles = ['.env', '.env.local', '.env.production']
+const isProductionBuild = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1'
+const envFiles = isProductionBuild
+  ? ['.env', '.env.local', '.env.production']
+  : ['.env', '.env.production', '.env.local']
 
 const readEnvFile = (filePath) => {
   if (!fs.existsSync(filePath)) {
