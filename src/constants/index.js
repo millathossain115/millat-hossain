@@ -46,19 +46,16 @@ export const SKILLS = [
 
 export const EXPERIENCES = [
   {
-    role: "Senior Software Engineer",
-    company: "InnovateTech",
-    duration: "2024 - Present",
-    description: "Lead the frontend team in migration to Tailwind CSS v4 and React 19. Reduced bundle sizes by 35% and optimized page loading speeds."
+    role: 'Undergraduate Grader ',
+    company: 'UNITED INTERNATIONAL UNIVERSITY ',
+    duration: 'Summer 2023',
+    contributions: [
+      'Collaborated with faculty to prepare and refine course materials, ensuring alignment with curriculum objectives  ',
+      'Supported faculty member in grading assignments, providing constructive feedback to students, and maintaining accuracy and consistency in assessment procedures',
+      'Contributed to analyzing course outcomes and student performance data to improve teaching methods and academic strategies',
+    ],
   },
-  {
-    role: "Full Stack Developer",
-    company: "WebCraft Solutions",
-    duration: "2022 - 2024",
-    description: "Designed, implemented, and scaled REST APIs using Node.js and NestJS. Built responsive frontends with React and Tailwind CSS."
-  }
-];
-
+]
 export const EDUCATION = [
   {
     degree: "B.Sc. in Computer Science & Engineering ",
@@ -77,7 +74,7 @@ export const EDUCATION = [
   },
   {
     degree: "Secondary School Certificate",
-    institution: "Panchrukhi Hazi Shaheb Ali Fakir High institution",
+    institution: "PANCHRUKHI HAZI SHAHEB ALI FAKIR HIGH SCHOOL",
     duration: "2010 - 2015",
     location: "Narayanganj,Dhaka",
     group: "Science"

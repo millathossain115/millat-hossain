@@ -54,6 +54,10 @@ main > section {
   z-index: 1;
 }
 
+.theme-section--plain::before {
+  background: #000;
+}
+
 .theme-heading {
   display: flex;
   align-items: center;
