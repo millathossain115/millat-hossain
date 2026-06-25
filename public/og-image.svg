@@ -1,0 +1,17 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#050505"/>
+  <circle cx="963" cy="121" r="208" fill="#DC143C" fill-opacity="0.16"/>
+  <circle cx="203" cy="533" r="214" fill="#DC143C" fill-opacity="0.12"/>
+  <circle cx="660" cy="338" r="320" fill="url(#paint0_radial)"/>
+  <rect x="72" y="72" width="1056" height="486" rx="28" fill="white" fill-opacity="0.03" stroke="white" stroke-opacity="0.08"/>
+  <text x="110" y="214" fill="#DC143C" font-family="Sora, Arial, sans-serif" font-size="28" font-weight="600" letter-spacing="8">SOFTWARE ENGINEER | FULL STACK DEVELOPER</text>
+  <text x="110" y="318" fill="white" font-family="Sora, Arial, sans-serif" font-size="74" font-weight="700">Millat Hossain</text>
+  <text x="110" y="382" fill="#CBD5E1" font-family="Sora, Arial, sans-serif" font-size="30" font-weight="500">United International University (UIU)</text>
+  <text x="110" y="466" fill="#94A3B8" font-family="Sora, Arial, sans-serif" font-size="24" font-weight="400">Modern portfolio showcasing software engineering, frontend systems, and full stack development.</text>
+  <defs>
+    <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(660 338) rotate(90) scale(320)">
+      <stop stop-color="#DC143C" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#DC143C" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
