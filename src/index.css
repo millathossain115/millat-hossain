@@ -21,6 +21,27 @@ body {
   min-height: 100vh;
 }
 
+.app-shell {
+  position: relative;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(220, 20, 60, 0.1), transparent 24%),
+    radial-gradient(circle at 82% 14%, rgba(255, 255, 255, 0.03), transparent 20%),
+    radial-gradient(circle at 20% 72%, rgba(127, 29, 29, 0.1), transparent 26%),
+    linear-gradient(180deg, #020202 0%, #050505 42%, #030303 100%);
+}
+
+.app-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 22% 26%, rgba(220, 20, 60, 0.08), transparent 20%),
+    radial-gradient(circle at 76% 18%, rgba(255, 255, 255, 0.025), transparent 18%),
+    radial-gradient(circle at 68% 78%, rgba(220, 20, 60, 0.05), transparent 22%);
+}
+
 main > section {
   min-height: 100vh;
 }
@@ -42,11 +63,8 @@ main > section {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 18% 24%, rgba(220, 20, 60, 0.12), transparent 24%),
-    radial-gradient(circle at 82% 14%, rgba(255, 255, 255, 0.04), transparent 18%),
-    linear-gradient(180deg, #020202 0%, #050505 40%, #030303 100%);
   pointer-events: none;
+  background: transparent;
 }
 
 .theme-section > * {
@@ -55,7 +73,7 @@ main > section {
 }
 
 .theme-section--plain::before {
-  background: #000;
+  background: transparent;
 }
 
 .theme-heading {

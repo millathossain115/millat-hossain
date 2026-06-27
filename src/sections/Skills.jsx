@@ -130,16 +130,16 @@ export default function Skills() {
           scale: 1,
           filter: 'blur(0px)',
           stagger: {
-            amount: 0.9,
+            amount: 0.55,
             from: 'start',
             ease: 'power1.inOut',
           },
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current.querySelector('.skills-chips'),
-            start: 'top 85%',
-            end: 'top 20%',
-            scrub: 1.2,
+            start: 'top 90%',
+            end: 'top 52%',
+            scrub: 0.7,
           },
         },
       )
@@ -149,11 +149,15 @@ export default function Skills() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="skills" className="theme-section scroll-mt-16 px-6 py-24">
+    <section
+      ref={sectionRef}
+      id="skills"
+      className="theme-section scroll-mt-16 px-6 py-24 md:flex md:min-h-screen md:items-center"
+    >
       {/* Background orbs */}
       <div className="section-glow-orb absolute left-1/2 top-12 h-72 w-72 -translate-x-1/2 bg-[#DC143C]/8" />
 
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto flex w-full max-w-6xl flex-col justify-center">
         <div className="mx-auto max-w-3xl text-center">
           <h2
             className="skills-heading font-display mt-5 text-4xl font-semibold uppercase leading-[0.95] tracking-[0.08em] text-white sm:text-5xl md:text-6xl md:tracking-[0.1em]"
@@ -172,7 +176,7 @@ export default function Skills() {
           </p>
         </div>
 
-        <div className="skills-chips mt-16 flex flex-wrap items-center justify-center gap-4">
+        <div className="skills-chips mt-14 flex flex-wrap items-center justify-center gap-4">
           {technologies.map((tech) => {
             const { icon: Icon, className } = techIcons[tech]
 

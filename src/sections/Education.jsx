@@ -175,8 +175,10 @@ export default function Education() {
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
         data-education-overlay
-        className="relative z-10 w-full min-h-screen theme-section scroll-mt-16 px-6 py-24 bg-[#090909]"
+        className="relative z-10 w-full min-h-screen theme-section scroll-mt-16 bg-[#090909] px-6 py-24"
       >
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-transparent via-[#090909]/75 to-[#090909]" />
+
         {/* Floating glow orb */}
         <div className="section-glow-orb absolute -left-20 top-1/3 h-64 w-64 bg-[#DC143C]/10 pointer-events-none blur-3xl rounded-full" />
         <div

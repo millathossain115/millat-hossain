@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
-  FaBasketballBall,
+  FaFacebookF,
   FaGithub,
-  FaInstagram,
   FaLinkedinIn,
+  FaWhatsapp,
 } from 'react-icons/fa'
 import profileImg from '../assets/Image/Untitled design.png'
 import Button from '../components/Button'
@@ -15,23 +15,23 @@ gsap.registerPlugin(ScrollTrigger)
 const SOCIAL_LINKS = [
   {
     label: 'GitHub',
-    href: 'https://github.com',
+    href: 'https://github.com/millathossain115',
     icon: FaGithub,
   },
   {
     label: 'LinkedIn',
-    href: 'https://linkedin.com',
+    href: 'https://www.linkedin.com/in/millathossain115/',
     icon: FaLinkedinIn,
   },
   {
-    label: 'Instagram',
-    href: 'https://instagram.com',
-    icon: FaInstagram,
+    label: 'Facebook',
+    href: 'https://www.facebook.com/millathossain115',
+    icon: FaFacebookF,
   },
   {
-    label: 'Dribbble',
-    href: 'https://dribbble.com',
-    icon: FaBasketballBall,
+    label: 'WhatsApp',
+    href: 'https://wa.me/8801948257217',
+    icon: FaWhatsapp,
   },
 ]
 
@@ -168,36 +168,32 @@ export default function Contact() {
     <section
       ref={sectionRef}
       id="contact"
-      className="theme-section scroll-mt-16 px-6 py-18 sm:px-8 lg:px-10"
+      className="theme-section scroll-mt-16 px-0 py-0"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_30%,rgba(220,20,60,0.16),transparent_24%),radial-gradient(circle_at_78%_18%,rgba(255,255,255,0.06),transparent_16%),linear-gradient(180deg,#040404_0%,#0a0909_45%,#040404_100%)]" />
-
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black via-black/70 to-transparent" />
-
-      <div className="relative mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[0.74fr_1.26fr] lg:items-center">
+      <div className="relative mx-auto grid w-full max-w-6xl gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[0.74fr_1.26fr] lg:items-center">
         <aside className="contact-profile-card relative mx-auto w-full max-w-[20rem] overflow-hidden rounded-[1.75rem] border border-[#DC143C]/45 bg-[linear-gradient(180deg,rgba(40,11,11,0.92),rgba(26,10,10,0.9))] p-5 shadow-[0_26px_80px_rgba(0,0,0,0.45)] sm:p-6">
           <div className="absolute -left-12 -top-14 h-40 w-40 rounded-full border-4 border-dashed border-[#ff4d73]/60" />
           <div className="absolute -bottom-8 -left-8 h-28 w-28 rounded-full border-4 border-dashed border-[#ff4d73]/60" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(220,20,60,0.08),transparent_32%,rgba(255,255,255,0.02)_100%)]" />
 
           <div className="relative flex h-full flex-col">
-            <div className="relative mx-auto mb-5 w-full max-w-[14rem] overflow-hidden rounded-[1.35rem] border border-white/10 bg-[#0b0b0b]">
+            <div className="group relative mx-auto mb-5 w-full max-w-[14rem] overflow-hidden rounded-[1.35rem] border border-white/10 bg-[#0b0b0b]">
               <img
                 src={profileImg}
                 alt="Millat Hossain"
                 loading="lazy"
                 decoding="async"
-                className="relative aspect-[4/5.2] w-full object-cover object-top"
+                className="relative aspect-[4/5.2] w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04] group-hover:-translate-y-1"
               />
             </div>
 
             <div className="mb-6">
-              <p className="mx-auto max-w-[13rem] text-center font-display text-[1.55rem] font-semibold leading-none text-white sm:max-w-[14rem] sm:text-[1.8rem]">
+              <p className="mx-auto max-w-[13rem] text-center font-display text-[1.55rem] font-semibold leading-none text-[#DC143C] sm:max-w-[14rem] sm:text-[1.8rem]">
                 Millat Hossain
               </p>
             </div>
 
-            <p className="mx-auto max-w-[13rem] text-base font-medium leading-[1.2] text-slate-200/88 sm:max-w-[14rem] sm:text-[1.45rem] sm:leading-[1.06]">
+            <p className="mx-auto max-w-[13rem] text-base text-center font-medium leading-[1.2] text-slate-200/88 sm:max-w-[14rem] sm:text-[1.45rem] sm:leading-[1.06]">
               A software engineer focused on building clean, high-impact digital
               experiences.
             </p>
@@ -223,11 +219,11 @@ export default function Contact() {
           <div className="mb-8 space-y-4">
             <h2 className="contact-title font-display text-[2.7rem] font-semibold uppercase leading-[0.9] text-white sm:text-[3.7rem] lg:text-[4.8rem]">
               <span className="block overflow-hidden">
-                <span className="contact-title-line block">Get In</span>
+                <span className="contact-title-line block">Let's</span>
               </span>
               <span className="block overflow-hidden">
                 <span className="contact-title-line block bg-[linear-gradient(180deg,#ff6a70_0%,#dc143c_55%,#ff2f47_100%)] bg-clip-text text-transparent">
-                  Touch
+                  Connect
                 </span>
               </span>
             </h2>

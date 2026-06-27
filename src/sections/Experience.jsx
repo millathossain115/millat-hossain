@@ -135,10 +135,8 @@ export default function Experience() {
       id="experience"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className="theme-section theme-section--plain scroll-mt-16 bg-black px-6 py-24 md:min-h-screen md:flex md:items-center"
+      className="theme-section theme-section--plain scroll-mt-16 px-6 py-24 md:min-h-screen md:flex md:items-center"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#090909] via-[#050505] to-black" />
-
       {/* Floating glow orb */}
       <div className="section-glow-orb absolute -right-20 top-1/3 h-72 w-72 bg-[#DC143C]/10" />
       <div

@@ -98,7 +98,7 @@ function App() {
     : 'app-reveal'
 
   return (
-    <div className="font-ui min-h-screen bg-[#020202] text-slate-100 selection:bg-[#DC143C]/25 selection:text-white">
+    <div className="app-shell font-ui min-h-screen text-slate-100 selection:bg-[#DC143C]/25 selection:text-white">
       {isLoaderVisible && (
         <Loader
           progress={progress}

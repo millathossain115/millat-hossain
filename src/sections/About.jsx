@@ -73,10 +73,8 @@ export default function About() {
     <section
       ref={aboutRef}
       id="about"
-      className="relative flex min-h-screen items-center overflow-hidden px-6 py-24 scroll-mt-16 sm:px-8 lg:px-10"
+      className="theme-section relative flex min-h-screen items-center overflow-hidden px-6 py-24 scroll-mt-16 sm:px-8 lg:px-10"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_42%,rgba(220,20,60,0.18),transparent_24%),radial-gradient(circle_at_82%_18%,rgba(255,255,255,0.05),transparent_20%),linear-gradient(180deg,#010101_0%,#050505_22%,#070707_58%,#020202_100%)]" />
-
       <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div
           ref={aboutImageRef}
