@@ -73,7 +73,7 @@ export default function About() {
     <section
       ref={aboutRef}
       id="about"
-      className="theme-section relative flex min-h-screen items-center overflow-hidden px-6 py-24 scroll-mt-16 sm:px-8 lg:px-10"
+      className="theme-section theme-section--seamless relative flex min-h-screen items-center overflow-hidden px-6 py-24 scroll-mt-16 sm:px-8 lg:px-10"
     >
       <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div

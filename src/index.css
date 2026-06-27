@@ -76,6 +76,10 @@ main > section {
   background: transparent;
 }
 
+.theme-section--seamless {
+  background: transparent;
+}
+
 .theme-heading {
   display: flex;
   align-items: center;

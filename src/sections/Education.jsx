@@ -154,31 +154,31 @@ export default function Education() {
 
   return (
     <div ref={containerRef} id="education" className="relative w-full">
-      {/* 1. Sticky Black Background with Zooming Red Text */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-black flex items-center justify-center z-0">
-        <h1 
-          ref={zoomTextRef} 
-          className="text-[#DC143C] font-display text-[15vw] sm:text-[12vw] font-bold tracking-[0.1em] text-center uppercase whitespace-nowrap"
-        >
-          EDUCATION
-        </h1>
-        {/* Safety solid red fill to ensure the screen is fully enveloped at the end of the scale */}
-        <div ref={redFillRef} className="absolute inset-0 bg-[#DC143C] opacity-0 pointer-events-none" />
+      {/* 1. Keep the red zoom scene contained so it clears before the seamless content begins */}
+      <div className="relative h-[250vh] w-full">
+        <div className="sticky top-0 z-0 flex h-screen w-full items-center justify-center overflow-hidden bg-black">
+          <h1
+            ref={zoomTextRef}
+            className="text-[#DC143C] font-display text-[15vw] sm:text-[12vw] font-bold tracking-[0.1em] text-center uppercase whitespace-nowrap"
+          >
+            EDUCATION
+          </h1>
+          {/* Safety solid red fill to ensure the screen is fully enveloped at the end of the scale */}
+          <div ref={redFillRef} className="absolute inset-0 bg-[#DC143C] opacity-0 pointer-events-none" />
+        </div>
+
+        {/* Allows 150vh of scrolling while the sticky zoom animation plays */}
+        <div className="h-[150vh] w-full" />
       </div>
 
-      {/* 2. Scroll Spacer - Allows you to scroll for 150vh while the sticky section plays the zoom animation */}
-      <div className="h-[150vh] w-full" />
-
-      {/* 3. Thematic Content Section - Slides up OVER the red zoomed text naturally */}
+      {/* 2. Content returns to the shared app background */}
       <div
         ref={contentSectionRef}
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
         data-education-overlay
-        className="relative z-10 w-full min-h-screen theme-section scroll-mt-16 bg-[#090909] px-6 py-24"
+        className="theme-section theme-section--seamless relative z-10 min-h-screen w-full scroll-mt-16 px-6 py-24"
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-transparent via-[#090909]/75 to-[#090909]" />
-
         {/* Floating glow orb */}
         <div className="section-glow-orb absolute -left-20 top-1/3 h-64 w-64 bg-[#DC143C]/10 pointer-events-none blur-3xl rounded-full" />
         <div
