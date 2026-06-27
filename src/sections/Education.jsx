@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useEffect, useRef, useState } from 'react'
 import { EDUCATION } from '../constants'
 
 gsap.registerPlugin(ScrollTrigger)
