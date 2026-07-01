@@ -1,18 +1,16 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import profileImg from '../assets/Image/Untitled design.png'
+import profileImg from '../assets/Image/about-profile.webp'
 
 gsap.registerPlugin(ScrollTrigger)
-
-
 
 export default function About() {
   const aboutRef = useRef(null)
   const aboutImageRef = useRef(null)
   const aboutContentRef = useRef(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     if (prefersReducedMotion) {
@@ -20,50 +18,62 @@ export default function About() {
     }
 
     const context = gsap.context(() => {
-      // 1. "getting up with smooth scroll" for the section
-      gsap.from(aboutRef.current, {
-        y: 120,
-        opacity: 0,
-        duration: 1.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: aboutRef.current,
-          start: 'top 90%',
-          end: 'top 50%',
-          scrub: 1.5,
-        }
-      })
+      const isDesktop = window.matchMedia('(min-width: 1024px)').matches
+      const imageStartX = isDesktop ? '25vw' : 0
+      const copyStartX = isDesktop ? '-25vw' : 0
+      const mobileStartY = isDesktop ? 0 : 36
 
-      // 2. Timeline for Image and Content panning
-      const tl = gsap.timeline({
+      const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: aboutRef.current,
-          start: 'top 75%',
-          end: 'top 25%', // Animation finishes earlier so it is completely clean before it takes up the full screen
-          scrub: 1, // Smooth scrubbing driven by scroll
+          start: 'top 82%',
+          end: 'top 28%',
+          scrub: true,
+          invalidateOnRefresh: true,
         },
       })
 
-      // In a scrubbed timeline, duration acts as a proportion of the scroll distance
-      // Image appears first at the center
-      tl.fromTo(
-        aboutImageRef.current,
-        { x: '25vw', opacity: 0, scale: 0.8, filter: 'blur(20px)' },
-        { x: '25vw', opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1, ease: 'none' }
-      )
-      // Then it pans to the left
-      .to(
-        aboutImageRef.current,
-        { x: '0vw', duration: 1.5, ease: 'none' }
-      )
-      // Then the text content pans center to right (No filter applied to prevent text anti-aliasing issues)
-      .fromTo(
-        aboutContentRef.current,
-        { x: '-25vw', opacity: 0 },
-        { x: '0vw', opacity: 1, duration: 1.5, ease: 'none', force3D: false },
-        '<0.5' // Overlaps with the image panning left
-      )
-
+      timeline
+        .fromTo(
+          aboutImageRef.current,
+          {
+            x: imageStartX,
+            y: mobileStartY,
+            autoAlpha: 0,
+            scale: 0.8,
+          },
+          {
+            x: imageStartX,
+            y: mobileStartY,
+            autoAlpha: 1,
+            scale: 1,
+            duration: 1,
+            ease: 'none',
+          },
+        )
+        .to(aboutImageRef.current, {
+          x: 0,
+          y: 0,
+          duration: 1.5,
+          ease: 'none',
+        })
+        .fromTo(
+          aboutContentRef.current,
+          {
+            x: copyStartX,
+            y: mobileStartY,
+            autoAlpha: 0,
+          },
+          {
+            x: 0,
+            y: 0,
+            autoAlpha: 1,
+            duration: 1.5,
+            ease: 'none',
+            force3D: false,
+          },
+          '<0.5',
+        )
     }, aboutRef)
 
     return () => context.revert()
@@ -87,8 +97,11 @@ export default function About() {
             <img
               src={profileImg}
               alt="Millat Hossain"
-              loading="lazy"
+              width="960"
+              height="1280"
+              loading="eager"
               decoding="async"
+              fetchPriority="high"
               className="aspect-[4/5] w-full object-cover rounded-[2rem]"
             />
           </div>
