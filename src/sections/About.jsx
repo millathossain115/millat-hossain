@@ -17,6 +17,15 @@ export default function About() {
       return undefined
     }
 
+    const appContent = aboutRef.current?.parentElement?.parentElement
+    const refreshAfterAppReveal = (event) => {
+      if (event.target === appContent && event.animationName === 'appReveal') {
+        ScrollTrigger.refresh()
+      }
+    }
+
+    appContent?.addEventListener('animationend', refreshAfterAppReveal)
+
     const context = gsap.context(() => {
       const isDesktop = window.matchMedia('(min-width: 1024px)').matches
       const imageStartX = isDesktop ? '25vw' : 0
@@ -26,9 +35,13 @@ export default function About() {
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: aboutRef.current,
-          start: 'top 82%',
-          end: 'top 28%',
+          start: isDesktop ? 'top top' : 'top 82%',
+          end: () => isDesktop ? `+=${window.innerHeight * 1.25}` : 'top 28%',
           scrub: true,
+          pin: isDesktop,
+          pinSpacing: true,
+          pinReparent: isDesktop,
+          anticipatePin: isDesktop ? 1 : 0,
           invalidateOnRefresh: true,
         },
       })
@@ -76,14 +89,17 @@ export default function About() {
         )
     }, aboutRef)
 
-    return () => context.revert()
+    return () => {
+      appContent?.removeEventListener('animationend', refreshAfterAppReveal)
+      context.revert()
+    }
   }, [])
 
   return (
     <section
       ref={aboutRef}
       id="about"
-      className="theme-section relative flex min-h-screen items-center overflow-hidden bg-[#020202] px-6 py-24 scroll-mt-16 sm:px-8 lg:px-10"
+      className="theme-section relative flex min-h-screen items-center overflow-hidden bg-[#020202] px-6 py-24 scroll-mt-16 sm:px-8 lg:h-screen lg:px-10"
     >
       <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div
