@@ -24,6 +24,7 @@ export default function Education() {
   const zoomTextRef = useRef(null)
   const redFillRef = useRef(null)
   const contentSectionRef = useRef(null)
+  const transitionVeilRef = useRef(null)
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -135,6 +136,31 @@ export default function Education() {
         /* Duration slides from left */
         if (duration) tl.fromTo(duration, { x: -28, opacity: 0 }, { x: 0, opacity: 1, ease: 'power2.out', duration: 0.5 }, 0.18)
       })
+
+      const experienceSection = document.getElementById('experience')
+      const isDesktop = window.matchMedia('(min-width: 1024px)').matches
+
+      if (isDesktop && experienceSection && transitionVeilRef.current) {
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: contentSectionRef.current,
+              start: 'bottom bottom',
+              endTrigger: experienceSection,
+              end: 'top top',
+              scrub: true,
+              pin: contentSectionRef.current,
+              pinSpacing: false,
+              pinType: 'transform',
+              invalidateOnRefresh: true,
+            },
+          })
+          .fromTo(
+            transitionVeilRef.current,
+            { autoAlpha: 0 },
+            { autoAlpha: 1, duration: 1, ease: 'none' },
+          )
+      }
     }, containerRef)
 
     return () => ctx.revert()
@@ -189,6 +215,11 @@ export default function Education() {
             top: pointer.y,
             boxShadow: '0 0 54px rgba(220, 20, 60, 0.24)',
           }}
+        />
+        <div
+          ref={transitionVeilRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-30 bg-[#020202]/40 opacity-0 backdrop-blur-[10px]"
         />
 
         <div className="mx-auto max-w-4xl relative z-20">
