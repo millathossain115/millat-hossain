@@ -69,7 +69,7 @@ export default function Skills() {
               trigger: headingEl,
               start: 'top 88%',
               end: 'top 52%',
-              scrub: 0.9,
+              scrub: true,
             },
           },
         )
@@ -89,7 +89,7 @@ export default function Skills() {
               trigger: divider,
               start: 'top 88%',
               end: 'top 62%',
-              scrub: 0.8,
+              scrub: true,
             },
           },
         )
@@ -108,7 +108,7 @@ export default function Skills() {
               trigger: subPara,
               start: 'top 90%',
               end: 'top 64%',
-              scrub: 0.8,
+              scrub: true,
             },
           },
         )
@@ -122,13 +122,11 @@ export default function Skills() {
           y: 52,
           opacity: 0,
           scale: 0.88,
-          filter: 'blur(10px)',
         },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          filter: 'blur(0px)',
           stagger: {
             amount: 0.55,
             from: 'start',
@@ -139,7 +137,7 @@ export default function Skills() {
             trigger: sectionRef.current.querySelector('.skills-chips'),
             start: 'top 90%',
             end: 'top 52%',
-            scrub: 0.7,
+            scrub: true,
           },
         },
       )
@@ -184,7 +182,7 @@ export default function Skills() {
               <div
                 key={tech}
                 data-skill-chip
-                className="group relative overflow-hidden rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-2.5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#DC143C]/45 hover:bg-[#DC143C]/[0.07] hover:shadow-[0_14px_28px_rgba(220,20,60,0.14)]"
+                className="group relative overflow-hidden rounded-full border border-white/10 bg-white/[0.05] px-3.5 py-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-[#DC143C]/45 hover:bg-[#DC143C]/[0.07] hover:shadow-[0_14px_28px_rgba(220,20,60,0.14)]"
               >
                 <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(220,20,60,0.16),rgba(220,20,60,0.04),transparent_72%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <div className="relative z-10 flex items-center gap-3">

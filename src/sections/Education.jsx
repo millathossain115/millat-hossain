@@ -1,10 +1,18 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef, useState } from 'react'
+import {
+  FaAward,
+  FaBookOpen,
+  FaCertificate,
+  FaGraduationCap,
+} from 'react-icons/fa'
+import { FiCalendar, FiMapPin } from 'react-icons/fi'
 import { EDUCATION } from '../constants'
 
 gsap.registerPlugin(ScrollTrigger)
 const defaultPointer = { x: 0, y: 0, active: false }
+const educationIcons = [FaGraduationCap, FaCertificate, FaBookOpen]
 
 /** Splits element text into per-word <span> pairs for stagger reveal */
 function splitWords(el) {
@@ -12,7 +20,7 @@ function splitWords(el) {
   el.innerHTML = words
     .map(
       (w) =>
-        `<span class="gsap-word"><span class="gsap-word-inner">${w}</span></span>`,
+        `<span class="gsap-word"><span class="gsap-word-inner">${w}</span></span>`
     )
     .join(' ')
   return Array.from(el.querySelectorAll('.gsap-word-inner'))
@@ -24,11 +32,10 @@ export default function Education() {
   const zoomTextRef = useRef(null)
   const redFillRef = useRef(null)
   const contentSectionRef = useRef(null)
-  const transitionVeilRef = useRef(null)
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
+      '(prefers-reduced-motion: reduce)'
     ).matches
     if (prefersReducedMotion) return
 
@@ -44,20 +51,26 @@ export default function Education() {
       })
 
       // Scale the text massively so the letter strokes cover the screen
-      zoomTl.to(zoomTextRef.current, {
-        scale: 150,
-        ease: 'power2.in',
-        duration: 1,
-      })
-      // Ensure the entire screen is perfectly red at the end of the scale
-      .to(redFillRef.current, {
-        opacity: 1,
-        duration: 0.15,
-      }, '-=0.15')
+      zoomTl
+        .to(zoomTextRef.current, {
+          scale: 150,
+          ease: 'power2.in',
+          duration: 1,
+        })
+        // Ensure the entire screen is perfectly red at the end of the scale
+        .to(
+          redFillRef.current,
+          {
+            opacity: 1,
+            duration: 0.15,
+          },
+          '-=0.15'
+        )
 
       // 2. Thematic Content Section Fade In
       // Fades in slightly before it reaches the top, sliding over the red background smoothly
-      gsap.fromTo(contentSectionRef.current,
+      gsap.fromTo(
+        contentSectionRef.current,
         { opacity: 0 },
         {
           opacity: 1,
@@ -67,7 +80,7 @@ export default function Education() {
             start: 'top 75%',
             end: 'top 15%',
             scrub: 1,
-          }
+          },
         }
       )
 
@@ -90,12 +103,14 @@ export default function Education() {
               end: 'top 55%',
               scrub: 0.9,
             },
-          },
+          }
         )
       }
 
       /* ── Timeline line draw ── */
-      const lineEl = contentSectionRef.current.querySelector('.gsap-timeline-line')
+      const lineEl = contentSectionRef.current.querySelector(
+        '.gsap-timeline-line'
+      )
       if (lineEl) {
         gsap.fromTo(
           lineEl,
@@ -106,10 +121,10 @@ export default function Education() {
             scrollTrigger: {
               trigger: contentSectionRef.current.querySelector('.edu-list'),
               start: 'top 78%',
-              end: 'bottom 22%',
+              end: 'bottom 72%',
               scrub: 1,
             },
-          },
+          }
         )
       }
 
@@ -130,35 +145,62 @@ export default function Education() {
         })
 
         /* Dot punches in */
-        if (dot) tl.fromTo(dot, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, ease: 'back.out(2.2)', duration: 0.4 }, 0)
+        if (dot)
+          tl.fromTo(
+            dot,
+            { scale: 0, opacity: 0 },
+            { scale: 1, opacity: 1, ease: 'back.out(2.2)', duration: 0.4 },
+            0
+          )
         /* Content slides from RIGHT */
-        if (content) tl.fromTo(content, { x: 48, opacity: 0 }, { x: 0, opacity: 1, ease: 'power3.out', duration: 0.7 }, 0.05)
+        if (content)
+          tl.fromTo(
+            content,
+            { x: 48, opacity: 0 },
+            { x: 0, opacity: 1, ease: 'power3.out', duration: 0.7 },
+            0.05
+          )
         /* Duration slides from left */
-        if (duration) tl.fromTo(duration, { x: -28, opacity: 0 }, { x: 0, opacity: 1, ease: 'power2.out', duration: 0.5 }, 0.18)
+        if (duration)
+          tl.fromTo(
+            duration,
+            { x: -28, opacity: 0 },
+            { x: 0, opacity: 1, ease: 'power2.out', duration: 0.5 },
+            0.18
+          )
       })
 
       const experienceSection = document.getElementById('experience')
       const isDesktop = window.matchMedia('(min-width: 1024px)').matches
+      const educationContent = contentSectionRef.current.querySelector(
+        '[data-education-content]'
+      )
 
-      if (isDesktop && experienceSection && transitionVeilRef.current) {
+      if (isDesktop && experienceSection && educationContent) {
         gsap
           .timeline({
             scrollTrigger: {
               trigger: contentSectionRef.current,
-              start: 'bottom bottom',
-              endTrigger: experienceSection,
-              end: 'top top',
+              start: 'top top',
+              end: () => `+=${contentSectionRef.current.offsetHeight}`,
               scrub: true,
               pin: contentSectionRef.current,
               pinSpacing: false,
               pinType: 'transform',
+              anticipatePin: 1,
               invalidateOnRefresh: true,
             },
           })
-          .fromTo(
-            transitionVeilRef.current,
-            { autoAlpha: 0 },
-            { autoAlpha: 1, duration: 1, ease: 'none' },
+          .to(
+            educationContent,
+            {
+              opacity: 0.38,
+              scale: 0.985,
+              filter: 'blur(9px)',
+              duration: 0.82,
+              ease: 'none',
+            },
+            0.18
           )
       }
     }, containerRef)
@@ -190,7 +232,10 @@ export default function Education() {
             EDUCATION
           </h1>
           {/* Safety solid red fill to ensure the screen is fully enveloped at the end of the scale */}
-          <div ref={redFillRef} className="absolute inset-0 bg-[#DC143C] opacity-0 pointer-events-none" />
+          <div
+            ref={redFillRef}
+            className="absolute inset-0 bg-[#DC143C] opacity-0 pointer-events-none"
+          />
         </div>
 
         {/* Allows 150vh of scrolling while the sticky zoom animation plays */}
@@ -203,12 +248,12 @@ export default function Education() {
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
         data-education-overlay
-        className="theme-section theme-section--seamless relative z-10 min-h-screen w-full scroll-mt-16 px-6 py-24"
+        className="theme-section theme-section--seamless relative z-10 min-h-screen w-full scroll-mt-16 px-6 pb-16 pt-14 sm:pb-20 sm:pt-16"
       >
         {/* Floating glow orb */}
-        <div className="section-glow-orb absolute -left-20 top-1/3 h-64 w-64 bg-[#DC143C]/10 pointer-events-none blur-3xl rounded-full" />
+        <div className="section-glow-orb !absolute -left-20 top-1/3 h-64 w-64 bg-[#DC143C]/10 pointer-events-none blur-3xl rounded-full" />
         <div
-          className="pointer-events-none absolute z-10 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#DC143C]/20 opacity-0 blur-[56px] transition-opacity duration-300"
+          className="pointer-events-none !absolute z-10 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#DC143C]/20 opacity-0 blur-[56px] transition-opacity duration-300"
           style={{
             opacity: pointer.active ? 1 : 0,
             left: pointer.x,
@@ -216,72 +261,104 @@ export default function Education() {
             boxShadow: '0 0 54px rgba(220, 20, 60, 0.24)',
           }}
         />
-        <div
-          ref={transitionVeilRef}
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-30 bg-[#020202]/40 opacity-0 backdrop-blur-[10px]"
-        />
-
-        <div className="mx-auto max-w-4xl relative z-20">
-          <h2 className="edu-heading theme-heading">
+        <div data-education-content className="relative z-20 mx-auto max-w-5xl">
+          <h2
+            className="edu-heading theme-heading"
+            style={{ color: '#DC143C' }}
+          >
             Education
             <span className="theme-heading__line" />
           </h2>
 
-          <div className="edu-list relative space-y-12">
+          <div className="edu-list relative space-y-4 sm:space-y-5">
             {/* Animated timeline line */}
             <div className="gsap-timeline-line" />
 
-            {EDUCATION.map((edu, index) => (
-              <div
-                key={index}
-                className="edu-item group relative border-l border-white/10 pl-8 transition-colors duration-300 hover:border-[#DC143C]/55"
-              >
-                {/* Animated dot */}
-                <div className="edu-dot absolute -left-[7px] top-1.5 h-3 w-3 rounded-full border-2 border-[#DC143C] bg-[#090909] shadow-[0_0_12px_rgba(220,20,60,0.45)]" />
+            {EDUCATION.map((edu, index) => {
+              const EducationIcon = educationIcons[index] ?? FaBookOpen
 
-                <div className="edu-content">
-                  <div className="mb-4 flex flex-col gap-1 md:flex-row md:items-start md:justify-between">
-                    <div>
-                      <h3 className="font-display text-xl font-bold uppercase tracking-[0.04em] text-slate-100 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white">
-                        {edu.degree}
-                      </h3>
-                      <p className="font-medium text-[#DC143C] transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#ff4d73]">
-                        {edu.institution}
-                      </p>
-                      {edu.location && (
-                        <p className="mt-0.5 text-sm text-slate-400 transition-all duration-300 group-hover:translate-x-1 group-hover:text-slate-300">
-                          {edu.location}
+              return (
+                <div
+                  key={index}
+                  className="edu-item group relative pl-7 sm:pl-10"
+                >
+                  {/* Animated dot */}
+                  <div className="edu-dot absolute -left-[6px] top-6 z-10 h-3 w-3 rounded-full border-2 border-[#ff234d] bg-[#090909] shadow-[0_0_16px_rgba(220,20,60,0.65)]" />
+
+                  <div className="edu-content relative overflow-hidden rounded-xl border border-white/[0.09] bg-white/[0.025] shadow-[inset_0_1px_0_rgba(255,255,255,0.035),0_18px_48px_rgba(0,0,0,0.2)] transition-[border-color,background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-[#DC143C]/35 hover:bg-white/[0.035] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_22px_56px_rgba(0,0,0,0.26),0_0_28px_rgba(220,20,60,0.06)]">
+                    <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#DC143C]/45 to-transparent opacity-70" />
+                    <div className="pointer-events-none absolute -right-20 -top-24 h-48 w-48 rounded-full bg-[#DC143C]/[0.06] blur-3xl transition-opacity duration-300 group-hover:opacity-100" />
+
+                    <div className="relative p-4 sm:p-5">
+                      <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-6">
+                        <div className="flex min-w-0 items-start gap-3">
+                          <span
+                            aria-hidden="true"
+                            className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[#DC143C]/30 bg-[#DC143C]/[0.08] text-sm text-[#DC143C]"
+                          >
+                            <EducationIcon />
+                          </span>
+                          <div className="min-w-0">
+                            <h3 className="font-display text-base font-semibold uppercase leading-tight tracking-[0.035em] text-slate-100 transition-colors duration-300 group-hover:text-white sm:text-lg">
+                              {edu.degree}
+                            </h3>
+                            <p className="mt-1 text-xs font-semibold uppercase tracking-[0.055em] text-[#DC143C] transition-colors duration-300 group-hover:text-[#ff5776] sm:text-sm">
+                              {edu.institution}
+                            </p>
+                          </div>
+                        </div>
+
+                        <span className="edu-duration flex shrink-0 items-center gap-2 pl-10 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-slate-300 md:pl-0 md:pt-1">
+                          <FiCalendar
+                            aria-hidden="true"
+                            className="text-sm text-[#DC143C]"
+                          />
+                          {edu.duration}
+                        </span>
+                      </div>
+
+                      <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs sm:pl-10">
+                        {edu.location && (
+                          <p className="flex items-center gap-2 text-slate-400">
+                            <FiMapPin
+                              aria-hidden="true"
+                              className="shrink-0 text-sm text-[#DC143C]"
+                            />
+                            <span>{edu.location}</span>
+                          </p>
+                        )}
+                        {edu.group && (
+                          <p className="rounded-full border border-white/10 bg-black/20 px-2.5 py-1 text-slate-400">
+                            Group:{' '}
+                            <span className="font-medium text-[#DC143C]">
+                              {edu.group}
+                            </span>
+                          </p>
+                        )}
+                        {edu.CGPA && (
+                          <p className="rounded-full border border-white/10 bg-black/20 px-2.5 py-1 text-slate-400">
+                            CGPA:{' '}
+                            <span className="font-semibold text-[#DC143C]">
+                              {edu.CGPA}
+                            </span>
+                          </p>
+                        )}
+                      </div>
+
+                      {edu.achivement && (
+                        <p className="mt-3 flex items-start gap-2 border-t border-white/[0.07] pt-3 text-xs italic leading-5 text-slate-400 transition-colors duration-300 group-hover:text-slate-300 sm:ml-10">
+                          <FaAward
+                            aria-hidden="true"
+                            className="mt-0.5 shrink-0 text-sm text-[#DC143C]"
+                          />
+                          <span>{edu.achivement}</span>
                         </p>
                       )}
                     </div>
-                    <span className="edu-duration mt-2 shrink-0 text-sm font-mono uppercase tracking-[0.18em] text-slate-500 transition-colors duration-300 group-hover:text-slate-300 md:mt-0">
-                      {edu.duration}
-                    </span>
-                  </div>
-                  
-                  <div className="flex flex-col gap-1.5 text-[0.95rem] leading-relaxed text-slate-300">
-                    {edu.group && (
-                      <p className="transition-colors duration-300 group-hover:text-slate-100">
-                        <span className="mr-2 font-medium text-slate-500 transition-colors duration-300 group-hover:text-[#DC143C]">Group:</span> 
-                        {edu.group}
-                      </p>
-                    )}
-                    {edu.CGPA && (
-                      <p className="transition-colors duration-300 group-hover:text-slate-100">
-                        <span className="mr-2 font-medium text-slate-500 transition-colors duration-300 group-hover:text-[#DC143C]">CGPA:</span> 
-                        <span className="font-semibold text-slate-200 transition-colors duration-300 group-hover:text-white">{edu.CGPA}</span>
-                      </p>
-                    )}
-                    {edu.achivement && (
-                      <p className="mt-1 leading-snug text-slate-400 italic transition-colors duration-300 group-hover:text-slate-200">
-                        {edu.achivement}
-                      </p>
-                    )}
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>

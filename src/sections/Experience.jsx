@@ -12,7 +12,7 @@ function splitWords(el) {
   el.innerHTML = words
     .map(
       (w) =>
-        `<span class="gsap-word"><span class="gsap-word-inner">${w}</span></span>`,
+        `<span class="gsap-word"><span class="gsap-word-inner">${w}</span></span>`
     )
     .join(' ')
   return Array.from(el.querySelectorAll('.gsap-word-inner'))
@@ -21,10 +21,11 @@ function splitWords(el) {
 export default function Experience() {
   const [pointer, setPointer] = useState(defaultPointer)
   const sectionRef = useRef(null)
+  const contentRef = useRef(null)
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
+      '(prefers-reduced-motion: reduce)'
     ).matches
     if (prefersReducedMotion) return
 
@@ -47,7 +48,7 @@ export default function Experience() {
               end: 'top 55%',
               scrub: 0.9,
             },
-          },
+          }
         )
       }
 
@@ -66,7 +67,7 @@ export default function Experience() {
               end: 'bottom 22%',
               scrub: 1,
             },
-          },
+          }
         )
       }
 
@@ -92,7 +93,7 @@ export default function Experience() {
             dot,
             { scale: 0, opacity: 0 },
             { scale: 1, opacity: 1, ease: 'back.out(2)', duration: 0.4 },
-            0,
+            0
           )
         }
 
@@ -101,8 +102,14 @@ export default function Experience() {
           tl.fromTo(
             content,
             { x: -48, opacity: 0, filter: 'blur(12px)' },
-            { x: 0, opacity: 1, filter: 'blur(0px)', ease: 'power3.out', duration: 0.7 },
-            0.05,
+            {
+              x: 0,
+              opacity: 1,
+              filter: 'blur(0px)',
+              ease: 'power3.out',
+              duration: 0.7,
+            },
+            0.05
           )
         }
 
@@ -112,10 +119,54 @@ export default function Experience() {
             duration,
             { x: 32, opacity: 0 },
             { x: 0, opacity: 1, ease: 'power2.out', duration: 0.5 },
-            0.18,
+            0.18
           )
         }
       })
+
+      /* Reveal only after the black Experience screen has taken over */
+      if (contentRef.current) {
+        const isDesktop = window.matchMedia('(min-width: 1024px)').matches
+
+        if (isDesktop) {
+          gsap
+            .timeline({
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top top',
+                end: () => `+=${window.innerHeight * 0.65}`,
+                scrub: true,
+                pin: sectionRef.current,
+                pinSpacing: true,
+                pinType: 'transform',
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+              },
+            })
+            .fromTo(
+              contentRef.current,
+              { autoAlpha: 0, y: 56 },
+              { autoAlpha: 1, y: 0, duration: 1, ease: 'none' }
+            )
+        } else {
+          gsap.fromTo(
+            contentRef.current,
+            { autoAlpha: 0, y: 40 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 86%',
+                end: 'top 34%',
+                scrub: true,
+                invalidateOnRefresh: true,
+              },
+            }
+          )
+        }
+      }
     }, sectionRef)
 
     return () => ctx.revert()
@@ -135,12 +186,13 @@ export default function Experience() {
       id="experience"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className="theme-section theme-section--plain relative z-40 bg-[#020202] scroll-mt-16 px-6 py-24 shadow-[0_-32px_90px_rgba(0,0,0,0.7)] md:min-h-screen md:flex md:items-center"
+      data-experience-screen
+      className="theme-section theme-section--plain relative z-40 bg-[#020202] scroll-mt-16 px-6 py-24 md:min-h-screen md:flex md:items-center"
     >
       {/* Floating glow orb */}
-      <div className="section-glow-orb absolute -right-20 top-1/3 h-72 w-72 bg-[#DC143C]/10" />
+      <div className="section-glow-orb !absolute -right-20 top-1/3 h-72 w-72 bg-[#DC143C]/10" />
       <div
-        className="pointer-events-none fixed left-0 top-0 z-30 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#DC143C]/20 opacity-0 blur-[56px] transition-opacity duration-300"
+        className="pointer-events-none !fixed left-0 top-0 z-30 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#DC143C]/20 opacity-0 blur-[56px] transition-opacity duration-300"
         style={{
           opacity: pointer.active ? 1 : 0,
           transform: `translate(${pointer.x}px, ${pointer.y}px) translate(-50%, -50%)`,
@@ -148,7 +200,11 @@ export default function Experience() {
         }}
       />
 
-      <div className="mx-auto max-w-4xl">
+      <div
+        ref={contentRef}
+        data-experience-content
+        className="mx-auto max-w-4xl"
+      >
         <h2 className="exp-heading theme-heading mx-auto max-w-3xl">
           Work Experience
           <span className="theme-heading__line" />

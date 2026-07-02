@@ -44,7 +44,7 @@ export default function Projects() {
               trigger: headingEl,
               start: 'top 88%',
               end: 'top 50%',
-              scrub: 0.9,
+              scrub: true,
             },
           },
         )
@@ -63,7 +63,7 @@ export default function Projects() {
               trigger: labelEl,
               start: 'top 90%',
               end: 'top 65%',
-              scrub: 0.8,
+              scrub: true,
             },
           },
         )
@@ -79,7 +79,6 @@ export default function Projects() {
           opacity: 0,
           scale: 0.93,
           rotateX: 6,
-          filter: 'blur(14px)',
           transformOrigin: 'center bottom',
         },
         {
@@ -87,7 +86,6 @@ export default function Projects() {
           opacity: 1,
           scale: 1,
           rotateX: 0,
-          filter: 'blur(0px)',
           stagger: {
             amount: 0.65,
             from: 'start',
@@ -97,25 +95,10 @@ export default function Projects() {
             trigger: sectionRef.current.querySelector('.proj-grid'),
             start: 'top 82%',
             end: 'top 22%',
-            scrub: 1.1,
+            scrub: true,
           },
         },
       )
-
-      /* ── Subtle floating glow orb parallax ── */
-      const orb = sectionRef.current.querySelector('.proj-orb')
-      if (orb) {
-        gsap.to(orb, {
-          yPercent: -28,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.5,
-          },
-        })
-      }
     }, sectionRef)
 
     return () => ctx.revert()

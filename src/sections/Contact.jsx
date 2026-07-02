@@ -7,7 +7,7 @@ import {
   FaLinkedinIn,
   FaWhatsapp,
 } from 'react-icons/fa'
-import profileImg from '../assets/Image/Untitled design.png'
+import profileImg from '../assets/Image/about-profile.webp'
 import Button from '../components/Button'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -56,18 +56,17 @@ export default function Contact() {
       if (card) {
         gsap.fromTo(
           card,
-          { x: -80, opacity: 0, rotateY: -10, filter: 'blur(16px)' },
+          { x: -80, opacity: 0, rotateY: -10 },
           {
             x: 0,
             opacity: 1,
             rotateY: 0,
-            filter: 'blur(0px)',
             ease: 'power3.out',
             scrollTrigger: {
               trigger: card,
               start: 'top 85%',
               end: 'top 45%',
-              scrub: 1,
+              scrub: true,
             },
           },
         )
@@ -84,7 +83,7 @@ export default function Contact() {
               trigger: content,
               start: 'top 85%',
               end: 'top 42%',
-              scrub: 1,
+              scrub: true,
             },
           },
         )
@@ -103,7 +102,7 @@ export default function Contact() {
               trigger: sectionRef.current.querySelector('.contact-form-grid'),
               start: 'top 88%',
               end: 'top 52%',
-              scrub: 0.8,
+              scrub: true,
             },
           },
         )
@@ -181,6 +180,8 @@ export default function Contact() {
               <img
                 src={profileImg}
                 alt="Millat Hossain"
+                width="960"
+                height="1280"
                 loading="lazy"
                 decoding="async"
                 className="relative aspect-[4/5.2] w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04] group-hover:-translate-y-1"

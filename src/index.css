@@ -524,16 +524,6 @@ main > section {
   100% { background-position: -200% center; }
 }
 
-/* Project card entrance — initial hidden state set by GSAP, not CSS */
-[data-project-card] {
-  will-change: transform, opacity, filter;
-}
-
-/* Skill chip entrance — initial state set by GSAP */
-[data-skill-chip] {
-  will-change: transform, opacity, filter;
-}
-
 /* Ken Burns wrapper */
 .gsap-ken-burns img {
   will-change: transform;
