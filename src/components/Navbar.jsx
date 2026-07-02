@@ -7,6 +7,8 @@ const navItems = [
   { label: 'Contact', href: '#contact', sectionId: 'contact' },
 ]
 
+const NAV_AUTO_HIDE_DELAY = 1500
+
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('about')
   const [isNavVisible, setIsNavVisible] = useState(true)
@@ -33,7 +35,7 @@ export default function Navbar() {
       {
         rootMargin: '-25% 0px -45% 0px',
         threshold: [0.2, 0.35, 0.5, 0.65],
-      },
+      }
     )
 
     sections.forEach((section) => observer.observe(section))
@@ -46,6 +48,24 @@ export default function Navbar() {
   useEffect(() => {
     let lastScrollY = window.scrollY
     let frameId = null
+    let hideTimeoutId = null
+
+    const clearHideTimeout = () => {
+      if (hideTimeoutId !== null) {
+        window.clearTimeout(hideTimeoutId)
+        hideTimeoutId = null
+      }
+    }
+
+    const scheduleAutoHide = () => {
+      clearHideTimeout()
+      hideTimeoutId = window.setTimeout(() => {
+        if (window.scrollY > 24) {
+          setIsNavVisible(false)
+        }
+        hideTimeoutId = null
+      }, NAV_AUTO_HIDE_DELAY)
+    }
 
     const handleScroll = () => {
       if (frameId !== null) {
@@ -57,11 +77,14 @@ export default function Navbar() {
         const delta = currentScrollY - lastScrollY
 
         if (currentScrollY <= 24) {
+          clearHideTimeout()
           setIsNavVisible(true)
         } else if (delta > 1) {
+          clearHideTimeout()
           setIsNavVisible(false)
         } else if (delta < -1) {
           setIsNavVisible(true)
+          scheduleAutoHide()
         }
 
         lastScrollY = currentScrollY
@@ -77,6 +100,8 @@ export default function Navbar() {
       if (frameId !== null) {
         window.cancelAnimationFrame(frameId)
       }
+
+      clearHideTimeout()
     }
   }, [])
 
@@ -125,7 +150,9 @@ export default function Navbar() {
                 href={href}
                 onClick={(event) => handleNavClick(event, href)}
                 className={`transition-colors duration-200 ${
-                  isActive ? 'text-[#DC143C]' : 'text-[rgba(148,163,184,0.75)] hover:text-[#DC143C]'
+                  isActive
+                    ? 'text-[#DC143C]'
+                    : 'text-[rgba(148,163,184,0.75)] hover:text-[#DC143C]'
                 }`}
               >
                 {label}
