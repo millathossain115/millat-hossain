@@ -134,7 +134,7 @@ export default function Projects() {
             {PROJECTS.map((project) => (
               <div
                 key={project.title}
-                className="w-[82vw] max-w-[23rem] shrink-0"
+                className="w-[84vw] max-w-[24.5rem] shrink-0"
               >
                 <ProjectCard project={project} />
               </div>
