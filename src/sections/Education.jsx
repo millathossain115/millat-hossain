@@ -121,7 +121,7 @@ export default function Education() {
             scrollTrigger: {
               trigger: contentSectionRef.current.querySelector('.edu-list'),
               start: 'top 78%',
-              end: 'bottom 72%',
+              end: 'bottom 82%',
               scrub: 1,
             },
           }
@@ -139,7 +139,7 @@ export default function Education() {
           scrollTrigger: {
             trigger: item,
             start: 'top 92%',
-            end: 'top 60%',
+            end: 'top 65%',
             scrub: 1,
           },
         })
@@ -248,7 +248,7 @@ export default function Education() {
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
         data-education-overlay
-        className="theme-section theme-section--seamless relative z-10 min-h-screen w-full scroll-mt-16 px-6 pb-16 pt-14 sm:pb-20 sm:pt-16"
+        className="theme-section theme-section--seamless relative z-10 flex min-h-screen w-full items-center scroll-mt-16 px-6 pb-16 pt-16 sm:pb-20 sm:pt-20"
       >
         {/* Floating glow orb */}
         <div className="section-glow-orb !absolute -left-20 top-1/3 h-64 w-64 bg-[#DC143C]/10 pointer-events-none blur-3xl rounded-full" />
@@ -261,7 +261,10 @@ export default function Education() {
             boxShadow: '0 0 54px rgba(220, 20, 60, 0.24)',
           }}
         />
-        <div data-education-content className="relative z-20 mx-auto max-w-5xl">
+        <div
+          data-education-content
+          className="relative z-20 mx-auto w-full max-w-5xl"
+        >
           <h2
             className="edu-heading theme-heading"
             style={{ color: '#DC143C' }}
