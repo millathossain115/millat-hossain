@@ -40,7 +40,7 @@ export default function About() {
           scrub: true,
           pin: isDesktop,
           pinSpacing: true,
-          pinReparent: isDesktop,
+          pinType: 'transform',
           anticipatePin: isDesktop ? 1 : 0,
           invalidateOnRefresh: true,
         },

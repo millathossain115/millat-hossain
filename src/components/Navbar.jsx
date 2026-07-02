@@ -9,6 +9,7 @@ const navItems = [
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('about')
+  const [isNavVisible, setIsNavVisible] = useState(true)
 
   useEffect(() => {
     const sections = navItems
@@ -42,6 +43,43 @@ export default function Navbar() {
     }
   }, [])
 
+  useEffect(() => {
+    let lastScrollY = window.scrollY
+    let frameId = null
+
+    const handleScroll = () => {
+      if (frameId !== null) {
+        return
+      }
+
+      frameId = window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY
+        const delta = currentScrollY - lastScrollY
+
+        if (currentScrollY <= 24) {
+          setIsNavVisible(true)
+        } else if (delta > 1) {
+          setIsNavVisible(false)
+        } else if (delta < -1) {
+          setIsNavVisible(true)
+        }
+
+        lastScrollY = currentScrollY
+        frameId = null
+      })
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId)
+      }
+    }
+  }, [])
+
   const handleNavClick = (event, href) => {
     const targetId = href.replace('#', '')
     const target = document.getElementById(targetId)
@@ -59,8 +97,12 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="soft-reveal delay-5 relative z-20 w-full bg-transparent px-4 py-5 text-white sm:px-6 md:px-12">
-      <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
+    <nav
+      className={`sticky top-0 z-[70] w-full bg-transparent px-4 py-5 text-white transition-transform duration-300 ease-out will-change-transform sm:px-6 md:px-12 ${
+        isNavVisible ? 'translate-y-0' : 'pointer-events-none -translate-y-full'
+      }`}
+    >
+      <div className="soft-reveal delay-5 flex w-full flex-col items-center justify-between gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
         <a
           href="#hero"
           onClick={(event) => handleNavClick(event, '#hero')}
