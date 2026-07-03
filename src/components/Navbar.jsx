@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import navLogo from '../assets/Image/Nav-Logo.svg'
+import resumePdf from '../assets/Resume/resumeMillathossain.pdf'
 
 const navItems = [
   { label: 'About', href: '#about', sectionId: 'about' },
@@ -161,7 +162,7 @@ export default function Navbar() {
           })}
 
           <a
-            href="/resume.pdf"
+            href={resumePdf}
             target="_blank"
             rel="noreferrer"
             className="rounded-full border border-[#DC143C] px-3 py-2 text-[0.65rem] uppercase tracking-[0.24em] text-[rgba(148,163,184,0.75)] transition-colors duration-200 hover:text-[#DC143C] sm:px-4 sm:text-xs sm:tracking-[0.32em] md:text-sm md:tracking-[0.42em]"
