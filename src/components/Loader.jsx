@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 const marqueeItems = [
   'Software Engineer',
   'Full Stack Developer',
@@ -7,8 +9,52 @@ const marqueeItems = [
   'Performance First',
 ]
 
-export default function Loader({ progress, isComplete, isWelcomeExpanding }) {
+export default function Loader({ onRevealStart, onComplete }) {
+  const [progress, setProgress] = useState(0)
+  const [isComplete, setIsComplete] = useState(false)
+  const [isWelcomeExpanding, setIsWelcomeExpanding] = useState(false)
   const label = isComplete ? 'Welcome' : `Loading ${progress}%`
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setProgress((current) => {
+        if (current >= 100) {
+          window.clearInterval(intervalId)
+          return 100
+        }
+
+        const increment = current < 65 ? 4 : current < 88 ? 2 : 1
+        return Math.min(current + increment, 100)
+      })
+    }, 45)
+
+    return () => window.clearInterval(intervalId)
+  }, [])
+
+  useEffect(() => {
+    if (progress < 100) {
+      return undefined
+    }
+
+    const completeTimeoutId = window.setTimeout(() => {
+      setIsComplete(true)
+    }, 140)
+
+    const expandTimeoutId = window.setTimeout(() => {
+      setIsWelcomeExpanding(true)
+      onRevealStart()
+    }, 1080)
+
+    const hideTimeoutId = window.setTimeout(() => {
+      onComplete()
+    }, 2480)
+
+    return () => {
+      window.clearTimeout(completeTimeoutId)
+      window.clearTimeout(expandTimeoutId)
+      window.clearTimeout(hideTimeoutId)
+    }
+  }, [progress, onComplete, onRevealStart])
 
   return (
     <div

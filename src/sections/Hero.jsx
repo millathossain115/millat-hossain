@@ -126,7 +126,7 @@ export default function Hero() {
             }}
           >
             <div className="pointer-events-none absolute inset-0">
-              <h1
+              <div
                 aria-hidden="true"
                 className="font-display select-none whitespace-nowrap text-[clamp(1.5rem,7.2vw,7.4rem)] font-semibold uppercase leading-[0.86] tracking-[0.02em] text-transparent opacity-0 transition-opacity duration-300 sm:tracking-[0.055em] md:tracking-[0.08em]"
                 style={{
@@ -138,8 +138,8 @@ export default function Hero() {
                 }}
               >
                 MILLAT HOSSAIN
-              </h1>
-              <h2
+              </div>
+              <div
                 aria-hidden="true"
                 className="font-ui select-none whitespace-nowrap text-[clamp(1.2rem,4.8vw,4.2rem)] font-semibold uppercase leading-none tracking-[0.08em] text-transparent opacity-0 transition-opacity duration-300 sm:tracking-[0.12em] md:tracking-[0.16em]"
                 style={{
@@ -151,7 +151,7 @@ export default function Hero() {
                 }}
               >
                 SOFTWARE ENGINEER
-              </h2>
+              </div>
             </div>
 
             <h1 className="font-display hero-cinematic-reveal delay-2 whitespace-nowrap text-[clamp(1.5rem,7.2vw,7.4rem)] font-semibold uppercase leading-[0.86] tracking-[0.02em] text-white sm:tracking-[0.055em] md:tracking-[0.08em]">

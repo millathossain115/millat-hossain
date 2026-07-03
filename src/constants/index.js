@@ -1,46 +1,38 @@
 export const PROJECTS = [
   {
     title: 'E-Commerce Microservices',
-    category: 'Backend System',
+    category: 'Architecture Concept',
+    status: 'concept',
     focus: 'Architecture & APIs',
     monogram: 'EC',
     description:
-      'An event-driven commerce backend built for high-throughput order processing, resilient services, and containerized deployment.',
+      'An architecture study exploring event-driven commerce, resilient services, and containerized deployment for high-throughput order processing.',
     tags: ['NestJS', 'Go', 'Kafka', 'Docker', 'Kubernetes'],
-    github: 'https://github.com',
-    live: 'https://example.com',
-    liveLabel: 'Live Demo',
-    image: 'https://placehold.co/600x400/png',
   },
   {
     title: 'AI-Powered Analytics Dashboard',
-    category: 'AI Product',
+    category: 'Product Concept',
+    status: 'concept',
     focus: 'Data & Experience',
     monogram: 'AI',
     description:
-      'A real-time analytics workspace that turns live datasets into configurable charts and AI-assisted insights.',
+      'A product concept for turning live datasets into configurable charts, focused workflows, and AI-assisted insights.',
     tags: ['React', 'Tailwind CSS', 'Vite', 'OpenAI', 'Chart.js'],
-    github: 'https://github.com',
-    live: 'https://example.com',
-    liveLabel: 'Live Demo',
-    image: 'https://placehold.co/600x400/png',
   },
   {
     title: 'Decentralized Voting System',
-    category: 'Web3 Application',
+    category: 'Web3 Concept',
+    status: 'concept',
     focus: 'Contracts & Trust',
     monogram: 'DV',
     description:
-      'A tamper-resistant voting application with Ethereum smart contracts, transparent ballot records, and verifiable results.',
+      'A Web3 architecture study for transparent ballots, verifiable results, and tamper-resistant voting through smart contracts.',
     tags: ['Solidity', 'React', 'Web3.js', 'Truffle'],
-    github: 'https://github.com',
-    live: 'https://example.com',
-    liveLabel: 'Live Demo',
-    image: 'https://placehold.co/600x400/png',
   },
   {
     title: 'ZaDEX Logistics Platform',
     category: 'Full-Stack Platform',
+    status: 'live',
     focus: 'Operations & Tracking',
     monogram: 'ZL',
     description:
@@ -55,6 +47,7 @@ export const PROJECTS = [
   {
     title: 'ThreadView Forum',
     category: 'Community Platform',
+    status: 'live',
     focus: 'Discussion & Moderation',
     monogram: 'TV',
     description:
@@ -69,6 +62,7 @@ export const PROJECTS = [
   {
     title: 'IoT Home Automation & Security',
     category: 'Embedded System',
+    status: 'live',
     focus: 'Automation & Sensing',
     monogram: 'IH',
     description:

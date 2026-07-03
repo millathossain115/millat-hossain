@@ -5,12 +5,23 @@
     <link rel="icon" type="image/svg+xml" href="/Favicon-M.svg?v=3" />
     <link rel="shortcut icon" href="/Favicon-M.svg?v=3" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Millat Hossain | Full-Stack Developer</title>
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap"
+    />
+    <title>%VITE_SITE_TITLE%</title>
     <meta name="description" content="%VITE_SITE_DESCRIPTION%" />
-    <meta name="keywords" content="%VITE_SITE_KEYWORDS%" />
     <meta name="author" content="Millat Hossain" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="google-site-verification" content="%VITE_GOOGLE_SITE_VERIFICATION%" />
     <meta name="theme-color" content="#020202" />
     <link rel="canonical" href="%VITE_SITE_URL%/" />
 
@@ -20,41 +31,58 @@
     <meta property="og:description" content="%VITE_SITE_DESCRIPTION%" />
     <meta property="og:url" content="%VITE_SITE_URL%/" />
     <meta property="og:image" content="%VITE_OG_IMAGE%" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Millat Hossain — Software Engineer" />
     <meta property="og:locale" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="%VITE_SITE_TITLE%" />
     <meta name="twitter:description" content="%VITE_SITE_DESCRIPTION%" />
     <meta name="twitter:image" content="%VITE_OG_IMAGE%" />
+    <meta name="twitter:image:alt" content="Millat Hossain — Software Engineer" />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Millat Hossain",
+        "@type": "ProfilePage",
+        "name": "%VITE_SITE_TITLE%",
         "url": "%VITE_SITE_URL%/",
-        "image": "%VITE_OG_IMAGE%",
-        "email": "%VITE_CONTACT_EMAIL%",
-        "jobTitle": "Software Engineer",
         "description": "%VITE_SITE_DESCRIPTION%",
-        "knowsAbout": [
-          "Software Engineering",
-          "Full Stack Development",
-          "React",
-          "JavaScript",
-          "Node.js",
-          "Frontend Development",
-          "Backend Development",
-          "UI Engineering"
-        ],
-        "alumniOf": {
-          "@type": "CollegeOrUniversity",
-          "name": "United International University"
-        },
-        "sameAs": [
-          "%VITE_GITHUB_URL%",
-          "%VITE_LINKEDIN_URL%"
-        ]
+        "mainEntity": {
+          "@id": "%VITE_SITE_URL%/#person",
+          "@type": "Person",
+          "name": "Millat Hossain",
+          "url": "%VITE_SITE_URL%/",
+          "image": "%VITE_PROFILE_IMAGE%",
+          "email": "%VITE_CONTACT_EMAIL%",
+          "jobTitle": "Software Engineer",
+          "description": "%VITE_SITE_DESCRIPTION%",
+          "homeLocation": {
+            "@type": "Place",
+            "name": "Dhaka, Bangladesh"
+          },
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "United International University"
+          },
+          "knowsAbout": [
+            "Software Engineering",
+            "Full-Stack Development",
+            "React",
+            "JavaScript",
+            "Node.js",
+            "Frontend Development",
+            "Backend Development",
+            "UI Engineering"
+          ],
+          "sameAs": [
+            "%VITE_GITHUB_URL%",
+            "%VITE_LINKEDIN_URL%",
+            "%VITE_FACEBOOK_URL%"
+          ]
+        }
       }
     </script>
   </head>

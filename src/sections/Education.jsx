@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fa'
 import { FiCalendar, FiMapPin } from 'react-icons/fi'
 import { EDUCATION } from '../constants'
+import useNearViewport from '../hooks/useNearViewport'
 
 gsap.registerPlugin(ScrollTrigger)
 const defaultPointer = { x: 0, y: 0, active: false }
@@ -32,8 +33,13 @@ export default function Education() {
   const zoomTextRef = useRef(null)
   const redFillRef = useRef(null)
   const contentSectionRef = useRef(null)
+  const isNearViewport = useNearViewport(containerRef)
 
   useEffect(() => {
+    if (!isNearViewport) {
+      return undefined
+    }
+
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     ).matches
@@ -206,7 +212,7 @@ export default function Education() {
     }, containerRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [isNearViewport])
 
   const handlePointerMove = (event) => {
     const bounds = event.currentTarget.getBoundingClientRect()
@@ -225,12 +231,13 @@ export default function Education() {
       {/* 1. Keep the red zoom scene contained so it clears before the seamless content begins */}
       <div className="relative h-[250vh] w-full">
         <div className="sticky top-0 z-0 flex h-screen w-full items-center justify-center overflow-hidden bg-black">
-          <h1
+          <div
             ref={zoomTextRef}
+            aria-hidden="true"
             className="text-[#DC143C] font-display text-[15vw] sm:text-[12vw] font-bold tracking-[0.1em] text-center uppercase whitespace-nowrap"
           >
             EDUCATION
-          </h1>
+          </div>
           {/* Safety solid red fill to ensure the screen is fully enveloped at the end of the scale */}
           <div
             ref={redFillRef}

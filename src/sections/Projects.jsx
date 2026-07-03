@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { PROJECTS } from '../constants'
 import ProjectCard from '../components/ProjectCard'
+import useNearViewport from '../hooks/useNearViewport'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -22,8 +23,13 @@ export default function Projects() {
   const sectionRef = useRef(null)
   const pinRef = useRef(null)
   const trackRef = useRef(null)
+  const isNearViewport = useNearViewport(sectionRef)
 
   useEffect(() => {
+    if (!isNearViewport) {
+      return undefined
+    }
+
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     ).matches
@@ -92,7 +98,7 @@ export default function Projects() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [isNearViewport])
 
   return (
     <section

@@ -1,7 +1,8 @@
 export default function ProjectCard({ project }) {
   const visibleTags = project?.tags?.slice(0, 3) || []
   const remainingTags = Math.max((project?.tags?.length || 0) - 3, 0)
-  const primaryLink = project?.live || project?.github
+  const isConcept = project?.status === 'concept'
+  const primaryLink = isConcept ? null : project?.live || project?.github
 
   return (
     <article
@@ -35,10 +36,10 @@ export default function ProjectCard({ project }) {
           <span className="font-mono text-[0.62rem] font-medium uppercase tracking-[0.2em] text-white/65">
             {project?.category || 'Selected Project'}
           </span>
-          {project?.live && (
+          {(isConcept || project?.live) && (
             <span className="flex items-center gap-1.5 font-mono text-[0.58rem] uppercase tracking-[0.18em] text-white/75">
               <span className="h-1.5 w-1.5 rounded-full bg-[#DC143C] shadow-[0_0_10px_rgba(220,20,60,0.9)]" />
-              {project.liveLabel || 'Live'}
+              {isConcept ? 'Concept Study' : project.liveLabel || 'Live'}
             </span>
           )}
         </div>
@@ -100,10 +101,12 @@ export default function ProjectCard({ project }) {
               </svg>
             </a>
           ) : (
-            <span />
+            <span className="font-ui text-[0.65rem] font-medium uppercase tracking-[0.16em] text-[#ff6f8b]">
+              Concept Study
+            </span>
           )}
 
-          {project?.github && project?.live && (
+          {!isConcept && project?.github && project?.live && (
             <a
               href={project.github}
               target="_blank"

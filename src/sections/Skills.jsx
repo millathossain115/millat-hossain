@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { techIcons } from '../assets/tech-icons'
+import useNearViewport from '../hooks/useNearViewport'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -45,8 +46,13 @@ function splitWords(el) {
 
 export default function Skills() {
   const sectionRef = useRef(null)
+  const isNearViewport = useNearViewport(sectionRef)
 
   useEffect(() => {
+    if (!isNearViewport) {
+      return undefined
+    }
+
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches
@@ -144,7 +150,7 @@ export default function Skills() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [isNearViewport])
 
   return (
     <section
@@ -187,7 +193,11 @@ export default function Skills() {
                 <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(220,20,60,0.16),rgba(220,20,60,0.04),transparent_72%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <div className="relative z-10 flex items-center gap-3">
                   <div>
-                    <Icon className={`h-[18px] w-[18px] ${className}`} />
+                    <Icon
+                      aria-hidden="true"
+                      focusable="false"
+                      className={`h-[18px] w-[18px] ${className}`}
+                    />
                   </div>
                   <h3 className="font-ui text-xs font-light text-white normal-case sm:text-base">
                     {tech}

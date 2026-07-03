@@ -136,7 +136,7 @@ export default function Navbar() {
         >
           <img
             src={navLogo}
-            alt="Navigation logo"
+            alt="Millat Hossain home"
             className="h-8 w-auto sm:h-11 md:h-12"
           />
         </a>

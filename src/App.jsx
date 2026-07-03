@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -16,53 +16,17 @@ import Footer from './components/Footer'
 gsap.registerPlugin(ScrollTrigger)
 
 function App() {
-  const [progress, setProgress] = useState(0)
-  const [isLoaderComplete, setIsLoaderComplete] = useState(false)
   const [isWelcomeExpanding, setIsWelcomeExpanding] = useState(false)
   const [isLoaderVisible, setIsLoaderVisible] = useState(true)
-
-  useEffect(() => {
-    const intervalId = window.setInterval(() => {
-      setProgress((current) => {
-        if (current >= 100) {
-          window.clearInterval(intervalId)
-          return 100
-        }
-
-        const increment = current < 65 ? 4 : current < 88 ? 2 : 1
-        return Math.min(current + increment, 100)
-      })
-    }, 45)
-
-    return () => window.clearInterval(intervalId)
-  }, [])
-
-  useEffect(() => {
-    if (progress < 100) {
-      return undefined
-    }
-
-    const completeTimeoutId = window.setTimeout(() => {
-      setIsLoaderComplete(true)
-    }, 140)
-
-    const expandTimeoutId = window.setTimeout(() => {
-      setIsWelcomeExpanding(true)
-    }, 1080)
-
-    const hideTimeoutId = window.setTimeout(() => {
-      setIsLoaderVisible(false)
-    }, 2480)
-
-    return () => {
-      window.clearTimeout(completeTimeoutId)
-      window.clearTimeout(expandTimeoutId)
-      window.clearTimeout(hideTimeoutId)
-    }
-  }, [progress])
+  const handleRevealStart = useCallback(() => setIsWelcomeExpanding(true), [])
+  const handleLoaderComplete = useCallback(() => setIsLoaderVisible(false), [])
 
   // Initialize Lenis smooth scroll
   useEffect(() => {
+    if (isLoaderVisible) {
+      return undefined
+    }
+
     const lenis = new Lenis({
       duration: 1.2,
       smoothWheel: true,
@@ -89,7 +53,7 @@ function App() {
       lenis.destroy()
       delete window.lenis
     }
-  }, [])
+  }, [isLoaderVisible])
 
   const appStateClass = isLoaderVisible
     ? isWelcomeExpanding
@@ -101,9 +65,8 @@ function App() {
     <div className="app-shell font-ui min-h-screen text-slate-100">
       {isLoaderVisible && (
         <Loader
-          progress={progress}
-          isComplete={isLoaderComplete}
-          isWelcomeExpanding={isWelcomeExpanding}
+          onRevealStart={handleRevealStart}
+          onComplete={handleLoaderComplete}
         />
       )}
 

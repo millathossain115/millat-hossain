@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fa'
 import profileImg from '../assets/Image/about-profile.webp'
 import Button from '../components/Button'
+import useNearViewport from '../hooks/useNearViewport'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -37,12 +38,17 @@ const SOCIAL_LINKS = [
 
 export default function Contact() {
   const sectionRef = useRef(null)
+  const isNearViewport = useNearViewport(sectionRef)
   const [submitState, setSubmitState] = useState({
     status: 'idle',
     message: '',
   })
 
   useEffect(() => {
+    if (!isNearViewport) {
+      return undefined
+    }
+
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches
@@ -110,7 +116,7 @@ export default function Contact() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [isNearViewport])
 
   const handleSubmit = async (event) => {
     event.preventDefault()

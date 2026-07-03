@@ -2,6 +2,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef, useState } from 'react'
 import { EXPERIENCES } from '../constants'
+import useNearViewport from '../hooks/useNearViewport'
 
 gsap.registerPlugin(ScrollTrigger)
 const defaultPointer = { x: 0, y: 0, active: false }
@@ -22,8 +23,13 @@ export default function Experience() {
   const [pointer, setPointer] = useState(defaultPointer)
   const sectionRef = useRef(null)
   const contentRef = useRef(null)
+  const isNearViewport = useNearViewport(sectionRef)
 
   useEffect(() => {
+    if (!isNearViewport) {
+      return undefined
+    }
+
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     ).matches
@@ -170,7 +176,7 @@ export default function Experience() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [isNearViewport])
 
   const handlePointerMove = (event) => {
     setPointer({ x: event.clientX, y: event.clientY, active: true })
@@ -228,11 +234,11 @@ export default function Experience() {
                     <h3 className="font-display text-xl font-bold uppercase tracking-[0.08em] text-slate-100 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white">
                       {exp.role}
                     </h3>
-                    <p className="mt-1 text-sm font-mono uppercase tracking-[0.18em] text-[#DC143C] transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#ff4d73] md:text-base">
+                    <p className="mt-1 text-sm font-mono uppercase tracking-[0.18em] text-[#ff5a7a] transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#ff7892] md:text-base">
                       {exp.company}
                     </p>
                   </div>
-                  <span className="exp-duration mt-2 shrink-0 text-sm font-mono uppercase tracking-[0.18em] text-slate-500 transition-colors duration-300 group-hover:text-slate-300 md:mt-0">
+                  <span className="exp-duration mt-2 shrink-0 text-sm font-mono uppercase tracking-[0.18em] text-slate-400 transition-colors duration-300 group-hover:text-slate-200 md:mt-0">
                     {exp.duration}
                   </span>
                 </div>

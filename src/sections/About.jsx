@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import profileImg from '../assets/Image/about-profile.webp'
+import useNearViewport from '../hooks/useNearViewport'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -9,8 +10,13 @@ export default function About() {
   const aboutRef = useRef(null)
   const aboutImageRef = useRef(null)
   const aboutContentRef = useRef(null)
+  const isNearViewport = useNearViewport(aboutRef)
 
   useLayoutEffect(() => {
+    if (!isNearViewport) {
+      return undefined
+    }
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     if (prefersReducedMotion) {
@@ -52,13 +58,13 @@ export default function About() {
           {
             x: imageStartX,
             y: mobileStartY,
-            autoAlpha: 0,
+            opacity: 0,
             scale: 0.8,
           },
           {
             x: imageStartX,
             y: mobileStartY,
-            autoAlpha: 1,
+            opacity: 1,
             scale: 1,
             duration: 1,
             ease: 'none',
@@ -75,12 +81,12 @@ export default function About() {
           {
             x: copyStartX,
             y: mobileStartY,
-            autoAlpha: 0,
+            opacity: 0,
           },
           {
             x: 0,
             y: 0,
-            autoAlpha: 1,
+            opacity: 1,
             duration: 1.5,
             ease: 'none',
             force3D: false,
@@ -93,7 +99,7 @@ export default function About() {
       appContent?.removeEventListener('animationend', refreshAfterAppReveal)
       context.revert()
     }
-  }, [])
+  }, [isNearViewport])
 
   return (
     <section
@@ -115,9 +121,8 @@ export default function About() {
               alt="Millat Hossain"
               width="960"
               height="1280"
-              loading="eager"
+              loading="lazy"
               decoding="async"
-              fetchPriority="high"
               className="aspect-[4/5] w-full object-cover rounded-[2rem]"
             />
           </div>
@@ -137,13 +142,15 @@ export default function About() {
             </h2>
 
             <p className="about-body max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
-              I build fast web experiences that feel sharp, scale smoothly, and stay easy
-              to use.
+              I&apos;m Millat Hossain, a software engineer and full-stack developer based
+              in Dhaka. After completing my CSE degree at United International University
+              in 2024, I&apos;ve focused on building fast, accessible web products with
+              React, Node.js, and thoughtful frontend architecture.
             </p>
           </div>
 
           <p className="about-body font-ui max-w-2xl text-sm uppercase leading-7 tracking-[0.22em] text-slate-400">
-            Modern UI. Full stack mindset. Performance first.
+            Clean interfaces. Reliable systems. Performance-first engineering.
           </p>
         </div>
       </div>
