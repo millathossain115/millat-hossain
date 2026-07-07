@@ -42,7 +42,7 @@ export const PROJECTS = [
     live: 'https://zadex-puce.vercel.app',
     liveLabel: 'Live Demo',
     image:
-      'https://opengraph.githubassets.com/6fa662915837d34d12aa353bd4849e0247053c9cc072b448a0f9300451748f59/millathossain115/ZaDEX-Client',
+      'src/assets/Projects/Zadex-portfolio-project-banner.png',
   },
   {
     title: 'ThreadView Forum',
