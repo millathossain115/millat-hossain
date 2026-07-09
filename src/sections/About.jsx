@@ -63,7 +63,7 @@ export default function About() {
     const context = gsap.context(() => {
       const isDesktop = window.matchMedia('(min-width: 1024px)').matches
       const imageStartX = isDesktop ? '25vw' : 0
-      const copyStartX = isDesktop ? '-25vw' : 0
+      const copyStartX = isDesktop ? 'calc(-100% - 4rem)' : 0
       const mobileStartY = isDesktop ? 0 : 36
 
       const timeline = gsap.timeline({
@@ -135,10 +135,10 @@ export default function About() {
       id="about"
       className="theme-section relative flex min-h-screen items-center overflow-hidden bg-[#020202] px-6 py-24 scroll-mt-16 sm:px-8 lg:h-screen lg:px-10"
     >
-      <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+      <div className="relative isolate mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div
           ref={aboutImageRef}
-          className="gsap-ken-burns relative mx-auto w-full max-w-sm overflow-hidden rounded-[2rem]"
+          className="gsap-ken-burns relative z-20 mx-auto w-full max-w-sm overflow-hidden rounded-[2rem]"
         >
           <div className="absolute -inset-5 rounded-[2rem] bg-[radial-gradient(circle_at_top,_rgba(220,20,60,0.28),_transparent_62%)] blur-2xl" />
           <div className="absolute inset-4 rounded-[2rem] border border-[#DC143C]/28" />
@@ -158,7 +158,7 @@ export default function About() {
 
         <div
           ref={aboutContentRef}
-          className="space-y-6 lg:flex lg:flex-col lg:justify-between lg:space-y-0"
+          className="relative z-10 space-y-6 lg:flex lg:flex-col lg:justify-between lg:space-y-0"
           style={{
             height: aboutContentHeight ? `${aboutContentHeight}px` : undefined,
           }}

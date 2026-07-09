@@ -274,7 +274,7 @@ export default function Education() {
         >
           <h2
             className="edu-heading theme-heading"
-            style={{ color: '#DC143C' }}
+            style={{ color: 'white' }}
           >
             Education
             <span className="theme-heading__line" />
@@ -295,7 +295,7 @@ export default function Education() {
                   {/* Animated dot */}
                   <div className="edu-dot absolute -left-[6px] top-6 z-10 h-3 w-3 rounded-full border-2 border-[#ff234d] bg-[#090909] shadow-[0_0_16px_rgba(220,20,60,0.65)]" />
 
-                  <div className="edu-content relative overflow-hidden rounded-xl border border-white/[0.09] bg-white/[0.025] shadow-[inset_0_1px_0_rgba(255,255,255,0.035),0_18px_48px_rgba(0,0,0,0.2)] transition-[border-color,background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-[#DC143C]/35 hover:bg-white/[0.035] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_22px_56px_rgba(0,0,0,0.26),0_0_28px_rgba(220,20,60,0.06)]">
+                  <div className="edu-content relative overflow-hidden rounded-xl border border-white/[0.09] bg-black shadow-[inset_0_1px_0_rgba(255,255,255,0.035),0_18px_48px_rgba(0,0,0,0.2)] transition-[border-color,background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-[#DC143C]/35 hover:bg-black hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_22px_56px_rgba(0,0,0,0.26),0_0_28px_rgba(220,20,60,0.06)]">
                     <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#DC143C]/45 to-transparent opacity-70" />
                     <div className="pointer-events-none absolute -right-20 -top-24 h-48 w-48 rounded-full bg-[#DC143C]/[0.06] blur-3xl transition-opacity duration-300 group-hover:opacity-100" />
 
