@@ -225,16 +225,16 @@ main > section {
 
   100% {
     opacity: 0;
-    filter: blur(14px);
-    transform: scale(1.035);
+    filter: blur(8px);
+    transform: scale(1.018);
   }
 }
 
 @keyframes appReveal {
   0% {
     opacity: 0;
-    transform: scale(1.02) translateY(20px);
-    filter: blur(14px);
+    transform: scale(1.01) translateY(10px);
+    filter: blur(8px);
   }
 
   100% {
@@ -276,32 +276,38 @@ main > section {
 
 .hero-cinematic-reveal {
   opacity: 0;
-  animation: heroCinematicReveal 0.95s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
 }
 
 .hero-soft-reveal {
   opacity: 0;
-  animation: heroSoftReveal 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.hero-intro-ready .hero-cinematic-reveal {
+  animation: heroCinematicReveal 1s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.hero-intro-ready .hero-soft-reveal {
+  animation: heroSoftReveal 0.82s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
 }
 
 .delay-1 {
-  animation-delay: 0.12s;
+  animation-delay: 0.22s;
 }
 
 .delay-2 {
-  animation-delay: 0.32s;
+  animation-delay: 0.42s;
 }
 
 .delay-3 {
-  animation-delay: 0.52s;
+  animation-delay: 0.6s;
 }
 
 .delay-4 {
-  animation-delay: 0.82s;
+  animation-delay: 0.84s;
 }
 
 .delay-5 {
-  animation-delay: 1.05s;
+  animation-delay: 1.02s;
 }
 
 .delay-6 {
@@ -338,7 +344,7 @@ main > section {
 
 .portfolio-loader--fade {
   pointer-events: none;
-  animation: loaderFade 1.35s cubic-bezier(0.16, 0.84, 0.2, 1) forwards;
+  animation: loaderFade 1.4s cubic-bezier(0.16, 0.84, 0.2, 1) forwards;
 }
 
 .loader-marquee__track {
@@ -433,11 +439,17 @@ main > section {
 }
 
 .app-reveal {
-  animation: appReveal 1.15s cubic-bezier(0.16, 0.84, 0.2, 1) both;
+  animation: appReveal 1.25s cubic-bezier(0.16, 0.84, 0.2, 1) both;
 }
 
 .app-reveal--under-loader {
-  animation-delay: 0.08s;
+  animation-delay: 0.04s;
+}
+
+.app-pre-reveal {
+  opacity: 0;
+  transform: scale(1.01) translateY(10px);
+  filter: blur(8px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -447,14 +459,17 @@ main > section {
 
   .cinematic-reveal,
   .hero-cinematic-reveal,
+  .hero-intro-ready .hero-cinematic-reveal,
   .soft-reveal,
   .hero-soft-reveal,
+  .hero-intro-ready .hero-soft-reveal,
   .shine-text,
   .slow-blink,
   .loader-marquee__track,
   .portfolio-loader--fade,
   .loader-welcome--expand,
-  .app-reveal {
+  .app-reveal,
+  .app-pre-reveal {
     animation: none;
     opacity: 1;
     filter: none;

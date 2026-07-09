@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import profileImg from '../assets/Image/about-profile.webp'
@@ -10,7 +10,35 @@ export default function About() {
   const aboutRef = useRef(null)
   const aboutImageRef = useRef(null)
   const aboutContentRef = useRef(null)
+  const [aboutContentHeight, setAboutContentHeight] = useState(null)
   const isNearViewport = useNearViewport(aboutRef)
+
+  useLayoutEffect(() => {
+    const image = aboutImageRef.current
+
+    if (!image) {
+      return undefined
+    }
+
+    const desktopQuery = window.matchMedia('(min-width: 1024px)')
+
+    const syncContentHeight = () => {
+      setAboutContentHeight(desktopQuery.matches ? image.offsetHeight : null)
+    }
+
+    const resizeObserver = new ResizeObserver(syncContentHeight)
+
+    syncContentHeight()
+    resizeObserver.observe(image)
+    desktopQuery.addEventListener('change', syncContentHeight)
+    window.addEventListener('resize', syncContentHeight)
+
+    return () => {
+      resizeObserver.disconnect()
+      desktopQuery.removeEventListener('change', syncContentHeight)
+      window.removeEventListener('resize', syncContentHeight)
+    }
+  }, [])
 
   useLayoutEffect(() => {
     if (!isNearViewport) {
@@ -59,7 +87,7 @@ export default function About() {
             x: imageStartX,
             y: mobileStartY,
             opacity: 0,
-            scale: 0.8,
+            scale: 1,
           },
           {
             x: imageStartX,
@@ -128,24 +156,29 @@ export default function About() {
           </div>
         </div>
 
-        <div ref={aboutContentRef} className="space-y-6">
+        <div
+          ref={aboutContentRef}
+          className="space-y-6 lg:flex lg:flex-col lg:justify-between lg:space-y-0"
+          style={{
+            height: aboutContentHeight ? `${aboutContentHeight}px` : undefined,
+          }}
+        >
           <p className="about-label font-ui text-xs font-medium uppercase tracking-[0.38em] text-[#DC143C]">
             About Me
           </p>
 
           <div className="space-y-4">
             <h2
-              className="about-heading font-display max-w-2xl text-4xl font-semibold uppercase leading-tight text-white sm:text-5xl"
+              className="about-heading font-display max-w-2xl text-4xl font-semibold uppercase leading-tight text-white sm:text-[2.375rem]"
               style={{ overflow: 'hidden' }}
             >
-              Building clean products with strong frontend focus.
+              Building full-stack products with clean, reliable systems.
             </h2>
 
-            <p className="about-body max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+            <p className="about-body max-w-2xl text-base leading-7 text-slate-300">
               I&apos;m Millat Hossain, a software engineer and full-stack developer based
-              in Dhaka. After completing my CSE degree at United International University
-              in 2024, I&apos;ve focused on building fast, accessible web products with
-              React, Node.js, and thoughtful frontend architecture.
+              in Dhaka. I build responsive React interfaces, practical Node.js APIs, and
+              product experiences that stay fast, accessible, and easy to maintain.
             </p>
           </div>
 

@@ -6,7 +6,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const defaultPointer = { x: 50, y: 34, active: false }
 
-export default function Hero() {
+export default function Hero({ isIntroReady = true }) {
   const [pointer, setPointer] = useState(defaultPointer)
   const heroRef = useRef(null)
   const heroContentRef = useRef(null)
@@ -88,7 +88,9 @@ export default function Hero() {
       id="hero"
       onMouseMove={handlePointerMove}
       onMouseLeave={handlePointerLeave}
-      className="relative -mt-[120px] flex min-h-screen items-center justify-center overflow-hidden px-4 pb-12 pt-40 text-center sm:-mt-[108px] sm:px-6 sm:pb-14 sm:pt-36 md:-mt-[96px] md:px-10 md:pb-20 md:pt-36"
+      className={`relative -mt-[120px] flex min-h-screen items-center justify-center overflow-hidden px-4 pb-12 pt-40 text-center sm:-mt-[108px] sm:px-6 sm:pb-14 sm:pt-36 md:-mt-[96px] md:px-10 md:pb-20 md:pt-36 ${
+        isIntroReady ? 'hero-intro-ready' : ''
+      }`}
     >
       <div className="hero-scroll-layer absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(220,20,60,0.24),_transparent_34%),radial-gradient(circle_at_18%_82%,_rgba(127,29,29,0.22),_transparent_28%),radial-gradient(circle_at_80%_18%,_rgba(91,12,24,0.18),_transparent_22%),linear-gradient(180deg,_#040404_0%,_#080808_52%,_#010101_100%)]" />
       <div className="hero-scroll-layer absolute left-1/2 top-12 h-56 w-56 -translate-x-1/2 rounded-full bg-[#DC143C]/20 blur-[120px] sm:h-72 sm:w-72 sm:blur-[140px] md:h-80 md:w-80 md:blur-[160px]" />

@@ -58,8 +58,8 @@ function App() {
   const appStateClass = isLoaderVisible
     ? isWelcomeExpanding
       ? 'app-reveal app-reveal--under-loader'
-      : 'opacity-0 scale-[1.015] blur-[8px]'
-    : 'app-reveal'
+      : 'app-pre-reveal'
+    : 'app-reveal app-reveal--under-loader'
 
   return (
     <div className="app-shell font-ui min-h-screen text-slate-100">
@@ -73,7 +73,7 @@ function App() {
       <div className={appStateClass}>
         <Navbar />
         <main className="flex-grow">
-          <Hero />
+          <Hero isIntroReady={isWelcomeExpanding || !isLoaderVisible} />
           <About />
           <Education />
           <Experience />
