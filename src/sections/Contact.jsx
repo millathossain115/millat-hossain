@@ -173,9 +173,9 @@ export default function Contact() {
     <section
       ref={sectionRef}
       id="contact"
-      className="theme-section scroll-mt-16 px-0 py-0"
+      className="theme-section scroll-mt-16 flex min-h-screen items-center justify-center"
     >
-      <div className="relative mx-auto grid w-full max-w-6xl gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[0.74fr_1.26fr] lg:items-center">
+      <div className="relative mx-auto grid w-full max-w-6xl gap-8 px-4 pt-6 pb-0 sm:px-6 sm:pt-8 sm:pb-0 lg:grid-cols-[0.74fr_1.26fr] lg:items-center">
         <aside className="contact-profile-card relative mx-auto w-full max-w-[20rem] overflow-hidden rounded-[1.75rem] border border-[#DC143C]/45 bg-[linear-gradient(180deg,rgba(40,11,11,0.92),rgba(26,10,10,0.9))] p-5 shadow-[0_26px_80px_rgba(0,0,0,0.45)] sm:p-6">
           <div className="absolute -left-12 -top-14 h-40 w-40 rounded-full border-4 border-dashed border-[#ff4d73]/60" />
           <div className="absolute -bottom-8 -left-8 h-28 w-28 rounded-full border-4 border-dashed border-[#ff4d73]/60" />
