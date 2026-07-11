@@ -130,7 +130,7 @@ export const SKILLS = [
 
 export const EXPERIENCES = [
   {
-    role: 'Undergraduate Grader ',
+    role: 'Undergraduate Grader',
     company: 'UNITED INTERNATIONAL UNIVERSITY ',
     duration: 'Summer 2023',
     contributions: [

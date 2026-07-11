@@ -7,15 +7,8 @@ import useNearViewport from '../hooks/useNearViewport'
 gsap.registerPlugin(ScrollTrigger)
 const defaultPointer = { x: 0, y: 0, active: false }
 
-/** Splits element text into per-word <span> pairs for stagger reveal */
-function splitWords(el) {
-  const words = el.innerText.trim().split(/\s+/)
-  el.innerHTML = words
-    .map(
-      (w) =>
-        `<span class="gsap-word"><span class="gsap-word-inner">${w}</span></span>`
-    )
-    .join(' ')
+/** Gets React-owned word spans for stagger reveal */
+function getWordInners(el) {
   return Array.from(el.querySelectorAll('.gsap-word-inner'))
 }
 
@@ -62,7 +55,7 @@ export default function Experience() {
       /* ── Section heading word-reveal ── */
       const headingEl = sectionRef.current.querySelector('.exp-heading')
       if (headingEl) {
-        const words = splitWords(headingEl)
+        const words = getWordInners(headingEl)
         gsap.fromTo(
           words,
           { y: '110%', opacity: 0 },
@@ -230,47 +223,46 @@ export default function Experience() {
       <div
         ref={contentRef}
         data-experience-content
-        className="mx-auto max-w-4xl"
+        className="mx-auto grid w-full gap-16 lg:grid-cols-[1fr_3fr] lg:items-center lg:justify-start lg:gap-16 xl:gap-20"
       >
-        <h2 className="exp-heading theme-heading mx-auto max-w-3xl">
-          Work Experience
-          <span className="theme-heading__line" />
-        </h2>
+        <div className="min-w-0 lg:sticky lg:top-24">
+          <h2 className="exp-heading exp-heading-title">
+            <span className="gsap-word">
+              <span className="gsap-word-inner">Work</span>
+            </span>
+            <span className="gsap-word">
+              <span className="gsap-word-inner">Experience</span>
+            </span>
+          </h2>
+        </div>
 
-        <div className="exp-list relative mx-auto max-w-3xl space-y-12">
-          {/* The animated timeline line */}
-          {/* <div className="gsap-timeline-line" /> */}
-
+        <div className="exp-list relative mx-auto w-full space-y-16 lg:mx-0 lg:pl-32">
           {EXPERIENCES.map((exp, index) => (
-            <div
-              key={index}
-              className="exp-item group relative border-l border-white/10 pl-8 transition-colors duration-300 hover:border-[#DC143C]/55"
-            >
-              {/* Animated dot */}
-              <div className="exp-dot absolute -left-[7px] top-1.5 h-3 w-3 rounded-full border-2 border-[#DC143C] bg-[#090909] shadow-[0_0_12px_rgba(220,20,60,0.45)]" />
-
+            <div key={index} className="exp-item group relative transition-colors duration-300">
               <div className="exp-content">
-                <div className="mb-4 flex flex-col gap-1 md:flex-row md:items-start md:justify-between">
-                  <div>
-                    <h3 className="font-display text-xl font-bold uppercase tracking-[0.08em] text-slate-100 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white">
-                      {exp.role}
-                    </h3>
-                    <p className="mt-1 text-sm font-mono uppercase tracking-[0.18em] text-[#ff5a7a] transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#ff7892] md:text-base">
-                      {exp.company}
-                    </p>
-                  </div>
-                  <span className="exp-duration mt-2 shrink-0 text-sm font-mono uppercase tracking-[0.18em] text-slate-400 transition-colors duration-300 group-hover:text-slate-200 md:mt-0">
+                <div className="flex flex-col gap-3 md:flex-row md:items-baseline md:justify-between">
+                  <h3 className="font-display text-2xl font-bold uppercase tracking-[0.08em] text-slate-100 transition-colors duration-300 group-hover:text-white md:text-3xl">
+                    {exp.role}
+                  </h3>
+                  <span className="exp-duration shrink-0 text-sm font-mono uppercase tracking-[0.18em] text-slate-400 transition-colors duration-300 group-hover:text-slate-200">
                     {exp.duration}
                   </span>
                 </div>
-                <div className="space-y-3">
+                <hr className="mt-5 border-0 border-t border-white/10 transition-colors duration-300 group-hover:border-white/16" />
+
+                <p className="py-5 text-sm font-mono uppercase tracking-[0.18em] text-[#ff5a7a] transition-colors duration-300 group-hover:text-[#ff7892] md:text-base">
+                  {exp.company}
+                </p>
+                <hr className="border-0 border-t border-white/10 transition-colors duration-300 group-hover:border-white/16" />
+
+                <div>
                   {exp.contributions?.map((item, itemIndex) => (
-                    <div
-                      key={itemIndex}
-                      className="flex items-start gap-3 text-left text-sm leading-7 text-slate-300 transition-colors duration-300 group-hover:text-slate-100 md:text-base"
-                    >
-                      <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#DC143C] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#ff4d73]" />
-                      <p>{item}</p>
+                    <div key={itemIndex}>
+                      <div className="flex items-start gap-5 py-5 text-left text-sm leading-7 text-slate-300 transition-colors duration-300 group-hover:text-slate-100 md:text-base">
+                        <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#DC143C] transition-transform duration-300 group-hover:scale-125" />
+                        <p className="max-w-3xl">{item}</p>
+                      </div>
+                      <hr className="border-0 border-t border-white/10 transition-colors duration-300 group-hover:border-white/16" />
                     </div>
                   ))}
                 </div>
