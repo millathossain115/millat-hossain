@@ -258,10 +258,14 @@ export default function Experience() {
         <div className="min-w-0 lg:sticky lg:top-24">
           <h2 className="exp-heading exp-heading-title">
             <span className="gsap-word">
-              <span className="gsap-word-inner">Work</span>
+              <span className="gsap-word-inner">
+                <span className="exp-heading-title__hover">Work</span>
+              </span>
             </span>
             <span className="gsap-word">
-              <span className="gsap-word-inner">Experience</span>
+              <span className="gsap-word-inner">
+                <span className="exp-heading-title__hover">Experience</span>
+              </span>
             </span>
           </h2>
         </div>
@@ -290,7 +294,7 @@ export default function Experience() {
                     <div key={itemIndex}>
                       <div className="group/point flex items-start gap-5 py-5 text-left text-sm leading-7 text-slate-300 transition-[color,transform] duration-300 hover:translate-x-2 hover:text-white md:text-base">
                         <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#DC143C] transition-[background-color,box-shadow,transform] duration-300 group-hover/point:scale-125 group-hover/point:bg-[#ff4d73] group-hover/point:shadow-[0_0_16px_rgba(220,20,60,0.55)]" />
-                        <p className="max-w-3xl">{item}</p>
+                        <p className="">{item}</p>
                       </div>
                       <hr className="border-0 border-t border-white/10 transition-colors duration-300 group-hover:border-white/16" />
                     </div>

@@ -107,6 +107,7 @@ main > section {
 
 .exp-heading-title {
   position: relative;
+  top: 0;
   display: inline-block;
   color: white;
   font-family: var(--font-display);
@@ -117,8 +118,9 @@ main > section {
   text-transform: uppercase;
   cursor: pointer;
   transition:
-    filter 500ms ease-out,
-    transform 500ms ease-out;
+    top 500ms ease-out,
+    text-shadow 500ms ease-out,
+    filter 500ms ease-out;
 }
 
 .exp-heading-title::after {
@@ -135,8 +137,8 @@ main > section {
 }
 
 .exp-heading-title:hover {
-  transform: translateY(-0.25rem);
-  filter: drop-shadow(0 0 22px rgba(220, 20, 60, 0.45));
+  top: -0.25rem;
+  text-shadow: 0 0 22px rgba(220, 20, 60, 0.45);
 }
 
 .exp-heading-title:hover::after {
@@ -147,11 +149,12 @@ main > section {
   display: block;
 }
 
-.exp-heading-title .gsap-word-inner {
+.exp-heading-title__hover {
+  display: inline-block;
   transition: transform 500ms ease-out;
 }
 
-.exp-heading-title:hover .gsap-word-inner {
+.exp-heading-title:hover .exp-heading-title__hover {
   transform: translateX(0.5rem);
 }
 
@@ -161,7 +164,7 @@ main > section {
   padding: 0.25rem 0;
   transition:
     background-color 400ms ease,
-    transform 400ms ease;
+    translate 400ms ease;
 }
 
 .exp-work-item::before {
@@ -180,7 +183,7 @@ main > section {
 
 .exp-work-item:hover {
   background: linear-gradient(90deg, rgba(220, 20, 60, 0.055), transparent 72%);
-  transform: translateX(0.5rem);
+  translate: 0.5rem 0;
 }
 
 .exp-work-item:hover::before {
