@@ -35,6 +35,17 @@ export default function Experience() {
       )
 
       if (isDesktop && hasEducationHandoff) {
+        gsap.set(sectionRef.current.querySelector('.exp-heading'), {
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          filter: 'blur(0px)',
+        })
+        gsap.set(sectionRef.current.querySelectorAll('.gsap-word-inner'), {
+          x: 0,
+          y: 0,
+          opacity: 1,
+        })
         gsap.set(contentRef.current, { autoAlpha: 1, y: 0 })
         gsap.set(sectionRef.current.querySelectorAll('.exp-dot'), {
           scale: 1,
@@ -57,9 +68,27 @@ export default function Experience() {
       if (headingEl) {
         const words = getWordInners(headingEl)
         gsap.fromTo(
-          words,
-          { y: '110%', opacity: 0 },
+          headingEl,
+          { autoAlpha: 0, x: -34, y: 38, filter: 'blur(14px)' },
           {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            filter: 'blur(0px)',
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: headingEl,
+              start: 'top 90%',
+              end: 'top 58%',
+              scrub: 0.9,
+            },
+          }
+        )
+        gsap.fromTo(
+          words,
+          { x: -18, y: '115%', opacity: 0 },
+          {
+            x: 0,
             y: '0%',
             opacity: 1,
             stagger: 0.07,
@@ -123,13 +152,14 @@ export default function Experience() {
         if (content) {
           tl.fromTo(
             content,
-            { x: -48, opacity: 0, filter: 'blur(12px)' },
+            { x: -44, y: 38, opacity: 0, filter: 'blur(12px)' },
             {
               x: 0,
+              y: 0,
               opacity: 1,
               filter: 'blur(0px)',
               ease: 'power3.out',
-              duration: 0.7,
+              duration: 0.85,
             },
             0.05
           )
@@ -139,8 +169,8 @@ export default function Experience() {
         if (duration) {
           tl.fromTo(
             duration,
-            { x: 32, opacity: 0 },
-            { x: 0, opacity: 1, ease: 'power2.out', duration: 0.5 },
+            { x: 36, y: 12, opacity: 0 },
+            { x: 0, y: 0, opacity: 1, ease: 'power2.out', duration: 0.55 },
             0.18
           )
         }
@@ -238,7 +268,7 @@ export default function Experience() {
 
         <div className="exp-list relative mx-auto w-full space-y-16 lg:mx-0 lg:pl-32">
           {EXPERIENCES.map((exp, index) => (
-            <div key={index} className="exp-item group relative transition-colors duration-300">
+            <div key={index} className="exp-item exp-work-item group relative">
               <div className="exp-content">
                 <div className="flex flex-col gap-3 md:flex-row md:items-baseline md:justify-between">
                   <h3 className="font-display text-2xl font-bold uppercase tracking-[0.08em] text-slate-100 transition-colors duration-300 group-hover:text-white md:text-3xl">
@@ -258,8 +288,8 @@ export default function Experience() {
                 <div>
                   {exp.contributions?.map((item, itemIndex) => (
                     <div key={itemIndex}>
-                      <div className="flex items-start gap-5 py-5 text-left text-sm leading-7 text-slate-300 transition-colors duration-300 group-hover:text-slate-100 md:text-base">
-                        <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#DC143C] transition-transform duration-300 group-hover:scale-125" />
+                      <div className="group/point flex items-start gap-5 py-5 text-left text-sm leading-7 text-slate-300 transition-[color,transform] duration-300 hover:translate-x-2 hover:text-white md:text-base">
+                        <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#DC143C] transition-[background-color,box-shadow,transform] duration-300 group-hover/point:scale-125 group-hover/point:bg-[#ff4d73] group-hover/point:shadow-[0_0_16px_rgba(220,20,60,0.55)]" />
                         <p className="max-w-3xl">{item}</p>
                       </div>
                       <hr className="border-0 border-t border-white/10 transition-colors duration-300 group-hover:border-white/16" />

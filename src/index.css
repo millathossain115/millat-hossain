@@ -155,6 +155,38 @@ main > section {
   transform: translateX(0.5rem);
 }
 
+.exp-work-item {
+  position: relative;
+  border-radius: 4px;
+  padding: 0.25rem 0;
+  transition:
+    background-color 400ms ease,
+    transform 400ms ease;
+}
+
+.exp-work-item::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  width: 2px;
+  background: #dc143c;
+  box-shadow: 0 0 18px rgba(220, 20, 60, 0.45);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 400ms ease;
+}
+
+.exp-work-item:hover {
+  background: linear-gradient(90deg, rgba(220, 20, 60, 0.055), transparent 72%);
+  transform: translateX(0.5rem);
+}
+
+.exp-work-item:hover::before {
+  transform: scaleY(1);
+}
+
 .theme-card {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: linear-gradient(180deg, rgba(10, 10, 10, 0.96) 0%, rgba(6, 6, 6, 0.94) 100%);
