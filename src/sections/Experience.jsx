@@ -36,6 +36,29 @@ export default function Experience() {
     if (prefersReducedMotion) return
 
     const ctx = gsap.context(() => {
+      const isDesktop = window.matchMedia('(min-width: 1024px)').matches
+      const hasEducationHandoff = Boolean(
+        document.querySelector('[data-experience-overlay]')
+      )
+
+      if (isDesktop && hasEducationHandoff) {
+        gsap.set(contentRef.current, { autoAlpha: 1, y: 0 })
+        gsap.set(sectionRef.current.querySelectorAll('.exp-dot'), {
+          scale: 1,
+          opacity: 1,
+        })
+        gsap.set(sectionRef.current.querySelectorAll('.exp-content'), {
+          x: 0,
+          opacity: 1,
+          filter: 'blur(0px)',
+        })
+        gsap.set(sectionRef.current.querySelectorAll('.exp-duration'), {
+          x: 0,
+          opacity: 1,
+        })
+        return
+      }
+
       /* ── Section heading word-reveal ── */
       const headingEl = sectionRef.current.querySelector('.exp-heading')
       if (headingEl) {
@@ -132,8 +155,6 @@ export default function Experience() {
 
       /* Reveal only after the black Experience screen has taken over */
       if (contentRef.current) {
-        const isDesktop = window.matchMedia('(min-width: 1024px)').matches
-
         if (isDesktop) {
           gsap
             .timeline({

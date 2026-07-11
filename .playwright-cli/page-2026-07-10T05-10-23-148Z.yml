@@ -1,0 +1,325 @@
+- generic [ref=f1e3]:
+  - generic [ref=f1e4]:
+    - paragraph [ref=f1e8]: Millat Hossain
+    - generic [ref=f1e9]:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Software Engineer
+            - generic: •
+          - generic:
+            - generic: Full Stack Developer
+            - generic: •
+          - generic:
+            - generic: Frontend Systems
+            - generic: •
+          - generic:
+            - generic: UI Engineering
+            - generic: •
+          - generic:
+            - generic: Scalable Interfaces
+            - generic: •
+          - generic:
+            - generic: Performance First
+            - generic: •
+          - generic:
+            - generic: Software Engineer
+            - generic: •
+          - generic:
+            - generic: Full Stack Developer
+            - generic: •
+          - generic:
+            - generic: Frontend Systems
+            - generic: •
+          - generic:
+            - generic: UI Engineering
+            - generic: •
+          - generic:
+            - generic: Scalable Interfaces
+            - generic: •
+          - generic:
+            - generic: Performance First
+            - generic: •
+      - generic [ref=f1e10]:
+        - generic [ref=f1e11]: Loading 0%
+        - paragraph [ref=f1e15]: Loading Portfolio Experience
+  - generic [ref=f1e16]:
+    - navigation [ref=f1e17]:
+      - generic [ref=f1e18]:
+        - link [ref=f1e19] [cursor=pointer]:
+          - /url: "#hero"
+          - img "Millat Hossain home" [ref=f1e20]
+        - generic [ref=f1e21]:
+          - link "About" [ref=f1e22] [cursor=pointer]:
+            - /url: "#about"
+          - link "Work" [ref=f1e23] [cursor=pointer]:
+            - /url: "#projects"
+          - link "Contact" [ref=f1e24] [cursor=pointer]:
+            - /url: "#contact"
+          - link "Resume" [ref=f1e25] [cursor=pointer]:
+            - /url: /src/assets/Resume/resumeMillathossain.pdf
+    - main [ref=f1e26]:
+      - generic [ref=f1e32]:
+        - generic [ref=f1e33]:
+          - paragraph [ref=f1e35]: Full Stack Developer
+          - generic [ref=f1e36]:
+            - generic:
+              - generic: MILLAT HOSSAIN
+              - generic: SOFTWARE ENGINEER
+            - heading "MILLAT HOSSAIN" [level=1] [ref=f1e37]
+            - heading "SOFTWARE ENGINEER" [level=2] [ref=f1e39]
+        - paragraph [ref=f1e40]: I build fast, modern digital products with a strong focus on clean user experience, scalable frontend systems, and thoughtful interaction design.
+        - generic [ref=f1e41]:
+          - link "Hire Me" [ref=f1e42] [cursor=pointer]:
+            - /url: "#contact"
+          - paragraph [ref=f1e43]: Based in Dhaka
+      - generic [ref=f1e45]:
+        - img "Millat Hossain" [ref=f1e51]
+        - generic [ref=f1e52]:
+          - paragraph [ref=f1e53]: About Me
+          - generic [ref=f1e54]:
+            - heading "Building full-stack products with clean, reliable systems." [level=2] [ref=f1e55]
+            - paragraph [ref=f1e56]: I'm Millat Hossain, a software engineer and full-stack developer based in Dhaka. I build responsive React interfaces, practical Node.js APIs, and product experiences that stay fast, accessible, and easy to maintain.
+          - paragraph [ref=f1e57]: Clean interfaces. Reliable systems. Performance-first engineering.
+      - generic [ref=f1e58]:
+        - generic [ref=f1e59]: EDUCATION
+        - generic [ref=f1e64]:
+          - heading "Education" [level=2] [ref=f1e65]
+          - generic [ref=f1e67]:
+            - generic [ref=f1e72]:
+              - generic [ref=f1e73]:
+                - generic [ref=f1e78]:
+                  - heading "B.Sc. in Computer Science & Engineering" [level=3] [ref=f1e79]
+                  - paragraph [ref=f1e80]: UNITED INTERNATIONAL UNIVERSITY
+                - generic [ref=f1e81]: 2020 - 2024
+              - generic [ref=f1e84]:
+                - paragraph [ref=f1e85]:
+                  - generic [ref=f1e89]: Madani Avenue, Dhaka,
+                - paragraph [ref=f1e90]: "CGPA: 3.65"
+              - paragraph [ref=f1e91]:
+                - generic [ref=f1e94]: Received Academic Scholarship (Scholarship Award | BSCSE) in several trimesters for excellent results
+            - generic [ref=f1e98]:
+              - generic [ref=f1e99]:
+                - generic [ref=f1e104]:
+                  - heading "Higher Secondary Certificate" [level=3] [ref=f1e105]
+                  - paragraph [ref=f1e106]: ABDUL KADIR MOLLAH CITY COLLEGE
+                - generic [ref=f1e107]: 2015 - 2017
+              - generic [ref=f1e110]:
+                - paragraph [ref=f1e111]:
+                  - generic [ref=f1e115]: Narsingdi,Dhaka
+                - paragraph [ref=f1e116]: "Group: Science"
+            - generic [ref=f1e120]:
+              - generic [ref=f1e121]:
+                - generic [ref=f1e126]:
+                  - heading "Secondary School Certificate" [level=3] [ref=f1e127]
+                  - paragraph [ref=f1e128]: PANCHRUKHI HAZI SHAHEB ALI FAKIR HIGH SCHOOL
+                - generic [ref=f1e129]: 2010 - 2015
+              - generic [ref=f1e132]:
+                - paragraph [ref=f1e133]:
+                  - generic [ref=f1e137]: Narayanganj,Dhaka
+                - paragraph [ref=f1e138]: "Group: Science"
+      - generic [ref=f1e141]:
+        - heading "Work Experience" [level=2] [ref=f1e142]
+        - generic [ref=f1e147]:
+          - generic [ref=f1e148]:
+            - generic [ref=f1e149]:
+              - heading "Undergraduate Grader" [level=3] [ref=f1e150]
+              - paragraph [ref=f1e151]: UNITED INTERNATIONAL UNIVERSITY
+            - generic [ref=f1e152]: Summer 2023
+          - generic [ref=f1e153]:
+            - paragraph [ref=f1e156]: Collaborated with faculty to prepare and refine course materials, ensuring alignment with curriculum objectives
+            - paragraph [ref=f1e159]: Supported faculty member in grading assignments, providing constructive feedback to students, and maintaining accuracy and consistency in assessment procedures
+            - paragraph [ref=f1e162]: Contributed to analyzing course outcomes and student performance data to improve teaching methods and academic strategies
+      - generic [ref=f1e164]:
+        - generic [ref=f1e165]:
+          - paragraph [ref=f1e166]: Selected Work
+          - heading "Some Things I've Built" [level=2] [ref=f1e167]
+        - generic [ref=f1e170]:
+          - article [ref=f1e172]:
+            - generic [ref=f1e173]:
+              - generic [ref=f1e174]: EC
+              - generic [ref=f1e178]:
+                - generic [ref=f1e179]: Architecture Concept
+                - generic [ref=f1e180]: Concept Study
+              - generic [ref=f1e182]:
+                - paragraph [ref=f1e183]: Architecture & APIs
+                - heading "E-Commerce Microservices" [level=3] [ref=f1e184]
+            - generic [ref=f1e185]:
+              - paragraph [ref=f1e186]: An architecture study exploring event-driven commerce, resilient services, and containerized deployment for high-throughput order processing.
+              - generic [ref=f1e187]:
+                - generic [ref=f1e188]: NestJS
+                - generic [ref=f1e189]: Go
+                - generic [ref=f1e190]: Kafka
+                - generic [ref=f1e191]: "+2"
+              - generic [ref=f1e192]: Concept Study
+          - article [ref=f1e195]:
+            - generic [ref=f1e196]:
+              - generic [ref=f1e197]: AI
+              - generic [ref=f1e201]:
+                - generic [ref=f1e202]: Product Concept
+                - generic [ref=f1e203]: Concept Study
+              - generic [ref=f1e205]:
+                - paragraph [ref=f1e206]: Data & Experience
+                - heading "AI-Powered Analytics Dashboard" [level=3] [ref=f1e207]
+            - generic [ref=f1e208]:
+              - paragraph [ref=f1e209]: A product concept for turning live datasets into configurable charts, focused workflows, and AI-assisted insights.
+              - generic [ref=f1e210]:
+                - generic [ref=f1e211]: React
+                - generic [ref=f1e212]: Tailwind CSS
+                - generic [ref=f1e213]: Vite
+                - generic [ref=f1e214]: "+2"
+              - generic [ref=f1e215]: Concept Study
+          - article [ref=f1e218]:
+            - generic [ref=f1e219]:
+              - generic [ref=f1e220]: DV
+              - generic [ref=f1e224]:
+                - generic [ref=f1e225]: Web3 Concept
+                - generic [ref=f1e226]: Concept Study
+              - generic [ref=f1e228]:
+                - paragraph [ref=f1e229]: Contracts & Trust
+                - heading "Decentralized Voting System" [level=3] [ref=f1e230]
+            - generic [ref=f1e231]:
+              - paragraph [ref=f1e232]: A Web3 architecture study for transparent ballots, verifiable results, and tamper-resistant voting through smart contracts.
+              - generic [ref=f1e233]:
+                - generic [ref=f1e234]: Solidity
+                - generic [ref=f1e235]: React
+                - generic [ref=f1e236]: Web3.js
+                - generic [ref=f1e237]: "+1"
+              - generic [ref=f1e238]: Concept Study
+          - article [ref=f1e241]:
+            - generic [ref=f1e242]:
+              - img "ZaDEX Logistics Platform project banner" [ref=f1e243]
+              - generic [ref=f1e245]:
+                - generic [ref=f1e246]: Full-Stack Platform
+                - generic [ref=f1e247]: Live Demo
+              - generic [ref=f1e249]:
+                - paragraph [ref=f1e250]: Operations & Tracking
+                - heading "ZaDEX Logistics Platform" [level=3] [ref=f1e251]
+            - generic [ref=f1e252]:
+              - paragraph [ref=f1e253]: End-to-end courier operations for parcel booking, live tracking, rider workflows, dispatch controls, and admin analytics.
+              - generic [ref=f1e254]:
+                - generic [ref=f1e255]: React
+                - generic [ref=f1e256]: Tailwind CSS
+                - generic [ref=f1e257]: Node.js
+                - generic [ref=f1e258]: "+2"
+              - generic [ref=f1e259]:
+                - link "Open ZaDEX Logistics Platform Live Demo" [ref=f1e260] [cursor=pointer]:
+                  - /url: https://zadex-puce.vercel.app
+                  - text: Live Demo
+                - link "Open ZaDEX Logistics Platform source code on GitHub" [ref=f1e263] [cursor=pointer]:
+                  - /url: https://github.com/millathossain115/ZaDEX-Client
+                  - text: Source
+          - article [ref=f1e267]:
+            - generic [ref=f1e268]:
+              - img "ThreadView Forum project banner" [ref=f1e269]
+              - generic [ref=f1e271]:
+                - generic [ref=f1e272]: Community Platform
+                - generic [ref=f1e273]: Live Demo
+              - generic [ref=f1e275]:
+                - paragraph [ref=f1e276]: Discussion & Moderation
+                - heading "ThreadView Forum" [level=3] [ref=f1e277]
+            - generic [ref=f1e278]:
+              - paragraph [ref=f1e279]: A community forum with threaded discussions, post editing, moderation controls, and role-aware administration.
+              - generic [ref=f1e280]:
+                - generic [ref=f1e281]: PHP
+                - generic [ref=f1e282]: MySQL
+                - generic [ref=f1e283]: Bootstrap
+                - generic [ref=f1e284]: "+1"
+              - generic [ref=f1e285]:
+                - link "Open ThreadView Forum Live Demo" [ref=f1e286] [cursor=pointer]:
+                  - /url: https://thread-view-rust.vercel.app
+                  - text: Live Demo
+                - link "Open ThreadView Forum source code on GitHub" [ref=f1e289] [cursor=pointer]:
+                  - /url: https://github.com/millathossain115/ThreadView
+                  - text: Source
+          - article [ref=f1e293]:
+            - generic [ref=f1e294]:
+              - img "IoT Home Automation & Security project banner" [ref=f1e295]
+              - generic [ref=f1e297]:
+                - generic [ref=f1e298]: Embedded System
+                - generic [ref=f1e299]: Demo
+              - generic [ref=f1e301]:
+                - paragraph [ref=f1e302]: Automation & Sensing
+                - heading "IoT Home Automation & Security" [level=3] [ref=f1e303]
+            - generic [ref=f1e304]:
+              - paragraph [ref=f1e305]: Arduino-based home automation and security with remote appliance control, motion detection, and environmental sensing.
+              - generic [ref=f1e306]:
+                - generic [ref=f1e307]: Arduino
+                - generic [ref=f1e308]: C++
+                - generic [ref=f1e309]: IoT
+                - generic [ref=f1e310]: "+2"
+              - generic [ref=f1e311]:
+                - link "Open IoT Home Automation & Security Demo" [ref=f1e312] [cursor=pointer]:
+                  - /url: https://www.youtube.com/watch?v=9_pd3rIbLUc
+                  - text: Demo
+                - link "Open IoT Home Automation & Security source code on GitHub" [ref=f1e315] [cursor=pointer]:
+                  - /url: https://github.com/millathossain115/IOT-based-Home-Automation-Security-Control
+                  - text: Source
+      - generic [ref=f1e319]:
+        - generic [ref=f1e320]:
+          - heading "Tech I Build With" [level=2] [ref=f1e321]
+          - paragraph [ref=f1e323]: A practical stack for modern full-stack product development, from polished interfaces to reliable backend services.
+        - generic [ref=f1e324]:
+          - heading "JavaScript" [level=3] [ref=f1e331]
+          - heading "C" [level=3] [ref=f1e338]
+          - heading "PHP" [level=3] [ref=f1e345]
+          - heading "HTML" [level=3] [ref=f1e352]
+          - heading "CSS" [level=3] [ref=f1e359]
+          - heading "Tailwind CSS" [level=3] [ref=f1e366]
+          - heading "React.js" [level=3] [ref=f1e373]
+          - heading "Redux" [level=3] [ref=f1e380]
+          - heading "RTK Query" [level=3] [ref=f1e387]
+          - heading "TypeScript" [level=3] [ref=f1e394]
+          - heading "Next.js" [level=3] [ref=f1e401]
+          - heading "Node.js" [level=3] [ref=f1e408]
+          - heading "Express.js" [level=3] [ref=f1e415]
+          - heading "Mongoose (ODM)" [level=3] [ref=f1e422]
+          - heading "Prisma (ORM)" [level=3] [ref=f1e429]
+          - heading "Laravel" [level=3] [ref=f1e436]
+          - heading "MongoDB" [level=3] [ref=f1e443]
+          - heading "PostgreSQL" [level=3] [ref=f1e450]
+          - heading "MySQL" [level=3] [ref=f1e457]
+          - heading "Figma" [level=3] [ref=f1e464]
+          - heading "Lucidchart" [level=3] [ref=f1e471]
+          - heading "Postman" [level=3] [ref=f1e478]
+          - heading "GitHub" [level=3] [ref=f1e485]
+      - generic [ref=f1e487]:
+        - complementary [ref=f1e488]:
+          - generic [ref=f1e492]:
+            - img "Millat Hossain" [ref=f1e494]
+            - paragraph [ref=f1e496]: Millat Hossain
+            - paragraph [ref=f1e497]: A software engineer focused on building clean, high-impact digital experiences.
+            - generic [ref=f1e498]:
+              - link "GitHub" [ref=f1e499] [cursor=pointer]:
+                - /url: https://github.com/millathossain115
+              - link "LinkedIn" [ref=f1e502] [cursor=pointer]:
+                - /url: https://www.linkedin.com/in/millathossain115/
+              - link "Facebook" [ref=f1e505] [cursor=pointer]:
+                - /url: https://www.facebook.com/millathossain115
+              - link "WhatsApp" [ref=f1e508] [cursor=pointer]:
+                - /url: https://wa.me/8801948257217
+        - generic [ref=f1e511]:
+          - generic [ref=f1e512]:
+            - heading "Let's Connect" [level=2] [ref=f1e513]:
+              - generic [ref=f1e514]: Let's
+              - generic [ref=f1e516]: Connect
+            - paragraph [ref=f1e518]: Share your idea, collaboration plan, or a quick hello and I'll respond through email.
+          - generic [ref=f1e519]:
+            - generic [ref=f1e520]:
+              - generic [ref=f1e521]:
+                - generic [ref=f1e522]: Name
+                - textbox "Name" [ref=f1e523]:
+                  - /placeholder: Your Name
+              - generic [ref=f1e524]:
+                - generic [ref=f1e525]: Email
+                - textbox "Email" [ref=f1e526]:
+                  - /placeholder: your@email.com
+            - generic [ref=f1e527]:
+              - generic [ref=f1e528]: Message
+              - textbox "Message" [ref=f1e529]:
+                - /placeholder: Tell me about your project or idea
+            - generic [ref=f1e530]:
+              - button "Send Message" [ref=f1e531] [cursor=pointer]
+              - paragraph [ref=f1e532]: Your message will be delivered to millathossain115@gmail.com.
+    - contentinfo [ref=f1e533]:
+      - generic [ref=f1e534]: © 2026 Millat Hossain. All rights reserved.
