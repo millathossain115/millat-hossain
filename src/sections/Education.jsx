@@ -164,12 +164,12 @@ export default function Education() {
               { scale: 1, opacity: 1, ease: 'none', duration: 0.28 },
               0.08
             )
-          /* Content slides in from RIGHT */
+          /* Content fades up */
           if (content)
             tl.fromTo(
               content,
-              { x: 96, opacity: 0 },
-              { x: 0, opacity: 1, ease: 'none', duration: 0.82 },
+              { y: 28, opacity: 0 },
+              { y: 0, opacity: 1, ease: 'none', duration: 0.82 },
               0.18
             )
           /* Duration slides from left for counter-motion */
@@ -274,11 +274,11 @@ export default function Education() {
           }
 
           if (content) {
-            gsap.set(content, { x: 120, opacity: 0 })
+            gsap.set(content, { y: 36, opacity: 0 })
             exitTl.to(
               content,
               {
-                x: 0,
+                y: 0,
                 opacity: 1,
                 duration: 0.72,
                 ease: 'none',
