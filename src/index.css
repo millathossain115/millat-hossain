@@ -117,77 +117,42 @@ main > section {
   letter-spacing: 0.02em;
   text-transform: uppercase;
   cursor: pointer;
-  transition:
-    top 500ms ease-out,
-    text-shadow 500ms ease-out,
-    filter 500ms ease-out;
+  transition: color 0.3s ease;
+  pointer-events: auto;
+}
+
+.exp-heading-title:hover {
+  color: #dc143c;
 }
 
 .exp-heading-title::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -0.75rem;
+  bottom: -6px;
   width: 100%;
-  height: 2px;
-  background: #dc143c;
+  height: 3px;
+  background-color: #dc143c;
   transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 500ms ease-out;
-}
-
-.exp-heading-title:hover {
-  top: -0.25rem;
-  text-shadow: 0 0 22px rgba(220, 20, 60, 0.45);
+  transform-origin: right center;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .exp-heading-title:hover::after {
   transform: scaleX(1);
+  transform-origin: left center;
 }
+
 
 .exp-heading-title .gsap-word {
   display: block;
-}
-
-.exp-heading-title__hover {
-  display: inline-block;
-  transition: transform 500ms ease-out;
-}
-
-.exp-heading-title:hover .exp-heading-title__hover {
-  transform: translateX(0.5rem);
 }
 
 .exp-work-item {
   position: relative;
   border-radius: 4px;
   padding: 0.25rem 0;
-  transition:
-    background-color 400ms ease,
-    translate 400ms ease;
-}
-
-.exp-work-item::before {
-  content: "";
-  position: absolute;
-  left: -1.5rem;
-  top: 0.25rem;
-  bottom: 0.25rem;
-  width: 2px;
-  background: #dc143c;
-  box-shadow: 0 0 18px rgba(220, 20, 60, 0.45);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 400ms ease;
-}
-
-.exp-work-item:hover {
-  background: linear-gradient(90deg, rgba(220, 20, 60, 0.055), transparent 72%);
-  translate: 0.5rem 0;
-}
-
-.exp-work-item:hover::before {
-  transform: scaleY(1);
+  pointer-events: auto;
 }
 
 .theme-card {
