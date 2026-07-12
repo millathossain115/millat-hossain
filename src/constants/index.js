@@ -1,3 +1,5 @@
+import zadexBanner from '../assets/Projects/Zadex-banner-portfolio.png';
+
 export const PROJECTS = [
   {
     title: 'E-Commerce Microservices',
@@ -41,8 +43,7 @@ export const PROJECTS = [
     github: 'https://github.com/millathossain115/ZaDEX-Client',
     live: 'https://zadex-puce.vercel.app',
     liveLabel: 'Live Demo',
-    image:
-      'src/assets/Projects/Zadex-portfolio-project-banner.png',
+    image: zadexBanner,
   },
   {
     title: 'ThreadView Forum',
