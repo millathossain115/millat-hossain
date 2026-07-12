@@ -194,6 +194,9 @@ export default function useEducationAnimations({
         })
         document.body.appendChild(experienceOverlay)
 
+        const overlayHeading = experienceOverlay.querySelector('.exp-heading-title')
+        const overlayItems = experienceOverlay.querySelectorAll('.exp-item')
+
         const exitTl = gsap.timeline({
           scrollTrigger: {
             trigger: contentSectionRef.current,
@@ -345,6 +348,35 @@ export default function useEducationAnimations({
             },
             3.05
           )
+
+        if (overlayHeading) {
+          exitTl.fromTo(
+            overlayHeading,
+            { y: 80, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.75,
+              ease: 'power2.out',
+            },
+            3.1
+          )
+        }
+
+        if (overlayItems && overlayItems.length > 0) {
+          exitTl.fromTo(
+            overlayItems,
+            { y: 120, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              stagger: 0.12,
+              duration: 0.8,
+              ease: 'power2.out',
+            },
+            3.15
+          )
+        }
 
         ScrollTrigger.create({
           trigger: experienceSection,
