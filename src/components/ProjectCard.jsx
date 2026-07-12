@@ -32,30 +32,30 @@ export default function ProjectCard({ project }) {
 
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/70" />
 
-        <div className="absolute inset-x-0 top-0 flex items-center justify-between gap-3 p-5">
-          <span className="font-mono text-[0.62rem] font-medium uppercase tracking-[0.2em] text-white/65">
+        <div className="absolute inset-x-0 top-0 flex items-center justify-between gap-3 p-5 sm:p-6 lg:p-7">
+          <span className="font-mono text-[0.62rem] font-medium uppercase tracking-[0.2em] text-white/65 sm:text-[0.68rem] lg:text-[0.72rem]">
             {project?.category || 'Selected Project'}
           </span>
           {(isConcept || project?.live) && (
-            <span className="flex items-center gap-1.5 font-mono text-[0.58rem] uppercase tracking-[0.18em] text-white/75">
+            <span className="flex items-center gap-1.5 font-mono text-[0.58rem] uppercase tracking-[0.18em] text-white/75 sm:text-[0.62rem] lg:text-[0.68rem]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#DC143C] shadow-[0_0_10px_rgba(220,20,60,0.9)]" />
               {isConcept ? 'Concept Study' : project.liveLabel || 'Live'}
             </span>
           )}
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 p-5">
-          <p className="mb-1.5 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[#ff496d]">
+        <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 lg:p-7">
+          <p className="mb-1.5 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[#ff496d] sm:text-[0.68rem] lg:text-[0.72rem]">
             {project?.focus || 'Product Engineering'}
           </p>
-          <h3 className="font-display max-w-[18rem] text-[1.35rem] font-semibold uppercase leading-[1.02] tracking-[0.035em] text-white transition-colors duration-300 group-hover:text-[#DC143C] sm:text-[1.45rem]">
+          <h3 className="font-display max-w-[22rem] text-[1.4rem] font-semibold uppercase leading-[1.02] tracking-[0.035em] text-white transition-colors duration-300 group-hover:text-[#DC143C] sm:text-[1.55rem] lg:text-[1.75rem]">
             {project?.title || 'Project Title'}
           </h3>
         </div>
       </div>
 
-      <div className="flex h-[53%] flex-col p-5">
-        <p className="line-clamp-3 text-[0.78rem] leading-[1.65] text-slate-400 transition-colors duration-300 group-hover:text-slate-300 sm:text-[0.82rem]">
+      <div className="flex h-[53%] flex-col p-5 sm:p-6 lg:p-7">
+        <p className="line-clamp-3 text-[0.8rem] leading-[1.65] text-slate-400 transition-colors duration-300 group-hover:text-slate-300 sm:text-[0.85rem] lg:text-[0.92rem]">
           {project?.description || 'Project description goes here.'}
         </p>
 
@@ -63,26 +63,26 @@ export default function ProjectCard({ project }) {
           {visibleTags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-white/[0.09] bg-white/[0.025] px-2.5 py-1 font-mono text-[0.58rem] text-slate-400 transition-colors duration-300 group-hover:border-[#DC143C]/25 group-hover:text-slate-300"
+              className="rounded-full border border-white/[0.09] bg-white/[0.025] px-2.5 py-1 font-mono text-[0.58rem] text-slate-400 transition-colors duration-300 group-hover:border-[#DC143C]/25 group-hover:text-slate-300 sm:text-[0.62rem] lg:text-[0.68rem]"
             >
               {tag}
             </span>
           ))}
           {remainingTags > 0 && (
-            <span className="font-mono text-[0.58rem] text-slate-600">
+            <span className="font-mono text-[0.58rem] text-slate-600 sm:text-[0.62rem] lg:text-[0.68rem]">
               +{remainingTags}
             </span>
           )}
         </div>
 
-        <div className="mt-auto flex items-end justify-between border-t border-white/[0.07] pt-3.5">
+        <div className="mt-auto flex items-end justify-between border-t border-white/[0.07] pt-3.5 sm:pt-4 lg:pt-5">
           {primaryLink ? (
             <a
               href={primaryLink}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Open ${project.title} ${project.live ? project.liveLabel || 'live site' : 'on GitHub'}`}
-              className="group/link flex items-center gap-2 font-ui text-[0.65rem] font-medium uppercase tracking-[0.16em] text-white transition-colors duration-300 hover:text-[#ff496d]"
+              className="group/link flex items-center gap-2 font-ui text-[0.65rem] font-medium uppercase tracking-[0.16em] text-white transition-colors duration-300 hover:text-[#ff496d] sm:text-[0.7rem] lg:text-[0.78rem]"
             >
               {project?.live ? project.liveLabel || 'View live' : 'View source'}
               <svg
@@ -101,7 +101,7 @@ export default function ProjectCard({ project }) {
               </svg>
             </a>
           ) : (
-            <span className="font-ui text-[0.65rem] font-medium uppercase tracking-[0.16em] text-[#ff6f8b]">
+            <span className="font-ui text-[0.65rem] font-medium uppercase tracking-[0.16em] text-[#ff6f8b] sm:text-[0.7rem] lg:text-[0.78rem]">
               Concept Study
             </span>
           )}
@@ -112,7 +112,7 @@ export default function ProjectCard({ project }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Open ${project.title} source code on GitHub`}
-              className="flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-slate-500 transition-colors duration-300 hover:text-white"
+              className="flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-slate-500 transition-colors duration-300 hover:text-white sm:text-[0.65rem] lg:text-[0.7rem]"
             >
               Source
               <svg

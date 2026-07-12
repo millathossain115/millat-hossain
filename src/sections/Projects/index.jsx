@@ -24,7 +24,7 @@ export default function Projects() {
 
       <div
         ref={pinRef}
-        className="flex min-h-[100svh] w-full flex-col justify-center overflow-hidden py-16 sm:py-20"
+        className="flex min-h-[100svh] w-full flex-col justify-start lg:justify-center overflow-hidden pt-12 pb-16 sm:pt-16 sm:pb-20 lg:py-16"
       >
         <div className="mx-auto w-full max-w-6xl px-6">
           {/* Sub-label */}
@@ -33,7 +33,7 @@ export default function Projects() {
           </p>
 
           <h2
-            className="proj-heading theme-heading flex-wrap sm:flex-nowrap"
+            className="proj-heading theme-heading flex-wrap sm:flex-nowrap !mb-6 sm:!mb-8 lg:!mb-10"
             style={{ overflow: 'hidden' }}
           >
             Some Things I've Built

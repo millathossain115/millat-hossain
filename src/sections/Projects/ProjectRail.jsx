@@ -11,7 +11,7 @@ export default function ProjectRail({ projects, trackRef }) {
         }}
       >
         {projects.map((project) => (
-          <div key={project.title} className="w-[84vw] max-w-[24.5rem] shrink-0">
+          <div key={project.title} className="w-[84vw] max-w-[30.5rem] shrink-0">
             <ProjectCard project={project} />
           </div>
         ))}
