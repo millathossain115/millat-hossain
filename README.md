@@ -10,6 +10,10 @@ Modern portfolio website for Millat Hossain, built with Vite, React, Tailwind CS
 | --- | --- |
 | ![Portfolio desktop home screen](docs/screenshots/home-desktop.png) | ![Portfolio mobile home screen](docs/screenshots/home-mobile.png) |
 
+## Contact Section
+
+![Portfolio contact section desktop view](docs/screenshots/contact-desktop.png)
+
 ## Highlights
 
 - Responsive single-page portfolio with smooth section navigation.
