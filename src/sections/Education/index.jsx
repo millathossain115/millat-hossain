@@ -1,9 +1,12 @@
-import { useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { FaBookOpen, FaCertificate, FaGraduationCap } from 'react-icons/fa'
 import { EDUCATION } from '../../constants'
 import useNearViewport from '../../hooks/useNearViewport'
 import EducationCard from './EducationCard'
-import useEducationAnimations from './useEducationAnimations'
+import useEducationAnimations, {
+  getEducationExitDistance,
+} from './useEducationAnimations'
 
 const defaultPointer = { x: 0, y: 0, active: false }
 const educationIcons = [FaGraduationCap, FaCertificate, FaBookOpen]
@@ -14,7 +17,55 @@ export default function Education() {
   const zoomTextRef = useRef(null)
   const redFillRef = useRef(null)
   const contentSectionRef = useRef(null)
+  const exitSpacerRef = useRef(null)
   const isNearViewport = useNearViewport(containerRef)
+
+  useLayoutEffect(() => {
+    const contentSection = contentSectionRef.current
+    const exitSpacer = exitSpacerRef.current
+
+    if (!contentSection || !exitSpacer) {
+      return undefined
+    }
+
+    let refreshFrameId = null
+
+    const updateSpacer = () => {
+      const isDesktop = window.matchMedia('(min-width: 1024px)').matches
+      const nextHeight = isDesktop
+        ? `${getEducationExitDistance(contentSection)}px`
+        : '0px'
+
+      if (exitSpacer.style.height === nextHeight) {
+        return
+      }
+
+      exitSpacer.style.height = nextHeight
+
+      if (refreshFrameId !== null) {
+        window.cancelAnimationFrame(refreshFrameId)
+      }
+
+      refreshFrameId = window.requestAnimationFrame(() => {
+        refreshFrameId = null
+        ScrollTrigger.refresh()
+      })
+    }
+
+    const resizeObserver = new ResizeObserver(updateSpacer)
+    resizeObserver.observe(contentSection)
+    window.addEventListener('resize', updateSpacer)
+    updateSpacer()
+
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener('resize', updateSpacer)
+
+      if (refreshFrameId !== null) {
+        window.cancelAnimationFrame(refreshFrameId)
+      }
+    }
+  }, [])
 
   useEducationAnimations({
     containerRef,
@@ -95,6 +146,8 @@ export default function Education() {
           </div>
         </div>
       </div>
+
+      <div ref={exitSpacerRef} aria-hidden="true" className="w-full" />
     </div>
   )
 }

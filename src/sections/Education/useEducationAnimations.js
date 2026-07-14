@@ -15,6 +15,10 @@ function splitWords(el) {
   return Array.from(el.querySelectorAll('.gsap-word-inner'))
 }
 
+export function getEducationExitDistance(contentSection) {
+  return Math.max(window.innerHeight * 4.6, contentSection.offsetHeight * 3.6)
+}
+
 export default function useEducationAnimations({
   containerRef,
   zoomTextRef,
@@ -169,10 +173,7 @@ export default function useEducationAnimations({
       )
 
       if (isDesktop && experienceSection && educationContent && educationList) {
-        const exitDistance = Math.max(
-          window.innerHeight * 4.6,
-          contentSectionRef.current.offsetHeight * 3.6
-        )
+        const exitDistance = getEducationExitDistance(contentSectionRef.current)
 
         experienceOverlay = experienceSection.cloneNode(true)
         experienceOverlay.removeAttribute('id')
@@ -194,7 +195,8 @@ export default function useEducationAnimations({
         })
         document.body.appendChild(experienceOverlay)
 
-        const overlayHeading = experienceOverlay.querySelector('.exp-heading-title')
+        const overlayHeading =
+          experienceOverlay.querySelector('.exp-heading-title')
         const overlayItems = experienceOverlay.querySelectorAll('.exp-item')
 
         const exitTl = gsap.timeline({
@@ -204,7 +206,7 @@ export default function useEducationAnimations({
             end: () => `+=${exitDistance}`,
             scrub: 0.35,
             pin: contentSectionRef.current,
-            pinSpacing: true,
+            pinSpacing: false,
             pinType: 'transform',
             anticipatePin: 1,
             invalidateOnRefresh: true,

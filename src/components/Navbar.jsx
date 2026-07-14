@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import navLogo from '../assets/Image/Nav-Logo.svg'
 import resumePdf from '../assets/Resume/resumeMillathossain.pdf'
@@ -11,13 +11,10 @@ const navItems = [
 
 const NAV_AUTO_HIDE_DELAY = 1500
 const NAV_SCROLL_OFFSET = -24
-const NAV_SCROLL_TOLERANCE = 120
-const NAV_SCROLL_TIMEOUT = 8000
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('about')
   const [isNavVisible, setIsNavVisible] = useState(true)
-  const navigationCleanupRef = useRef(null)
 
   useEffect(() => {
     const sections = navItems
@@ -50,13 +47,6 @@ export default function Navbar() {
       observer.disconnect()
     }
   }, [])
-
-  useEffect(
-    () => () => {
-      navigationCleanupRef.current?.()
-    },
-    []
-  )
 
   useEffect(() => {
     let lastScrollY = window.scrollY
@@ -127,115 +117,18 @@ export default function Navbar() {
       return
     }
 
-    navigationCleanupRef.current?.()
-
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     ).matches
 
+    ScrollTrigger.refresh()
+
     if (window.lenis && !prefersReducedMotion) {
-      const scrollRoot = document.querySelector('main') ?? document.body
-      const deadline = window.performance.now() + NAV_SCROLL_TIMEOUT
-      let checkTimeoutId = null
-      let refreshFrameId = null
-      let isCleanedUp = false
-      let lastRetargetTime = 0
-
-      const cleanupNavigation = () => {
-        if (isCleanedUp) {
-          return
-        }
-
-        isCleanedUp = true
-        mutationObserver.disconnect()
-
-        if (checkTimeoutId !== null) {
-          window.clearTimeout(checkTimeoutId)
-        }
-
-        if (refreshFrameId !== null) {
-          window.cancelAnimationFrame(refreshFrameId)
-        }
-
-        if (navigationCleanupRef.current === cleanupNavigation) {
-          navigationCleanupRef.current = null
-        }
-      }
-
-      const scrollToTarget = (duration = 1.4) => {
-        if (isCleanedUp) {
-          return
-        }
-
-        lastRetargetTime = window.performance.now()
-        window.lenis.scrollTo(target, {
-          offset: NAV_SCROLL_OFFSET,
-          duration,
-        })
-      }
-
-      const retargetAfterLayoutChange = () => {
-        if (isCleanedUp || refreshFrameId !== null) {
-          return
-        }
-
-        refreshFrameId = window.requestAnimationFrame(() => {
-          refreshFrameId = null
-          ScrollTrigger.refresh()
-          scrollToTarget(0.9)
-        })
-      }
-
-      const mutationObserver = new MutationObserver((mutations) => {
-        const pinLayoutChanged = mutations.some((mutation) =>
-          Array.from(mutation.addedNodes).some(
-            (node) =>
-              node instanceof Element &&
-              (node.matches('.pin-spacer') || node.querySelector('.pin-spacer'))
-          )
-        )
-
-        if (pinLayoutChanged) {
-          retargetAfterLayoutChange()
-        }
+      window.lenis.scrollTo(target, {
+        offset: NAV_SCROLL_OFFSET,
+        duration: 1.4,
+        onComplete: () => setActiveSection(targetId),
       })
-
-      const checkNavigation = () => {
-        if (isCleanedUp) {
-          return
-        }
-
-        const now = window.performance.now()
-        const targetOffset = target.getBoundingClientRect().top
-        const expectedOffset = Math.abs(NAV_SCROLL_OFFSET)
-        const missedTarget =
-          Math.abs(targetOffset - expectedOffset) > NAV_SCROLL_TOLERANCE
-        const isScrolling = Boolean(window.lenis?.isScrolling)
-
-        if (!missedTarget && !isScrolling) {
-          setActiveSection(targetId)
-          cleanupNavigation()
-          return
-        }
-
-        if (now >= deadline) {
-          setActiveSection(targetId)
-          cleanupNavigation()
-          return
-        }
-
-        if (missedTarget && !isScrolling && now - lastRetargetTime > 300) {
-          ScrollTrigger.refresh()
-          scrollToTarget(0.9)
-        }
-
-        checkTimeoutId = window.setTimeout(checkNavigation, 150)
-      }
-
-      mutationObserver.observe(scrollRoot, { childList: true, subtree: true })
-      navigationCleanupRef.current = cleanupNavigation
-      scrollToTarget()
-      checkTimeoutId = window.setTimeout(checkNavigation, 150)
     } else {
       window.scrollTo({
         top:
@@ -245,7 +138,6 @@ export default function Navbar() {
         behavior: 'auto',
       })
       setActiveSection(targetId)
-      navigationCleanupRef.current = null
     }
 
     window.history.replaceState(

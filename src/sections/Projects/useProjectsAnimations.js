@@ -15,6 +15,10 @@ function splitWords(el) {
   return Array.from(el.querySelectorAll('.gsap-word-inner'))
 }
 
+export function getProjectsTravelDistance(track) {
+  return Math.max(0, track.scrollWidth - window.innerWidth)
+}
+
 export default function useProjectsAnimations({
   sectionRef,
   pinRef,
@@ -71,18 +75,16 @@ export default function useProjectsAnimations({
         )
       }
 
-      const getTravelDistance = () =>
-        Math.max(0, trackRef.current.scrollWidth - window.innerWidth)
-
       gsap.to(trackRef.current, {
-        x: () => -getTravelDistance(),
+        x: () => -getProjectsTravelDistance(trackRef.current),
         ease: 'none',
         scrollTrigger: {
           trigger: pinRef.current,
           start: 'top top',
-          end: () => `+=${getTravelDistance()}`,
+          end: () => `+=${getProjectsTravelDistance(trackRef.current)}`,
           scrub: 0.75,
           pin: true,
+          pinSpacing: false,
           pinType: 'transform',
           anticipatePin: 1,
           invalidateOnRefresh: true,
