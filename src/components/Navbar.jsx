@@ -1,18 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import navLogo from '../assets/Image/Nav-Logo.svg'
 import resumePdf from '../assets/Resume/resumeMillathossain.pdf'
 
 const navItems = [
-  { label: 'About', href: '#about', sectionId: 'about' },
-  { label: 'Work', href: '#projects', sectionId: 'projects' },
-  { label: 'Contact', href: '#contact', sectionId: 'contact' },
+  { label: 'About', sectionId: 'about' },
+  { label: 'Work', sectionId: 'experience' },
+  { label: 'Contact', sectionId: 'contact' },
 ]
 
 const NAV_AUTO_HIDE_DELAY = 1500
+const NAV_SCROLL_OFFSET = -24
+const NAV_SCROLL_TOLERANCE = 120
+const NAV_SCROLL_TIMEOUT = 8000
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('about')
   const [isNavVisible, setIsNavVisible] = useState(true)
+  const navigationCleanupRef = useRef(null)
 
   useEffect(() => {
     const sections = navItems
@@ -45,6 +50,13 @@ export default function Navbar() {
       observer.disconnect()
     }
   }, [])
+
+  useEffect(
+    () => () => {
+      navigationCleanupRef.current?.()
+    },
+    []
+  )
 
   useEffect(() => {
     let lastScrollY = window.scrollY
@@ -106,20 +118,141 @@ export default function Navbar() {
     }
   }, [])
 
-  const handleNavClick = (event, href) => {
-    const targetId = href.replace('#', '')
+  const handleNavClick = (event, targetId) => {
+    event.preventDefault()
+
     const target = document.getElementById(targetId)
 
     if (!target) {
       return
     }
 
-    event.preventDefault()
-    window.lenis?.scrollTo(target, {
-      offset: -24,
-      duration: 1.4,
-    })
-    window.history.replaceState(null, '', href)
+    navigationCleanupRef.current?.()
+
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches
+
+    if (window.lenis && !prefersReducedMotion) {
+      const scrollRoot = document.querySelector('main') ?? document.body
+      const deadline = window.performance.now() + NAV_SCROLL_TIMEOUT
+      let checkTimeoutId = null
+      let refreshFrameId = null
+      let isCleanedUp = false
+      let lastRetargetTime = 0
+
+      const cleanupNavigation = () => {
+        if (isCleanedUp) {
+          return
+        }
+
+        isCleanedUp = true
+        mutationObserver.disconnect()
+
+        if (checkTimeoutId !== null) {
+          window.clearTimeout(checkTimeoutId)
+        }
+
+        if (refreshFrameId !== null) {
+          window.cancelAnimationFrame(refreshFrameId)
+        }
+
+        if (navigationCleanupRef.current === cleanupNavigation) {
+          navigationCleanupRef.current = null
+        }
+      }
+
+      const scrollToTarget = (duration = 1.4) => {
+        if (isCleanedUp) {
+          return
+        }
+
+        lastRetargetTime = window.performance.now()
+        window.lenis.scrollTo(target, {
+          offset: NAV_SCROLL_OFFSET,
+          duration,
+        })
+      }
+
+      const retargetAfterLayoutChange = () => {
+        if (isCleanedUp || refreshFrameId !== null) {
+          return
+        }
+
+        refreshFrameId = window.requestAnimationFrame(() => {
+          refreshFrameId = null
+          ScrollTrigger.refresh()
+          scrollToTarget(0.9)
+        })
+      }
+
+      const mutationObserver = new MutationObserver((mutations) => {
+        const pinLayoutChanged = mutations.some((mutation) =>
+          Array.from(mutation.addedNodes).some(
+            (node) =>
+              node instanceof Element &&
+              (node.matches('.pin-spacer') || node.querySelector('.pin-spacer'))
+          )
+        )
+
+        if (pinLayoutChanged) {
+          retargetAfterLayoutChange()
+        }
+      })
+
+      const checkNavigation = () => {
+        if (isCleanedUp) {
+          return
+        }
+
+        const now = window.performance.now()
+        const targetOffset = target.getBoundingClientRect().top
+        const expectedOffset = Math.abs(NAV_SCROLL_OFFSET)
+        const missedTarget =
+          Math.abs(targetOffset - expectedOffset) > NAV_SCROLL_TOLERANCE
+        const isScrolling = Boolean(window.lenis?.isScrolling)
+
+        if (!missedTarget && !isScrolling) {
+          setActiveSection(targetId)
+          cleanupNavigation()
+          return
+        }
+
+        if (now >= deadline) {
+          setActiveSection(targetId)
+          cleanupNavigation()
+          return
+        }
+
+        if (missedTarget && !isScrolling && now - lastRetargetTime > 300) {
+          ScrollTrigger.refresh()
+          scrollToTarget(0.9)
+        }
+
+        checkTimeoutId = window.setTimeout(checkNavigation, 150)
+      }
+
+      mutationObserver.observe(scrollRoot, { childList: true, subtree: true })
+      navigationCleanupRef.current = cleanupNavigation
+      scrollToTarget()
+      checkTimeoutId = window.setTimeout(checkNavigation, 150)
+    } else {
+      window.scrollTo({
+        top:
+          window.scrollY +
+          target.getBoundingClientRect().top +
+          NAV_SCROLL_OFFSET,
+        behavior: 'auto',
+      })
+      setActiveSection(targetId)
+      navigationCleanupRef.current = null
+    }
+
+    window.history.replaceState(
+      null,
+      '',
+      `${window.location.pathname}${window.location.search}`
+    )
   }
 
   return (
@@ -130,8 +263,8 @@ export default function Navbar() {
     >
       <div className="soft-reveal delay-5 flex w-full flex-col items-center justify-between gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
         <a
-          href="#hero"
-          onClick={(event) => handleNavClick(event, '#hero')}
+          href="/"
+          onClick={(event) => handleNavClick(event, 'hero')}
           className="transition-opacity duration-200 hover:opacity-80"
         >
           <img
@@ -142,14 +275,14 @@ export default function Navbar() {
         </a>
 
         <div className="font-ui flex flex-wrap items-center justify-center gap-3 text-[0.65rem] font-medium uppercase tracking-[0.24em] sm:gap-5 sm:text-xs sm:tracking-[0.32em] md:gap-8 md:text-sm md:tracking-[0.42em]">
-          {navItems.map(({ label, href, sectionId }) => {
+          {navItems.map(({ label, sectionId }) => {
             const isActive = activeSection === sectionId
 
             return (
               <a
                 key={sectionId}
-                href={href}
-                onClick={(event) => handleNavClick(event, href)}
+                href="/"
+                onClick={(event) => handleNavClick(event, sectionId)}
                 className={`transition-colors duration-200 ${
                   isActive
                     ? 'text-[#DC143C]'
