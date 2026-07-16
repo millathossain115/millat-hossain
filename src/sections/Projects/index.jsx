@@ -92,7 +92,11 @@ export default function Projects() {
         <ProjectRail projects={PROJECTS} trackRef={trackRef} />
       </div>
 
-      <div ref={pinSpacerRef} aria-hidden="true" className="w-full" />
+      <div
+        ref={pinSpacerRef}
+        aria-hidden="true"
+        className="pointer-events-none w-full"
+      />
     </section>
   )
 }
