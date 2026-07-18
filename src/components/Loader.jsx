@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import './Loader.css'
 
 const marqueeItems = [
   'Software Engineer',
@@ -71,7 +72,9 @@ export default function Loader({ onRevealStart, onComplete }) {
 
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 text-center">
         <div className="loader-marquee pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 overflow-hidden">
-          <div className={`loader-marquee__track ${isComplete ? 'loader-marquee__track--fade' : ''}`}>
+          <div
+            className={`loader-marquee__track ${isComplete ? 'loader-marquee__track--fade' : ''}`}
+          >
             {[...marqueeItems, ...marqueeItems].map((item, index) => (
               <span
                 key={`${item}-${index}`}
@@ -103,7 +106,9 @@ export default function Loader({ onRevealStart, onComplete }) {
 
           <p
             className={`font-ui text-[0.72rem] font-medium uppercase tracking-[0.32em] text-[rgba(148,163,184,0.75)] transition-all duration-500 sm:text-sm sm:tracking-[0.42em] ${
-              isComplete || isWelcomeExpanding ? 'opacity-0 blur-sm' : 'opacity-100 blur-0'
+              isComplete || isWelcomeExpanding
+                ? 'opacity-0 blur-sm'
+                : 'opacity-100 blur-0'
             }`}
           >
             Loading Portfolio Experience

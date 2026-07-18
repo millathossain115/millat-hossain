@@ -1,0 +1,10 @@
+.gsap-timeline-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform-origin: top center;
+  background: linear-gradient(180deg, #dc143c 0%, rgba(220, 20, 60, 0.18) 100%);
+  will-change: transform;
+}

@@ -1,0 +1,86 @@
+main > section {
+  min-height: 100vh;
+}
+
+.theme-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: transparent;
+}
+
+.theme-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-section--plain::before {
+  background: transparent;
+}
+
+.theme-section--seamless {
+  background: transparent;
+}
+
+.theme-heading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  color: white;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 2.8vw, 3rem);
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.theme-heading__index {
+  color: #dc143c;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+}
+
+.theme-heading__line {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(220, 20, 60, 0.4),
+    rgba(255, 255, 255, 0.08)
+  );
+}
+
+.theme-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.96) 0%,
+    rgba(6, 6, 6, 0.94) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+    0 24px 60px rgba(0, 0, 0, 0.32);
+}
+
+.theme-card:hover {
+  border-color: rgba(220, 20, 60, 0.34);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 26px 70px rgba(0, 0, 0, 0.4),
+    0 0 26px rgba(220, 20, 60, 0.08);
+}
+
+.theme-chip {
+  border: 1px solid rgba(220, 20, 60, 0.18);
+  background: rgba(220, 20, 60, 0.08);
+  color: rgba(255, 255, 255, 0.82);
+}

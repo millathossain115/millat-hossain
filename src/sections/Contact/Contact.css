@@ -1,0 +1,21 @@
+@keyframes contactGlowPulse {
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.38;
+    transform: scale(1.06);
+  }
+}
+
+.contact-glow-ring {
+  animation: contactGlowPulse 3.2s ease-in-out infinite;
+}
+
+.contact-glow-ring-2 {
+  animation: contactGlowPulse 3.2s ease-in-out infinite;
+  animation-delay: 1.6s;
+}

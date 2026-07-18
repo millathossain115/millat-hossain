@@ -3,6 +3,7 @@ import useNearViewport from '../../hooks/useNearViewport'
 import ContactForm from './ContactForm'
 import ContactProfileCard from './ContactProfileCard'
 import useContactAnimations from './useContactAnimations'
+import './Contact.css'
 
 export default function Contact() {
   const sectionRef = useRef(null)

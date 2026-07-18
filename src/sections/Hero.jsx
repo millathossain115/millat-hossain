@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import './Hero.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -12,7 +13,9 @@ export default function Hero({ isIntroReady = true }) {
   const heroContentRef = useRef(null)
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches
 
     if (prefersReducedMotion) {
       return undefined
@@ -37,7 +40,7 @@ export default function Hero({ isIntroReady = true }) {
             ease: 'none',
             force3D: false, // Prevents text anti-aliasing loss on load
           },
-          0,
+          0
         )
         .to(
           '.hero-scroll-layer',
@@ -48,7 +51,7 @@ export default function Hero({ isIntroReady = true }) {
             ease: 'none',
             force3D: false,
           },
-          0,
+          0
         )
     }, heroRef)
 
@@ -168,8 +171,9 @@ export default function Hero({ isIntroReady = true }) {
         </div>
 
         <p className="font-ui hero-soft-reveal delay-4 mt-6 max-w-3xl px-2 text-sm leading-6 text-slate-300 sm:mt-8 sm:px-0 sm:leading-7 md:text-base md:leading-8">
-          I build fast, modern digital products with a strong focus on clean user experience,
-          scalable frontend systems, and thoughtful interaction design.
+          I build fast, modern digital products with a strong focus on clean
+          user experience, scalable frontend systems, and thoughtful interaction
+          design.
         </p>
 
         <div className="hero-soft-reveal delay-5 mt-10 flex w-full flex-col items-center gap-5 sm:mt-12 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-6 md:mt-14">

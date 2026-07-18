@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Clash Display';
+  src: url('../assets/fonts/ClashDisplay-Variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --font-display: 'Clash Display', 'Sora', sans-serif;
+  --font-ui: 'Sora', sans-serif;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background: #020202;
+  font-family: var(--font-ui);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-ui {
+  font-family: var(--font-ui);
+}

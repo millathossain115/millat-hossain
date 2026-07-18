@@ -12,6 +12,10 @@ import Projects from './sections/Projects/index.jsx'
 import Skills from './sections/Skills'
 import Contact from './sections/Contact/index.jsx'
 import Footer from './components/Footer'
+import './styles/theme.css'
+import './styles/gsap.css'
+import './styles/reveal.css'
+import './App.css'
 
 gsap.registerPlugin(ScrollTrigger)
 

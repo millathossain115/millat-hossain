@@ -4,9 +4,9 @@ import { FaBookOpen, FaCertificate, FaGraduationCap } from 'react-icons/fa'
 import { EDUCATION } from '../../constants'
 import useNearViewport from '../../hooks/useNearViewport'
 import EducationCard from './EducationCard'
-import useEducationAnimations, {
-  getEducationExitDistance,
-} from './useEducationAnimations'
+import { getExperienceEntranceDistance } from '../Experience/experienceTransition'
+import useEducationAnimations from './useEducationAnimations'
+import './Education.css'
 
 const defaultPointer = { x: 0, y: 0, active: false }
 const educationIcons = [FaGraduationCap, FaCertificate, FaBookOpen]
@@ -33,7 +33,7 @@ export default function Education() {
     const updateSpacer = () => {
       const isDesktop = window.matchMedia('(min-width: 1024px)').matches
       const nextHeight = isDesktop
-        ? `${getEducationExitDistance(contentSection)}px`
+        ? `${getExperienceEntranceDistance(contentSection)}px`
         : '0px'
 
       if (exitSpacer.style.height === nextHeight) {

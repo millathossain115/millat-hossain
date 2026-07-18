@@ -1,0 +1,73 @@
+@keyframes cinematicReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.96);
+    filter: blur(18px);
+    letter-spacing: 0.24em;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    letter-spacing: inherit;
+  }
+}
+
+@keyframes softReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.cinematic-reveal {
+  opacity: 0;
+  animation: cinematicReveal 1s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.soft-reveal {
+  opacity: 0;
+  animation: softReveal 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.delay-1 {
+  animation-delay: 0.22s;
+}
+
+.delay-2 {
+  animation-delay: 0.42s;
+}
+
+.delay-3 {
+  animation-delay: 0.6s;
+}
+
+.delay-4 {
+  animation-delay: 0.84s;
+}
+
+.delay-5 {
+  animation-delay: 1.02s;
+}
+
+.delay-6 {
+  animation-delay: 1.22s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-reveal,
+  .soft-reveal {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}

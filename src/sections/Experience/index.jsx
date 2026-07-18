@@ -1,5 +1,6 @@
 import { EXPERIENCES } from '../../constants'
 import ExperienceCard from './ExperienceCard'
+import './Experience.css'
 
 export default function Experience() {
   return (
