@@ -19,6 +19,9 @@ export default function Footer() {
     return () => window.clearInterval(timer)
   }, [])
 
+
+
+  
   return (
     <footer className="border-t border-white/8 bg-[#040404] py-4 text-center text-xs text-slate-400 sm:text-sm">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-3 px-4 md:flex-row">
