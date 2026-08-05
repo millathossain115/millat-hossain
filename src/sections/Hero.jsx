@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const defaultPointer = { x: 50, y: 34, active: false }
 
-export default function Hero({ isIntroReady = true }) {
+export default function Hero({ isIntroReady = true, onNavigate }) {
   const [pointer, setPointer] = useState(defaultPointer)
   const heroRef = useRef(null)
   const heroContentRef = useRef(null)
@@ -71,18 +71,8 @@ export default function Hero({ isIntroReady = true }) {
   }
 
   const handleScrollToContact = (event) => {
-    const contactSection = document.getElementById('contact')
-
-    if (!contactSection) {
-      return
-    }
-
     event.preventDefault()
-    window.lenis?.scrollTo(contactSection, {
-      offset: -24,
-      duration: 1.4,
-    })
-    window.history.replaceState(null, '', '#contact')
+    onNavigate?.('contact')
   }
 
   return (

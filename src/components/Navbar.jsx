@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import navLogo from '../assets/Image/Nav-Logo.svg'
 import resumePdf from '../assets/Resume/resumeMillathossain.pdf'
 
@@ -10,9 +9,8 @@ const navItems = [
 ]
 
 const NAV_AUTO_HIDE_DELAY = 1500
-const NAV_SCROLL_OFFSET = -24
 
-export default function Navbar() {
+export default function Navbar({ onNavigate }) {
   const [activeSection, setActiveSection] = useState('about')
   const [isNavVisible, setIsNavVisible] = useState(true)
 
@@ -111,40 +109,15 @@ export default function Navbar() {
   const handleNavClick = (event, targetId) => {
     event.preventDefault()
 
-    const target = document.getElementById(targetId)
+    setIsNavVisible(true)
 
-    if (!target) {
-      return
-    }
+    Promise.resolve(onNavigate?.(targetId)).then((didNavigate) => {
+      if (didNavigate !== false) {
+        setActiveSection(targetId)
+      }
 
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches
-
-    ScrollTrigger.refresh()
-
-    if (window.lenis && !prefersReducedMotion) {
-      window.lenis.scrollTo(target, {
-        offset: NAV_SCROLL_OFFSET,
-        duration: 1.4,
-        onComplete: () => setActiveSection(targetId),
-      })
-    } else {
-      window.scrollTo({
-        top:
-          window.scrollY +
-          target.getBoundingClientRect().top +
-          NAV_SCROLL_OFFSET,
-        behavior: 'auto',
-      })
-      setActiveSection(targetId)
-    }
-
-    window.history.replaceState(
-      null,
-      '',
-      `${window.location.pathname}${window.location.search}`
-    )
+      setIsNavVisible(true)
+    })
   }
 
   return (
