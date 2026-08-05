@@ -48,8 +48,14 @@ export default function Navbar({ onNavigate }) {
 
   useEffect(() => {
     let lastScrollY = window.scrollY
+    let lastLenisScrollY = null
+    let touchStartY = null
+    let showIntentUntil = 0
     let frameId = null
+    let holdFrameId = null
     let hideTimeoutId = null
+    let bindLenisFrameId = null
+    let unbindLenisScroll = null
 
     const clearHideTimeout = () => {
       if (hideTimeoutId !== null) {
@@ -62,10 +68,45 @@ export default function Navbar({ onNavigate }) {
       clearHideTimeout()
       hideTimeoutId = window.setTimeout(() => {
         if (window.scrollY > 24) {
+          showIntentUntil = 0
           setIsNavVisible(false)
         }
         hideTimeoutId = null
       }, NAV_AUTO_HIDE_DELAY)
+    }
+
+    const holdVisibleWhileScrollingUp = () => {
+      if (Date.now() >= showIntentUntil) {
+        holdFrameId = null
+        return
+      }
+
+      setIsNavVisible(true)
+      holdFrameId = window.requestAnimationFrame(holdVisibleWhileScrollingUp)
+    }
+
+    const applyScrollDirection = (deltaY) => {
+      const currentScrollY = window.scrollY
+
+      if (currentScrollY <= 24) {
+        clearHideTimeout()
+        setIsNavVisible(true)
+      } else if (deltaY > 1) {
+        if (Date.now() < showIntentUntil) {
+          return
+        }
+
+        clearHideTimeout()
+        setIsNavVisible(false)
+      } else if (deltaY < -1) {
+        showIntentUntil = Date.now() + NAV_AUTO_HIDE_DELAY
+        setIsNavVisible(true)
+        scheduleAutoHide()
+
+        if (holdFrameId === null) {
+          holdVisibleWhileScrollingUp()
+        }
+      }
     }
 
     const handleScroll = () => {
@@ -77,31 +118,113 @@ export default function Navbar({ onNavigate }) {
         const currentScrollY = window.scrollY
         const delta = currentScrollY - lastScrollY
 
-        if (currentScrollY <= 24) {
-          clearHideTimeout()
-          setIsNavVisible(true)
-        } else if (delta > 1) {
-          clearHideTimeout()
-          setIsNavVisible(false)
-        } else if (delta < -1) {
-          setIsNavVisible(true)
-          scheduleAutoHide()
-        }
+        applyScrollDirection(delta)
 
         lastScrollY = currentScrollY
         frameId = null
       })
     }
 
+    const handleWheel = (event) => {
+      applyScrollDirection(event.deltaY)
+    }
+
+    const handleTouchStart = (event) => {
+      touchStartY = event.touches[0]?.clientY ?? null
+    }
+
+    const handleTouchMove = (event) => {
+      if (touchStartY === null) {
+        return
+      }
+
+      const currentTouchY = event.touches[0]?.clientY
+
+      if (typeof currentTouchY !== 'number') {
+        return
+      }
+
+      applyScrollDirection(touchStartY - currentTouchY)
+      touchStartY = currentTouchY
+    }
+
+    const bindLenisScroll = () => {
+      if (unbindLenisScroll || !window.lenis) {
+        return
+      }
+
+      lastLenisScrollY = window.lenis.scroll
+      unbindLenisScroll = window.lenis.on('scroll', (lenis) => {
+        const currentLenisScrollY = lenis.scroll
+
+        if (typeof currentLenisScrollY !== 'number') {
+          return
+        }
+
+        if (typeof lastLenisScrollY === 'number') {
+          applyScrollDirection(currentLenisScrollY - lastLenisScrollY)
+        }
+
+        lastLenisScrollY = currentLenisScrollY
+      })
+    }
+
+    const waitForLenis = () => {
+      bindLenisScroll()
+
+      if (!unbindLenisScroll) {
+        bindLenisFrameId = window.requestAnimationFrame(waitForLenis)
+      }
+    }
+
     window.addEventListener('scroll', handleScroll, { passive: true })
+    document.addEventListener('scroll', handleScroll, {
+      capture: true,
+      passive: true,
+    })
+    window.addEventListener('wheel', handleWheel, {
+      capture: true,
+      passive: true,
+    })
+    document.addEventListener('wheel', handleWheel, {
+      capture: true,
+      passive: true,
+    })
+    window.addEventListener('touchstart', handleTouchStart, {
+      capture: true,
+      passive: true,
+    })
+    window.addEventListener('touchmove', handleTouchMove, {
+      capture: true,
+      passive: true,
+    })
+    waitForLenis()
 
     return () => {
       window.removeEventListener('scroll', handleScroll)
+      document.removeEventListener('scroll', handleScroll, { capture: true })
+      window.removeEventListener('wheel', handleWheel, { capture: true })
+      document.removeEventListener('wheel', handleWheel, { capture: true })
+      window.removeEventListener('touchstart', handleTouchStart, {
+        capture: true,
+      })
+      window.removeEventListener('touchmove', handleTouchMove, {
+        capture: true,
+      })
 
       if (frameId !== null) {
         window.cancelAnimationFrame(frameId)
       }
 
+      if (holdFrameId !== null) {
+        window.cancelAnimationFrame(holdFrameId)
+      }
+
+      if (bindLenisFrameId !== null) {
+        window.cancelAnimationFrame(bindLenisFrameId)
+      }
+
+      unbindLenisScroll?.()
       clearHideTimeout()
     }
   }, [])
