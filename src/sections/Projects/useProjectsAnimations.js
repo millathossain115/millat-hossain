@@ -21,21 +21,23 @@ export function getProjectsTravelDistance(track) {
 
 export default function useProjectsAnimations({
   sectionRef,
-  pinRef,
   trackRef,
-  isNearViewport,
 }) {
   useEffect(() => {
-    if (!isNearViewport) {
-      return undefined
-    }
-
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     ).matches
-    if (prefersReducedMotion) return
+
+    if (prefersReducedMotion) {
+      gsap.set(trackRef.current, { clearProps: 'transform' })
+      return undefined
+    }
+
+    let syncRail = () => {}
 
     const ctx = gsap.context(() => {
+      gsap.set(trackRef.current, { x: 0 })
+
       const headingEl = sectionRef.current.querySelector('.proj-heading')
       if (headingEl) {
         const words = splitWords(headingEl)
@@ -75,23 +77,40 @@ export default function useProjectsAnimations({
         )
       }
 
-      gsap.to(trackRef.current, {
-        x: () => -getProjectsTravelDistance(trackRef.current),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: pinRef.current,
-          start: 'top top',
-          end: () => `+=${getProjectsTravelDistance(trackRef.current)}`,
-          scrub: 0.75,
-          pin: true,
-          pinSpacing: false,
-          pinType: 'transform',
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
+      syncRail = () => {
+        const section = sectionRef.current
+        const track = trackRef.current
+        const travelDistance = getProjectsTravelDistance(track)
+
+        if (!section || !track || travelDistance <= 0) {
+          gsap.set(track, { x: 0 })
+          return
+        }
+
+        const progress = gsap.utils.clamp(
+          0,
+          1,
+          (window.scrollY - section.offsetTop) / travelDistance
+        )
+
+        gsap.set(track, { x: -travelDistance * progress })
+      }
+
+      window.addEventListener('scroll', syncRail, { passive: true })
+      window.addEventListener('resize', syncRail)
+      ScrollTrigger.addEventListener('refresh', syncRail)
+
+      requestAnimationFrame(() => {
+        syncRail()
+        ScrollTrigger.refresh()
       })
     }, sectionRef)
 
-    return () => ctx.revert()
-  }, [isNearViewport, pinRef, sectionRef, trackRef])
+    return () => {
+      window.removeEventListener('scroll', syncRail)
+      window.removeEventListener('resize', syncRail)
+      ScrollTrigger.removeEventListener('refresh', syncRail)
+      ctx.revert()
+    }
+  }, [sectionRef, trackRef])
 }

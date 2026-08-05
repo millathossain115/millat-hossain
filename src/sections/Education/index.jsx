@@ -1,153 +1,92 @@
-import { useLayoutEffect, useRef, useState } from 'react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useRef } from 'react'
 import { FaBookOpen, FaCertificate, FaGraduationCap } from 'react-icons/fa'
 import { EDUCATION } from '../../constants'
-import useNearViewport from '../../hooks/useNearViewport'
 import EducationCard from './EducationCard'
-import { getExperienceEntranceDistance } from '../Experience/experienceTransition'
 import useEducationAnimations from './useEducationAnimations'
 import './Education.css'
 
-const defaultPointer = { x: 0, y: 0, active: false }
 const educationIcons = [FaGraduationCap, FaCertificate, FaBookOpen]
 
 export default function Education() {
-  const [pointer, setPointer] = useState(defaultPointer)
-  const containerRef = useRef(null)
+  const sectionRef = useRef(null)
+  const cinemaViewportRef = useRef(null)
   const zoomTextRef = useRef(null)
-  const redFillRef = useRef(null)
-  const contentSectionRef = useRef(null)
-  const exitSpacerRef = useRef(null)
-  const isNearViewport = useNearViewport(containerRef)
-
-  useLayoutEffect(() => {
-    const contentSection = contentSectionRef.current
-    const exitSpacer = exitSpacerRef.current
-
-    if (!contentSection || !exitSpacer) {
-      return undefined
-    }
-
-    let refreshFrameId = null
-
-    const updateSpacer = () => {
-      const isDesktop = window.matchMedia('(min-width: 1024px)').matches
-      const nextHeight = isDesktop
-        ? `${getExperienceEntranceDistance(contentSection)}px`
-        : '0px'
-
-      if (exitSpacer.style.height === nextHeight) {
-        return
-      }
-
-      exitSpacer.style.height = nextHeight
-
-      if (refreshFrameId !== null) {
-        window.cancelAnimationFrame(refreshFrameId)
-      }
-
-      refreshFrameId = window.requestAnimationFrame(() => {
-        refreshFrameId = null
-        ScrollTrigger.refresh()
-      })
-    }
-
-    const resizeObserver = new ResizeObserver(updateSpacer)
-    resizeObserver.observe(contentSection)
-    window.addEventListener('resize', updateSpacer)
-    updateSpacer()
-
-    return () => {
-      resizeObserver.disconnect()
-      window.removeEventListener('resize', updateSpacer)
-
-      if (refreshFrameId !== null) {
-        window.cancelAnimationFrame(refreshFrameId)
-      }
-    }
-  }, [])
+  const redCurtainRef = useRef(null)
+  const recordScreenRef = useRef(null)
+  const recordHeadingRef = useRef(null)
+  const cardListRef = useRef(null)
 
   useEducationAnimations({
-    containerRef,
+    sectionRef,
+    cinemaViewportRef,
     zoomTextRef,
-    redFillRef,
-    contentSectionRef,
-    isNearViewport,
+    redCurtainRef,
+    recordScreenRef,
+    recordHeadingRef,
+    cardListRef,
   })
 
-  const handlePointerMove = (event) => {
-    const bounds = event.currentTarget.getBoundingClientRect()
-    const x = event.clientX - bounds.left
-    const y = event.clientY - bounds.top
-
-    setPointer({ x, y, active: true })
-  }
-
-  const handlePointerLeave = () => {
-    setPointer(defaultPointer)
-  }
-
   return (
-    <div ref={containerRef} id="education" className="relative w-full">
-      <div className="relative h-[250vh] w-full">
-        <div className="sticky top-0 z-0 flex h-screen w-full items-center justify-center overflow-hidden bg-black">
-          <div
-            ref={zoomTextRef}
-            aria-hidden="true"
-            className="text-[#DC143C] font-display text-[15vw] sm:text-[12vw] font-bold tracking-[0.1em] text-center uppercase whitespace-nowrap"
-          >
+    <section
+      ref={sectionRef}
+      id="education"
+      className="theme-section theme-section--plain education-section edu-cinema-stage relative scroll-mt-16 overflow-x-clip bg-black"
+    >
+      <div
+        ref={cinemaViewportRef}
+        className="edu-cinema-viewport relative h-[100svh] w-full overflow-hidden bg-black"
+      >
+        <div
+          ref={recordScreenRef}
+          className="edu-record-screen absolute inset-0 bg-black px-6 py-20 sm:py-24 lg:flex lg:items-center lg:py-0"
+        >
+          <div className="edu-record-shell mx-auto grid w-full gap-12 lg:grid-cols-[minmax(15rem,30vw)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:gap-16">
+            <div
+              ref={recordHeadingRef}
+              className="edu-record-heading-zone min-w-0"
+            >
+              <p className="edu-record-label font-ui mb-5 text-xs font-semibold uppercase tracking-[0.34em] text-[#DC143C]">
+                Academic Record
+              </p>
+
+              <h2 className="edu-record-title font-display font-bold uppercase text-[#DC143C]">
+                Education
+              </h2>
+            </div>
+
+            <div
+              ref={cardListRef}
+              className="edu-list edu-card-rotator edu-record-list relative mx-auto w-full lg:mx-0"
+            >
+              {EDUCATION.map((edu, index) => {
+                const EducationIcon = educationIcons[index] ?? FaBookOpen
+
+                return (
+                  <div key={index} className="edu-card-panel">
+                    <EducationCard edu={edu} Icon={EducationIcon} />
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div
+          ref={zoomTextRef}
+          aria-hidden="true"
+          className="edu-zoom-title-layer pointer-events-none absolute inset-0 z-20 flex items-center justify-center"
+        >
+          <div className="edu-zoom-title text-[#DC143C] font-display text-[15vw] sm:text-[12vw] font-bold tracking-[0.1em] text-center uppercase whitespace-nowrap">
             EDUCATION
           </div>
-          <div
-            ref={redFillRef}
-            className="absolute inset-0 bg-[#DC143C] opacity-0 pointer-events-none"
-          />
         </div>
 
-        <div className="h-[150vh] w-full" />
-      </div>
-
-      <div
-        ref={contentSectionRef}
-        onPointerMove={handlePointerMove}
-        onPointerLeave={handlePointerLeave}
-        data-education-overlay
-        className="theme-section theme-section--seamless relative z-10 flex min-h-screen w-full items-center scroll-mt-16 px-6 pb-16 pt-16 sm:pb-20 sm:pt-20"
-      >
-        <div className="section-glow-orb !absolute -left-20 top-1/3 h-64 w-64 bg-[#DC143C]/10 pointer-events-none blur-3xl rounded-full" />
         <div
-          className="pointer-events-none !absolute z-10 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#DC143C]/20 opacity-0 blur-[56px] transition-opacity duration-300"
-          style={{
-            opacity: pointer.active ? 1 : 0,
-            left: pointer.x,
-            top: pointer.y,
-            boxShadow: '0 0 54px rgba(220, 20, 60, 0.24)',
-          }}
+          ref={redCurtainRef}
+          aria-hidden="true"
+          className="edu-red-curtain pointer-events-none absolute inset-0 z-30 bg-[#DC143C] opacity-0"
         />
-        <div
-          data-education-content
-          className="relative z-20 mx-auto w-full max-w-5xl"
-        >
-          <h2 className="edu-heading theme-heading" style={{ color: 'white' }}>
-            Education
-            <span className="theme-heading__line" />
-          </h2>
-
-          <div className="edu-list relative space-y-4 sm:space-y-5">
-            <div className="gsap-timeline-line" />
-
-            {EDUCATION.map((edu, index) => {
-              const EducationIcon = educationIcons[index] ?? FaBookOpen
-
-              return (
-                <EducationCard key={index} edu={edu} Icon={EducationIcon} />
-              )
-            })}
-          </div>
-        </div>
       </div>
-
-      <div ref={exitSpacerRef} aria-hidden="true" className="w-full" />
-    </div>
+    </section>
   )
 }

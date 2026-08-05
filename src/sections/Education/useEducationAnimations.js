@@ -1,28 +1,22 @@
 import { useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { createExperienceEntranceAnimation } from '../Experience/experienceTransition'
+import useNearViewport from '../../hooks/useNearViewport'
+import { addExperienceIntroToTimeline } from '../Experience/experienceTransition'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function splitWords(el) {
-  const words = el.innerText.trim().split(/\s+/)
-  el.innerHTML = words
-    .map(
-      (word) =>
-        `<span class="gsap-word"><span class="gsap-word-inner">${word}</span></span>`
-    )
-    .join(' ')
-  return Array.from(el.querySelectorAll('.gsap-word-inner'))
-}
-
 export default function useEducationAnimations({
-  containerRef,
+  sectionRef,
+  cinemaViewportRef,
   zoomTextRef,
-  redFillRef,
-  contentSectionRef,
-  isNearViewport,
+  redCurtainRef,
+  recordScreenRef,
+  recordHeadingRef,
+  cardListRef,
 }) {
+  const isNearViewport = useNearViewport(sectionRef)
+
   useEffect(() => {
     if (!isNearViewport) {
       return undefined
@@ -31,221 +25,220 @@ export default function useEducationAnimations({
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     ).matches
-    if (prefersReducedMotion) return
 
-    let removeExperienceOverlay
+    if (prefersReducedMotion) {
+      const cardPanels = sectionRef.current.querySelectorAll('.edu-card-panel')
+
+      gsap.set([zoomTextRef.current, redCurtainRef.current], {
+        autoAlpha: 0,
+      })
+      gsap.set(
+        [
+          recordScreenRef.current,
+          recordHeadingRef.current,
+          cardListRef.current,
+        ],
+        {
+          autoAlpha: 1,
+          y: 0,
+          '--edu-line-scale': 1,
+          '--edu-line-opacity': 1,
+          clearProps: 'transform',
+        }
+      )
+      gsap.set(cardPanels, {
+        opacity: 1,
+        y: 0,
+        clearProps: 'transform',
+      })
+      return undefined
+    }
+
+    let removeExperienceIntro
 
     const ctx = gsap.context(() => {
-      const zoomTl = gsap.timeline({
+      const cardPanels = gsap.utils.toArray(
+        '.edu-card-panel',
+        sectionRef.current
+      )
+      const zoomTitle =
+        zoomTextRef.current.querySelector('.edu-zoom-title') ??
+        zoomTextRef.current
+
+      const getZoomScale = () => {
+        const bounds = zoomTitle.getBoundingClientRect()
+        const textWidth = Math.max(bounds.width, 1)
+        const textHeight = Math.max(bounds.height, 1)
+        const baseScale =
+          Math.max(
+            window.innerWidth / textWidth,
+            window.innerHeight / textHeight
+          ) * 72
+        const isMobile = window.matchMedia('(max-width: 767px)').matches
+
+        return gsap.utils.clamp(
+          isMobile ? 60 : 120,
+          isMobile ? 100 : 170,
+          baseScale
+        )
+      }
+      const getExperienceIntroScrollUnits = () =>
+        window.matchMedia('(min-width: 1024px)').matches ? 1.55 : 0
+
+      gsap.set(recordScreenRef.current, { autoAlpha: 1 })
+      gsap.set(zoomTextRef.current, {
+        autoAlpha: 1,
+        scale: 1,
+        yPercent: 0,
+        transformOrigin: 'center center',
+      })
+      gsap.set(redCurtainRef.current, { autoAlpha: 0, yPercent: 0 })
+      gsap.set(recordHeadingRef.current, { autoAlpha: 0, y: 0 })
+      gsap.set(cardListRef.current, {
+        autoAlpha: 0,
+        '--edu-line-scale': 1,
+        '--edu-line-opacity': 1,
+      })
+      gsap.set(cardPanels, { autoAlpha: 0, y: 42 })
+
+      const cinemaTl = gsap.timeline({
         scrollTrigger: {
-          trigger: containerRef.current,
+          trigger: sectionRef.current,
+          pin: cinemaViewportRef.current,
+          pinSpacing: true,
+          pinReparent: true,
+          anticipatePin: 1,
           start: 'top top',
-          end: '+=150%',
+          end: () =>
+            `+=${window.innerHeight * (3.55 + Math.max(cardPanels.length, 1) * 0.8 + getExperienceIntroScrollUnits())}`,
           scrub: 1,
+          invalidateOnRefresh: true,
+          refreshPriority: -1,
         },
       })
 
-      zoomTl
+      cinemaTl
         .to(zoomTextRef.current, {
-          scale: 150,
+          scale: getZoomScale,
           ease: 'power2.in',
-          duration: 1,
+          duration: 1.05,
         })
         .to(
-          redFillRef.current,
+          redCurtainRef.current,
           {
-            opacity: 1,
-            duration: 0.15,
-          },
-          '-=0.15'
-        )
-
-      gsap.fromTo(
-        contentSectionRef.current,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: contentSectionRef.current,
-            start: 'top 75%',
-            end: 'top 15%',
-            scrub: 1,
-          },
-        }
-      )
-
-      const headingEl = contentSectionRef.current.querySelector('.edu-heading')
-      const isDesktop = window.matchMedia('(min-width: 1024px)').matches
-
-      if (headingEl) {
-        const words = splitWords(headingEl)
-        gsap.fromTo(
-          words,
-          { y: '110%', opacity: 0 },
-          {
-            y: '0%',
-            opacity: 1,
-            stagger: 0.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: headingEl,
-              start: 'top 88%',
-              end: 'top 55%',
-              scrub: 0.9,
-            },
-          }
-        )
-      }
-
-      const lineEl = contentSectionRef.current.querySelector(
-        '.gsap-timeline-line'
-      )
-      const educationList = contentSectionRef.current.querySelector('.edu-list')
-      if (lineEl && !isDesktop) {
-        gsap.fromTo(
-          lineEl,
-          { scaleY: 0, autoAlpha: 1 },
-          {
-            scaleY: 1,
+            autoAlpha: 1,
+            duration: 0.12,
             ease: 'none',
-            scrollTrigger: {
-              trigger: educationList,
-              start: 'top 88%',
-              end: 'bottom 34%',
-              scrub: 1.2,
-            },
-          }
+          },
+          '-=0.1'
         )
-      }
-
-      const items = contentSectionRef.current.querySelectorAll('.edu-item')
-      if (!isDesktop) {
-        items.forEach((item) => {
-          const dot = item.querySelector('.edu-dot')
-          const content = item.querySelector('.edu-content')
-          const duration = item.querySelector('.edu-duration')
-
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: item,
-              start: 'top 92%',
-              end: 'top 36%',
-              scrub: 1.15,
-            },
-          })
-
-          if (dot) {
-            tl.fromTo(
-              dot,
-              { scale: 0, opacity: 0 },
-              { scale: 1, opacity: 1, ease: 'none', duration: 0.28 },
-              0.08
-            )
-          }
-
-          if (content) {
-            tl.fromTo(
-              content,
-              { y: 28, opacity: 0 },
-              { y: 0, opacity: 1, ease: 'none', duration: 0.82 },
-              0.18
-            )
-          }
-
-          if (duration) {
-            tl.fromTo(
-              duration,
-              { x: -28, opacity: 0 },
-              { x: 0, opacity: 1, ease: 'none', duration: 0.42 },
-              0.44
-            )
-          }
+        .to(redCurtainRef.current, {
+          autoAlpha: 1,
+          duration: 0.24,
+          ease: 'none',
         })
-      }
-
-      const addDesktopEducationReveal = ({ timeline }) => {
-        if (lineEl) {
-          timeline.fromTo(
-            lineEl,
-            { scaleY: 0, autoAlpha: 1 },
-            {
-              scaleY: 1,
-              duration: 2.55,
-              ease: 'none',
-            },
-            0.12
-          )
-        }
-
-        items.forEach((item, index) => {
-          const dot = item.querySelector('.edu-dot')
-          const content = item.querySelector('.edu-content')
-          const duration = item.querySelector('.edu-duration')
-          const startAt = 0.28 + index * 0.68
-
-          if (dot) {
-            timeline.fromTo(
-              dot,
-              { scale: 0, opacity: 0 },
-              {
-                scale: 1,
-                opacity: 1,
-                duration: 0.22,
-                ease: 'none',
-              },
-              startAt
-            )
-          }
-
-          if (content) {
-            timeline.fromTo(
-              content,
-              { y: 36, opacity: 0 },
-              {
-                y: 0,
-                opacity: 1,
-                duration: 0.72,
-                ease: 'none',
-              },
-              startAt + 0.14
-            )
-          }
-
-          if (duration) {
-            timeline.fromTo(
-              duration,
-              { x: -36, opacity: 0 },
-              {
-                x: 0,
-                opacity: 1,
-                duration: 0.42,
-                ease: 'none',
-              },
-              startAt + 0.42
-            )
-          }
+        .set(zoomTextRef.current, {
+          autoAlpha: 0,
         })
-      }
+        .to(redCurtainRef.current, {
+          yPercent: -100,
+          duration: 0.72,
+          ease: 'none',
+        })
+        .to(
+          [recordHeadingRef.current, cardListRef.current],
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.28,
+            ease: 'none',
+          },
+          '>-0.08'
+        )
+        .to(recordHeadingRef.current, {
+          autoAlpha: 1,
+          duration: 0.12,
+          ease: 'none',
+        })
 
-      ScrollTrigger.create({
-        trigger: contentSectionRef.current,
-        start: 'top bottom',
-        once: true,
-        onEnter: () => {
-          removeExperienceOverlay = createExperienceEntranceAnimation({
-            educationSection: contentSectionRef.current,
-            experienceSection: document.getElementById('experience'),
-            addEducationReveal: addDesktopEducationReveal,
+      cardPanels.forEach((cardPanel) => {
+        cinemaTl
+          .to(cardPanel, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.34,
+            ease: 'none',
           })
-          ScrollTrigger.refresh()
-        },
+          .to(cardPanel, {
+            autoAlpha: 1,
+            duration: 0.18,
+            ease: 'none',
+          })
+          .to(cardPanel, {
+            autoAlpha: 0,
+            y: -28,
+            duration: 0.28,
+            ease: 'none',
+          })
       })
-    }, containerRef)
+
+      cinemaTl
+        .to(recordHeadingRef.current, {
+          autoAlpha: 1,
+          duration: 0.6,
+          ease: 'none',
+        })
+        .to(
+          recordHeadingRef.current,
+          {
+            autoAlpha: 0,
+            y: 0,
+            duration: 0.18,
+            ease: 'none',
+          },
+          'eduOutro'
+        )
+        .to(
+          cardListRef.current,
+          {
+            '--edu-line-scale': 0,
+            duration: 0.2,
+            ease: 'none',
+          },
+          'eduOutro'
+        )
+        .to(cardListRef.current, {
+          autoAlpha: 0,
+          duration: 0.08,
+          ease: 'none',
+        })
+        .to(recordScreenRef.current, {
+          autoAlpha: 1,
+          duration: 0.04,
+          ease: 'none',
+        })
+
+      removeExperienceIntro = addExperienceIntroToTimeline({
+        timeline: cinemaTl,
+        educationSection: sectionRef.current,
+        experienceSection: document.getElementById('experience'),
+      })
+
+      requestAnimationFrame(() => ScrollTrigger.refresh())
+    }, sectionRef)
 
     return () => {
       ctx.revert()
-      removeExperienceOverlay?.()
+      removeExperienceIntro?.()
     }
-  }, [containerRef, zoomTextRef, redFillRef, contentSectionRef, isNearViewport])
+  }, [
+    cardListRef,
+    cinemaViewportRef,
+    isNearViewport,
+    recordHeadingRef,
+    recordScreenRef,
+    redCurtainRef,
+    sectionRef,
+    zoomTextRef,
+  ])
 }

@@ -5,6 +5,8 @@ node_modules/
 dist/
 dist-ssr/
 .vercel/
+output/
+.playwright-cli/
 
 # Environment files
 .env

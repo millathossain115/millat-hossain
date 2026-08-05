@@ -1,18 +1,17 @@
 import { useLayoutEffect, useRef } from 'react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { PROJECTS } from '../../constants'
-import useNearViewport from '../../hooks/useNearViewport'
 import ProjectRail from './ProjectRail'
 import useProjectsAnimations, {
   getProjectsTravelDistance,
 } from './useProjectsAnimations'
+import './Projects.css'
 
 export default function Projects() {
   const sectionRef = useRef(null)
   const pinRef = useRef(null)
   const trackRef = useRef(null)
   const pinSpacerRef = useRef(null)
-  const isNearViewport = useNearViewport(sectionRef)
 
   useLayoutEffect(() => {
     const track = trackRef.current
@@ -58,13 +57,13 @@ export default function Projects() {
     }
   }, [])
 
-  useProjectsAnimations({ sectionRef, pinRef, trackRef, isNearViewport })
+  useProjectsAnimations({ sectionRef, trackRef })
 
   return (
     <section
       ref={sectionRef}
       id="projects"
-      className="theme-section scroll-mt-16"
+      className="theme-section projects-section scroll-mt-16"
     >
       {/* Parallax glow orb */}
       <div className="proj-orb section-glow-orb right-0 top-24 h-96 w-96 bg-[#DC143C]/12" />
@@ -72,7 +71,7 @@ export default function Projects() {
 
       <div
         ref={pinRef}
-        className="flex min-h-[100svh] w-full flex-col justify-start lg:justify-center overflow-hidden pt-12 pb-16 sm:pt-16 sm:pb-20 lg:py-16"
+        className="proj-pin flex min-h-[100svh] w-full flex-col justify-center overflow-hidden py-10 sm:py-12 lg:py-14"
       >
         <div className="mx-auto w-full max-w-6xl px-6">
           {/* Sub-label */}

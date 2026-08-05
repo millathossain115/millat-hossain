@@ -4,78 +4,81 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function useContactAnimations({ sectionRef, isNearViewport }) {
-  useEffect(() => {
-    if (!isNearViewport) {
-      return undefined
-    }
+const getViewportProgress = (element, startRatio, endRatio) => {
+  if (!element) return 0
 
+  const start = window.innerHeight * startRatio
+  const end = window.innerHeight * endRatio
+
+  return gsap.utils.clamp(
+    0,
+    1,
+    (start - element.getBoundingClientRect().top) / (start - end),
+  )
+}
+
+export default function useContactAnimations({ sectionRef }) {
+  useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches
     if (prefersReducedMotion) return
+
+    let syncContact = () => {}
 
     const ctx = gsap.context(() => {
       const card = sectionRef.current.querySelector('.contact-profile-card')
       const content = sectionRef.current.querySelector('.contact-form-shell')
       const formItems = sectionRef.current.querySelectorAll('.contact-form-item')
 
-      if (card) {
-        gsap.fromTo(
-          card,
-          { x: -80, opacity: 0, rotateY: -10 },
-          {
-            x: 0,
-            opacity: 1,
-            rotateY: 0,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 85%',
-              end: 'top 45%',
-              scrub: true,
-            },
-          },
+      gsap.set(card, { x: -80, opacity: 0, rotateY: -10 })
+      gsap.set(content, { x: 40 })
+      gsap.set(formItems, { y: 28, opacity: 0 })
+
+      syncContact = () => {
+        const cardProgress = getViewportProgress(card, 0.85, 0.45)
+        const contentProgress = getViewportProgress(content, 0.85, 0.42)
+        const itemsProgress = getViewportProgress(
+          sectionRef.current.querySelector('.contact-form-grid'),
+          0.88,
+          0.52,
         )
+
+        gsap.set(card, {
+          x: -80 * (1 - cardProgress),
+          opacity: cardProgress,
+          rotateY: -10 * (1 - cardProgress),
+        })
+        gsap.set(content, {
+          x: 40 * (1 - contentProgress),
+        })
+        formItems.forEach((item, index) => {
+          const delay =
+            formItems.length <= 1 ? 0 : (index / (formItems.length - 1)) * 0.35
+          const progress = gsap.utils.clamp(
+            0,
+            1,
+            (itemsProgress - delay) / 0.65,
+          )
+
+          gsap.set(item, {
+            y: 28 * (1 - progress),
+            opacity: progress,
+          })
+        })
       }
 
-      if (content) {
-        gsap.fromTo(
-          content,
-          { x: 40 },
-          {
-            x: 0,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: content,
-              start: 'top 85%',
-              end: 'top 42%',
-              scrub: true,
-            },
-          },
-        )
-      }
-
-      if (formItems.length) {
-        gsap.fromTo(
-          formItems,
-          { y: 28, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.08,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: sectionRef.current.querySelector('.contact-form-grid'),
-              start: 'top 88%',
-              end: 'top 52%',
-              scrub: true,
-            },
-          },
-        )
-      }
+      window.addEventListener('scroll', syncContact, { passive: true })
+      window.addEventListener('resize', syncContact)
+      ScrollTrigger.addEventListener('refresh', syncContact)
+      requestAnimationFrame(syncContact)
     }, sectionRef)
 
-    return () => ctx.revert()
-  }, [isNearViewport, sectionRef])
+    return () => {
+      window.removeEventListener('scroll', syncContact)
+      window.removeEventListener('resize', syncContact)
+      ScrollTrigger.removeEventListener('refresh', syncContact)
+      ctx.revert()
+    }
+  }, [sectionRef])
 }

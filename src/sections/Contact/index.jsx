@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-import useNearViewport from '../../hooks/useNearViewport'
 import ContactForm from './ContactForm'
 import ContactProfileCard from './ContactProfileCard'
 import useContactAnimations from './useContactAnimations'
@@ -7,9 +6,8 @@ import './Contact.css'
 
 export default function Contact() {
   const sectionRef = useRef(null)
-  const isNearViewport = useNearViewport(sectionRef)
 
-  useContactAnimations({ sectionRef, isNearViewport })
+  useContactAnimations({ sectionRef })
 
   return (
     <section

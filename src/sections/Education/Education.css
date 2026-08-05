@@ -1,10 +1,181 @@
-.gsap-timeline-line {
+.education-section {
+  min-height: 100vh;
+}
+
+.edu-cinema-stage,
+.edu-cinema-viewport,
+.edu-record-screen {
+  overflow-x: clip;
+}
+
+.edu-cinema-viewport {
+  isolation: isolate;
+}
+
+.edu-record-screen {
+  z-index: 0;
+}
+
+.edu-zoom-title-layer {
+  transform-origin: center center;
+}
+
+.edu-zoom-title {
+  line-height: 0.9;
+  transform-origin: center center;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.edu-red-curtain {
+  transform-origin: top center;
+}
+
+.edu-record-shell {
+  max-width: none;
+}
+
+.edu-record-heading-zone {
+  align-self: center;
+  visibility: hidden;
+}
+
+.edu-record-title {
+  font-size: clamp(3rem, 3.35vw, 4.25rem);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+}
+
+.edu-record-list {
+  --edu-line-gutter: 2.75rem;
+  --edu-line-opacity: 1;
+  --edu-line-scale: 1;
+  position: relative;
+  visibility: hidden;
+}
+
+.edu-record-list::before {
+  content: '';
   position: absolute;
   left: 0;
-  top: 0;
-  width: 1px;
-  height: 100%;
-  transform-origin: top center;
-  background: linear-gradient(180deg, #dc143c 0%, rgba(220, 20, 60, 0.18) 100%);
-  will-change: transform;
+  top: 50%;
+  width: 2px;
+  height: clamp(18rem, 39svh, 24rem);
+  opacity: var(--edu-line-opacity);
+  transform: translateY(-50%) scaleY(var(--edu-line-scale));
+  transform-origin: center center;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 56, 92, 0.95),
+    rgba(220, 20, 60, 0.42)
+  );
+}
+
+.edu-card-rotator {
+  height: clamp(27rem, 56svh, 33rem);
+}
+
+.edu-card-panel {
+  position: absolute;
+  inset: 0 0 0 var(--edu-line-gutter);
+  display: flex;
+  align-items: center;
+  visibility: hidden;
+}
+
+.edu-item {
+  width: 100%;
+}
+
+.edu-content {
+  position: relative;
+}
+
+.edu-card-rule {
+  width: 100%;
+}
+
+.edu-meta {
+  color: rgb(148 163 184);
+}
+
+.edu-meta strong {
+  color: #ff385c;
+  font-weight: 600;
+}
+
+@media (max-width: 1023px) {
+  .edu-record-heading-zone {
+    align-self: start;
+  }
+
+  .edu-record-title {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  .edu-record-screen {
+    padding-block: clamp(3rem, 7svh, 4.5rem);
+  }
+
+  .edu-record-list {
+    --edu-line-gutter: 1.65rem;
+  }
+
+  .edu-card-rotator {
+    height: clamp(29rem, 60svh, 35rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .edu-record-list {
+    margin-top: -1.5rem;
+  }
+
+  .edu-card-panel {
+    right: 2px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .edu-record-list {
+    --edu-line-gutter: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edu-cinema-stage,
+  .edu-cinema-viewport {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+
+  .edu-zoom-title-layer,
+  .edu-red-curtain {
+    display: none;
+  }
+
+  .edu-record-screen {
+    position: relative;
+    min-height: 100svh;
+  }
+
+  .edu-record-heading-zone,
+  .edu-record-list {
+    visibility: visible;
+  }
+
+  .edu-card-rotator {
+    height: auto;
+  }
+
+  .edu-card-panel {
+    position: relative;
+    inset: auto;
+    visibility: visible;
+  }
+
+  .edu-card-panel + .edu-card-panel {
+    margin-top: 3rem;
+  }
 }

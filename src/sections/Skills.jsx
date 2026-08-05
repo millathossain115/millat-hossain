@@ -2,9 +2,17 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { techIcons } from '../assets/tech-icons'
-import useNearViewport from '../hooks/useNearViewport'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const getViewportProgress = (element, startRatio, endRatio) => {
+  if (!element) return 0
+
+  const start = window.innerHeight * startRatio
+  const end = window.innerHeight * endRatio
+
+  return gsap.utils.clamp(0, 1, (start - element.getBoundingClientRect().top) / (start - end))
+}
 
 const technologies = [
   'JavaScript',
@@ -46,111 +54,72 @@ function splitWords(el) {
 
 export default function Skills() {
   const sectionRef = useRef(null)
-  const isNearViewport = useNearViewport(sectionRef)
 
   useEffect(() => {
-    if (!isNearViewport) {
-      return undefined
-    }
-
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches
     if (prefersReducedMotion) return
 
+    let syncSkills = () => {}
+
     const ctx = gsap.context(() => {
       /* ── Heading word-reveal ── */
       const headingEl = sectionRef.current.querySelector('.skills-heading')
-      if (headingEl) {
-        const words = splitWords(headingEl)
-        gsap.fromTo(
-          words,
-          { y: '110%', opacity: 0 },
-          {
-            y: '0%',
-            opacity: 1,
-            stagger: 0.09,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: headingEl,
-              start: 'top 88%',
-              end: 'top 52%',
-              scrub: true,
-            },
-          },
-        )
-      }
-
-      /* ── Divider line expands ── */
+      const words = headingEl ? splitWords(headingEl) : []
       const divider = sectionRef.current.querySelector('.skills-divider')
-      if (divider) {
-        gsap.fromTo(
-          divider,
-          { scaleX: 0, opacity: 0 },
-          {
-            scaleX: 1,
-            opacity: 1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: divider,
-              start: 'top 88%',
-              end: 'top 62%',
-              scrub: true,
-            },
-          },
-        )
-      }
-
-      /* ── Sub-paragraph fade ── */
       const subPara = sectionRef.current.querySelector('.skills-sub')
-      if (subPara) {
-        gsap.fromTo(
-          subPara,
-          { opacity: 0, y: 24 },
-          {
-            opacity: 1,
-            y: 0,
-            scrollTrigger: {
-              trigger: subPara,
-              start: 'top 90%',
-              end: 'top 64%',
-              scrub: true,
-            },
-          },
-        )
+      const chipsContainer = sectionRef.current.querySelector('.skills-chips')
+      const chips = gsap.utils.toArray('[data-skill-chip]', sectionRef.current)
+
+      gsap.set(words, { y: '110%', opacity: 0 })
+      gsap.set(divider, { scaleX: 0, opacity: 0 })
+      gsap.set(subPara, { opacity: 0, y: 24 })
+      gsap.set(chips, { y: 52, opacity: 0, scale: 0.88 })
+
+      syncSkills = () => {
+        const headingProgress = getViewportProgress(headingEl, 0.88, 0.52)
+        const dividerProgress = getViewportProgress(divider, 0.88, 0.62)
+        const subProgress = getViewportProgress(subPara, 0.9, 0.64)
+        const chipBaseProgress = getViewportProgress(chipsContainer, 0.9, 0.52)
+
+        gsap.set(words, {
+          y: `${(1 - headingProgress) * 110}%`,
+          opacity: headingProgress,
+        })
+        gsap.set(divider, {
+          scaleX: dividerProgress,
+          opacity: dividerProgress,
+        })
+        gsap.set(subPara, {
+          y: 24 * (1 - subProgress),
+          opacity: subProgress,
+        })
+        chips.forEach((chip, index) => {
+          const delay = chips.length <= 1 ? 0 : (index / (chips.length - 1)) * 0.45
+          const progress = gsap.utils.clamp(0, 1, (chipBaseProgress - delay) / 0.55)
+
+          gsap.set(chip, {
+            y: 52 * (1 - progress),
+            opacity: progress,
+            scale: 0.88 + 0.12 * progress,
+          })
+        })
       }
 
-      /* ── Chip wave stagger — Apple-style from bottom ── */
-      const chips = sectionRef.current.querySelectorAll('[data-skill-chip]')
-      gsap.fromTo(
-        chips,
-        {
-          y: 52,
-          opacity: 0,
-          scale: 0.88,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          stagger: {
-            amount: 0.55,
-            from: 'start',
-            ease: 'power1.inOut',
-          },
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current.querySelector('.skills-chips'),
-            start: 'top 90%',
-            end: 'top 52%',
-            scrub: true,
-          },
-        },
-      )
+      window.addEventListener('scroll', syncSkills, { passive: true })
+      window.addEventListener('resize', syncSkills)
+      ScrollTrigger.addEventListener('refresh', syncSkills)
+      requestAnimationFrame(syncSkills)
     }, sectionRef)
 
-    return () => ctx.revert()
-  }, [isNearViewport])
+    return () => {
+      window.removeEventListener('scroll', syncSkills)
+      window.removeEventListener('resize', syncSkills)
+      ScrollTrigger.removeEventListener('refresh', syncSkills)
+      ctx.revert()
+    }
+  }, [])
 
   return (
     <section
