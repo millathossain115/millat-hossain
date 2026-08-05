@@ -123,7 +123,7 @@ export default function Hero({ isIntroReady = true, onNavigate }) {
             <div className="pointer-events-none absolute inset-0">
               <div
                 aria-hidden="true"
-                className="font-display select-none whitespace-nowrap text-[clamp(1.5rem,7.2vw,7.4rem)] font-semibold uppercase leading-[0.86] tracking-[0.02em] text-transparent opacity-0 transition-opacity duration-300 sm:tracking-[0.055em] md:tracking-[0.08em]"
+                className="font-display select-none whitespace-nowrap text-[clamp(1.4rem,7.2vw,7.4rem)] font-semibold uppercase leading-[0.86] tracking-[0.02em] text-transparent opacity-0 transition-opacity duration-300 sm:tracking-[0.055em] md:tracking-[0.08em]"
                 style={{
                   opacity: pointer.active ? 1 : 0,
                   background:
@@ -134,26 +134,28 @@ export default function Hero({ isIntroReady = true, onNavigate }) {
               >
                 MILLAT HOSSAIN
               </div>
-              <div
-                aria-hidden="true"
-                className="font-ui select-none whitespace-nowrap text-[clamp(1.2rem,4.8vw,4.2rem)] font-semibold uppercase leading-none tracking-[0.08em] text-transparent opacity-0 transition-opacity duration-300 sm:tracking-[0.12em] md:tracking-[0.16em]"
-                style={{
-                  opacity: pointer.active ? 1 : 0,
-                  background:
-                    'radial-gradient(circle 190px at var(--cursor-x) var(--cursor-y), rgba(255,122,122,0.98) 0%, rgba(220,20,60,0.94) 30%, rgba(220,20,60,0) 68%)',
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                }}
-              >
-                SOFTWARE ENGINEER
+              <div>
+                <div
+                  aria-hidden="true"
+                  className="font-ui inline-block select-none whitespace-nowrap text-[clamp(1.05rem,4.5vw,4.2rem)] font-semibold uppercase leading-none tracking-[0.08em] text-transparent opacity-0 transition-opacity duration-300 sm:tracking-[0.12em] md:tracking-[0.16em]"
+                  style={{
+                    opacity: pointer.active ? 1 : 0,
+                    background:
+                      'radial-gradient(circle 190px at var(--cursor-x) var(--cursor-y), rgba(255,122,122,0.98) 0%, rgba(220,20,60,0.94) 30%, rgba(220,20,60,0) 68%)',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  SOFTWARE ENGINEER
+                </div>
               </div>
             </div>
 
-            <h1 className="font-display hero-cinematic-reveal delay-2 whitespace-nowrap text-[clamp(1.5rem,7.2vw,7.4rem)] font-semibold uppercase leading-[0.86] tracking-[0.02em] text-white sm:tracking-[0.055em] md:tracking-[0.08em]">
+            <h1 className="font-display hero-cinematic-reveal delay-2 whitespace-nowrap text-[clamp(1.4rem,7.2vw,7.4rem)] font-semibold uppercase leading-[0.86] tracking-[0.02em] text-white sm:tracking-[0.055em] md:tracking-[0.08em]">
               MILLAT HOSSAIN
             </h1>
             <div className="hero-cinematic-reveal delay-3">
-              <h2 className="font-ui inline-block whitespace-nowrap text-[clamp(1.2rem,4.8vw,4.2rem)] font-semibold uppercase leading-none tracking-[0.08em] text-[#DC143C] sm:tracking-[0.12em] md:tracking-[0.16em]">
+              <h2 className="font-ui inline-block whitespace-nowrap text-[clamp(1.05rem,4.5vw,4.2rem)] font-semibold uppercase leading-none tracking-[0.08em] text-[#DC143C] sm:tracking-[0.12em] md:tracking-[0.16em]">
                 SOFTWARE ENGINEER
               </h2>
             </div>
