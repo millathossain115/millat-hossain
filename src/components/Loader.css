@@ -55,8 +55,16 @@
   animation: loaderFade 1.4s cubic-bezier(0.16, 0.84, 0.2, 1) forwards;
 }
 
+.loader-marquee {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .loader-marquee__track {
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: max-content;
   animation: loaderMarquee 18s linear infinite;
 }
@@ -73,6 +81,7 @@
   position: relative;
   display: inline-flex;
   min-width: 17rem;
+  max-width: calc(100vw - 2rem);
   align-items: center;
   justify-content: center;
   gap: 1rem;
@@ -107,16 +116,22 @@
 .loader-pill__label {
   position: relative;
   z-index: 2;
-  font-size: clamp(1.1rem, 2vw, 1.85rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(1rem, 2.2vw, 1.85rem);
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: white;
+  line-height: 1;
+  transform-origin: center center;
 }
 
 .loader-pill__dot {
   height: 0.55rem;
   width: 0.55rem;
+  flex-shrink: 0;
   border-radius: 999px;
   background: rgba(220, 20, 60, 0.92);
   box-shadow: 0 0 18px rgba(220, 20, 60, 0.35);
@@ -137,9 +152,9 @@
 
 @media (max-width: 640px) {
   .loader-pill {
-    min-width: 13.5rem;
-    gap: 0.7rem;
-    padding: 1rem 1.4rem;
+    min-width: 12.5rem;
+    gap: 0.65rem;
+    padding: 0.95rem 1.3rem;
   }
 
   .loader-pill__dot {

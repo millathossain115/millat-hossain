@@ -70,15 +70,15 @@ export default function Loader({ onRevealStart, onComplete }) {
         Millat Hossain
       </p>
 
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 text-center">
-        <div className="loader-marquee pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 overflow-hidden">
+      <div className="relative z-10 flex h-full w-full flex-col items-center justify-center overflow-hidden px-4 text-center">
+        <div className="loader-marquee pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 overflow-hidden flex items-center justify-center">
           <div
             className={`loader-marquee__track ${isComplete ? 'loader-marquee__track--fade' : ''}`}
           >
             {[...marqueeItems, ...marqueeItems].map((item, index) => (
               <span
                 key={`${item}-${index}`}
-                className="font-display mx-4 inline-flex items-center gap-4 whitespace-nowrap text-[2.35rem] font-semibold uppercase tracking-[0.08em] text-white/18 sm:mx-8 sm:gap-6 sm:text-[4.2rem] md:text-[6rem] lg:text-[7rem]"
+                className="font-display mx-3 inline-flex items-center gap-3 whitespace-nowrap text-[1.75rem] font-semibold uppercase leading-none tracking-[0.08em] text-white/18 xs:text-[2.35rem] sm:mx-8 sm:gap-6 sm:text-[4.2rem] md:text-[6rem] lg:text-[7rem]"
               >
                 <span>{item}</span>
                 <span className="text-[#DC143C]/45">•</span>
@@ -87,7 +87,7 @@ export default function Loader({ onRevealStart, onComplete }) {
           </div>
         </div>
 
-        <div className="relative z-20 flex flex-col items-center gap-5">
+        <div className="relative z-20 flex flex-col items-center justify-center gap-4 sm:gap-5">
           <div
             className={`loader-pill ${isWelcomeExpanding ? 'loader-pill--fade' : ''} ${
               isComplete ? 'loader-pill--complete' : ''
