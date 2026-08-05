@@ -135,7 +135,7 @@ export default function About() {
       id="about"
       className="theme-section relative flex min-h-screen items-center overflow-hidden bg-[#020202] px-6 py-24 scroll-mt-16 sm:px-8 lg:h-screen lg:px-10"
     >
-      <div className="relative isolate mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+      <div className="relative isolate mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-8 md:grid-cols-[0.9fr_1.1fr] md:gap-12 lg:gap-16">
         <div
           ref={aboutImageRef}
           className="gsap-ken-burns relative z-20 mx-auto w-full max-w-sm overflow-hidden rounded-[2rem]"
