@@ -50,6 +50,48 @@
   background: #040404;
 }
 
+.loader-stage {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  min-height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  padding-inline: 1rem;
+  text-align: center;
+}
+
+.loader-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 20;
+  display: flex;
+  width: min(calc(100vw - 2rem), 34rem);
+  align-items: center;
+  justify-content: center;
+  transform: translate3d(calc(-50% - clamp(0.25rem, 0.8vw, 0.55rem)), -50%, 0);
+}
+
+.loader-subtitle {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + clamp(0.85rem, 2vw, 1.25rem));
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+  overflow: hidden;
+  transform: translateX(-50%);
+  color: rgba(148, 163, 184, 0.75);
+  font-size: clamp(0.58rem, 1.8vw, 0.875rem);
+  font-weight: 500;
+  letter-spacing: clamp(0.18em, 0.8vw, 0.42em);
+  line-height: 1.25;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    opacity 0.5s ease,
+    filter 0.5s ease;
+}
 .portfolio-loader--fade {
   pointer-events: none;
   animation: loaderFade 1.4s cubic-bezier(0.16, 0.84, 0.2, 1) forwards;

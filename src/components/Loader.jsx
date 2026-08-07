@@ -70,7 +70,7 @@ export default function Loader({ onRevealStart, onComplete }) {
         Millat Hossain
       </p>
 
-      <div className="relative z-10 flex h-full w-full flex-col items-center justify-center overflow-hidden px-4 text-center">
+      <div className="loader-stage">
         <div className="loader-marquee pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 overflow-hidden flex items-center justify-center">
           <div
             className={`loader-marquee__track ${isComplete ? 'loader-marquee__track--fade' : ''}`}
@@ -87,7 +87,7 @@ export default function Loader({ onRevealStart, onComplete }) {
           </div>
         </div>
 
-        <div className="relative z-20 flex flex-col items-center justify-center gap-4 sm:gap-5">
+        <div className="loader-center">
           <div
             className={`loader-pill ${isWelcomeExpanding ? 'loader-pill--fade' : ''} ${
               isComplete ? 'loader-pill--complete' : ''
@@ -105,7 +105,7 @@ export default function Loader({ onRevealStart, onComplete }) {
           </div>
 
           <p
-            className={`font-ui text-[0.72rem] font-medium uppercase tracking-[0.32em] text-[rgba(148,163,184,0.75)] transition-all duration-500 sm:text-sm sm:tracking-[0.42em] ${
+            className={`font-ui loader-subtitle ${
               isComplete || isWelcomeExpanding
                 ? 'opacity-0 blur-sm'
                 : 'opacity-100 blur-0'
