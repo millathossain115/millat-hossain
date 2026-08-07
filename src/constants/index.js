@@ -2,7 +2,7 @@ import zadexBanner from '../assets/Projects/Zadex-banner-portfolio.png';
 
 export const PROJECTS = [
   {
-    title: 'E-Commerce Microservices',
+    title: 'Artisane - Art Marketplace',
     category: 'Architecture Concept',
     status: 'concept',
     focus: 'Architecture & APIs',
