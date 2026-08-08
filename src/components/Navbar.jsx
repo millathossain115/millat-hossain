@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import navLogo from '../assets/Image/Nav-Logo.svg'
 import resumePdf from '../assets/Resume/resumeMillathossain.pdf'
+import './Navbar.css'
 
 const navItems = [
   { label: 'About', sectionId: 'about' },
@@ -14,8 +15,13 @@ const NAV_TOP_HOVER_HEIGHT = 24
 export default function Navbar({ onNavigate }) {
   const [activeSection, setActiveSection] = useState('hero')
   const [isNavVisible, setIsNavVisible] = useState(true)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [navHeight, setNavHeight] = useState(0)
   const navRef = useRef(null)
+  const mobileNavRef = useRef(null)
+  const menuButtonRef = useRef(null)
+  const firstMobileLinkRef = useRef(null)
+  const isMobileMenuOpenRef = useRef(false)
 
   useLayoutEffect(() => {
     const nav = navRef.current
@@ -34,6 +40,63 @@ export default function Navbar({ onNavigate }) {
 
     return () => resizeObserver.disconnect()
   }, [])
+
+  useEffect(() => {
+    const desktopMedia = window.matchMedia('(min-width: 640px)')
+
+    const closeAtDesktopBreakpoint = (event) => {
+      if (!event.matches) {
+        return
+      }
+
+      isMobileMenuOpenRef.current = false
+      setIsMobileMenuOpen(false)
+    }
+
+    desktopMedia.addEventListener('change', closeAtDesktopBreakpoint)
+
+    return () => {
+      desktopMedia.removeEventListener('change', closeAtDesktopBreakpoint)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return undefined
+    }
+
+    const focusFrameId = window.requestAnimationFrame(() => {
+      firstMobileLinkRef.current?.focus()
+    })
+
+    const handlePointerDown = (event) => {
+      if (mobileNavRef.current?.contains(event.target)) {
+        return
+      }
+
+      isMobileMenuOpenRef.current = false
+      setIsMobileMenuOpen(false)
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key !== 'Escape') {
+        return
+      }
+
+      isMobileMenuOpenRef.current = false
+      setIsMobileMenuOpen(false)
+      menuButtonRef.current?.focus()
+    }
+
+    document.addEventListener('pointerdown', handlePointerDown)
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.cancelAnimationFrame(focusFrameId)
+      document.removeEventListener('pointerdown', handlePointerDown)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isMobileMenuOpen])
 
   useEffect(() => {
     const sections = ['hero', ...navItems.map(({ sectionId }) => sectionId)]
@@ -88,7 +151,7 @@ export default function Navbar({ onNavigate }) {
     const scheduleAutoHide = () => {
       clearHideTimeout()
       hideTimeoutId = window.setTimeout(() => {
-        if (window.scrollY > 24) {
+        if (!isMobileMenuOpenRef.current && window.scrollY > 24) {
           showIntentUntil = 0
           setIsNavVisible(false)
         }
@@ -118,6 +181,12 @@ export default function Navbar({ onNavigate }) {
 
     const applyScrollDirection = (deltaY) => {
       const currentScrollY = window.scrollY
+
+      if (isMobileMenuOpenRef.current) {
+        clearHideTimeout()
+        setIsNavVisible(true)
+        return
+      }
 
       if (currentScrollY <= 24) {
         clearHideTimeout()
@@ -270,6 +339,8 @@ export default function Navbar({ onNavigate }) {
   const handleNavClick = (event, targetId) => {
     event.preventDefault()
 
+    isMobileMenuOpenRef.current = false
+    setIsMobileMenuOpen(false)
     setIsNavVisible(true)
 
     Promise.resolve(onNavigate?.(targetId)).then((didNavigate) => {
@@ -281,18 +352,117 @@ export default function Navbar({ onNavigate }) {
     })
   }
 
+  const handleMobileMenuToggle = () => {
+    setIsMobileMenuOpen((isOpen) => {
+      const nextIsOpen = !isOpen
+
+      isMobileMenuOpenRef.current = nextIsOpen
+
+      if (nextIsOpen) {
+        setIsNavVisible(true)
+      }
+
+      return nextIsOpen
+    })
+  }
+
+  const handleResumeClick = () => {
+    isMobileMenuOpenRef.current = false
+    setIsMobileMenuOpen(false)
+  }
+
   return (
     <>
       <div aria-hidden="true" style={{ height: `${navHeight}px` }} />
       <nav
         ref={navRef}
-        className={`fixed inset-x-0 top-0 z-[70] w-full bg-transparent px-4 py-5 text-white transition-transform duration-300 ease-out will-change-transform sm:px-6 md:px-12 ${
+        className={`site-nav fixed inset-x-0 top-0 z-[70] w-full bg-transparent px-3 py-3 text-white transition-transform duration-300 ease-out will-change-transform sm:px-6 sm:py-5 md:px-12 ${
           isNavVisible
             ? 'translate-y-0'
             : 'pointer-events-none -translate-y-full'
         }`}
       >
-        <div className="soft-reveal delay-5 flex w-full flex-col items-center justify-between gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
+        <div
+          ref={mobileNavRef}
+          className="mobile-nav soft-reveal delay-5 sm:hidden"
+        >
+          <div className="mobile-nav__bar">
+            <a
+              href="/"
+              onClick={(event) => handleNavClick(event, 'hero')}
+              className="mobile-nav__brand"
+              aria-label="Millat Hossain home"
+            >
+              <img src={navLogo} alt="" className="mobile-nav__logo" />
+              <span className="mobile-nav__name">Millat Hossain</span>
+            </a>
+
+            <button
+              ref={menuButtonRef}
+              type="button"
+              className="mobile-nav__toggle"
+              aria-controls="mobile-navigation-menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-label={
+                isMobileMenuOpen
+                  ? 'Close navigation menu'
+                  : 'Open navigation menu'
+              }
+              onClick={handleMobileMenuToggle}
+            >
+              <span className="mobile-nav__toggle-line" />
+              <span className="mobile-nav__toggle-line" />
+              <span className="mobile-nav__toggle-line" />
+            </button>
+          </div>
+
+          <div
+            id="mobile-navigation-menu"
+            className="mobile-nav__menu"
+            data-open={isMobileMenuOpen}
+            aria-hidden={!isMobileMenuOpen}
+          >
+            <div className="mobile-nav__menu-inner">
+              {navItems.map(({ label, sectionId }, index) => {
+                const isActive = activeSection === sectionId
+
+                return (
+                  <a
+                    ref={index === 0 ? firstMobileLinkRef : undefined}
+                    key={sectionId}
+                    href="/"
+                    onClick={(event) => handleNavClick(event, sectionId)}
+                    className="mobile-nav__link"
+                    data-active={isActive}
+                    aria-current={isActive ? 'location' : undefined}
+                    tabIndex={isMobileMenuOpen ? 0 : -1}
+                  >
+                    <span>{label}</span>
+                    <span aria-hidden="true" className="mobile-nav__link-mark">
+                      ↗
+                    </span>
+                  </a>
+                )
+              })}
+
+              <a
+                href={resumePdf}
+                target="_blank"
+                rel="noreferrer"
+                onClick={handleResumeClick}
+                className="mobile-nav__link mobile-nav__link--resume"
+                tabIndex={isMobileMenuOpen ? 0 : -1}
+              >
+                <span>Resume</span>
+                <span aria-hidden="true" className="mobile-nav__link-mark">
+                  PDF
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="soft-reveal delay-5 hidden w-full items-center justify-between sm:flex sm:flex-row sm:flex-wrap sm:gap-5">
           <a
             href="/"
             onClick={(event) => handleNavClick(event, 'hero')}
@@ -301,7 +471,7 @@ export default function Navbar({ onNavigate }) {
             <img
               src={navLogo}
               alt="Millat Hossain home"
-              className="h-8 w-auto sm:h-11 md:h-12"
+              className="h-11 w-auto md:h-12"
             />
           </a>
 
