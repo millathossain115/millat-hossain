@@ -21,24 +21,33 @@ export function getProjectsTravelDistance(track) {
 
 export default function useProjectsAnimations({
   sectionRef,
+  pinRef,
   trackRef,
 }) {
   useEffect(() => {
+    const section = sectionRef.current
+    const pin = pinRef.current
+    const track = trackRef.current
+
+    if (!section || !pin || !track) {
+      return undefined
+    }
+
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     ).matches
 
     if (prefersReducedMotion) {
-      gsap.set(trackRef.current, { clearProps: 'transform' })
+      gsap.set(track, { clearProps: 'transform' })
       return undefined
     }
 
-    let syncRail = () => {}
+    let refreshFrameId = null
 
     const ctx = gsap.context(() => {
-      gsap.set(trackRef.current, { x: 0 })
+      gsap.set(track, { x: 0 })
 
-      const headingEl = sectionRef.current.querySelector('.proj-heading')
+      const headingEl = section.querySelector('.proj-heading')
       if (headingEl) {
         const words = splitWords(headingEl)
         gsap.fromTo(
@@ -59,7 +68,7 @@ export default function useProjectsAnimations({
         )
       }
 
-      const labelEl = sectionRef.current.querySelector('.proj-label')
+      const labelEl = section.querySelector('.proj-label')
       if (labelEl) {
         gsap.fromTo(
           labelEl,
@@ -77,40 +86,35 @@ export default function useProjectsAnimations({
         )
       }
 
-      syncRail = () => {
-        const section = sectionRef.current
-        const track = trackRef.current
-        const travelDistance = getProjectsTravelDistance(track)
+      gsap.to(track, {
+        x: () => -getProjectsTravelDistance(track),
+        ease: 'none',
+        scrollTrigger: {
+          id: 'projects-horizontal',
+          trigger: section,
+          start: 'top top',
+          end: () => `+=${getProjectsTravelDistance(track)}`,
+          pin,
+          pinSpacing: true,
+          scrub: 0.6,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          refreshPriority: -2,
+        },
+      })
 
-        if (!section || !track || travelDistance <= 0) {
-          gsap.set(track, { x: 0 })
-          return
-        }
-
-        const progress = gsap.utils.clamp(
-          0,
-          1,
-          (window.scrollY - section.offsetTop) / travelDistance
-        )
-
-        gsap.set(track, { x: -travelDistance * progress })
-      }
-
-      window.addEventListener('scroll', syncRail, { passive: true })
-      window.addEventListener('resize', syncRail)
-      ScrollTrigger.addEventListener('refresh', syncRail)
-
-      requestAnimationFrame(() => {
-        syncRail()
+      refreshFrameId = window.requestAnimationFrame(() => {
+        refreshFrameId = null
         ScrollTrigger.refresh()
       })
     }, sectionRef)
 
     return () => {
-      window.removeEventListener('scroll', syncRail)
-      window.removeEventListener('resize', syncRail)
-      ScrollTrigger.removeEventListener('refresh', syncRail)
+      if (refreshFrameId !== null) {
+        window.cancelAnimationFrame(refreshFrameId)
+      }
+
       ctx.revert()
     }
-  }, [sectionRef, trackRef])
+  }, [pinRef, sectionRef, trackRef])
 }

@@ -9,6 +9,7 @@ const marqueeItems = [
   'Scalable Interfaces',
   'Performance First',
 ]
+const marqueeGroups = [0, 1]
 
 export default function Loader({ onRevealStart, onComplete }) {
   const [progress, setProgress] = useState(0)
@@ -62,32 +63,36 @@ export default function Loader({ onRevealStart, onComplete }) {
       className={`portfolio-loader ${isWelcomeExpanding ? 'portfolio-loader--fade' : ''}`}
       aria-hidden={isWelcomeExpanding}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(220,20,60,0.24),_transparent_32%),radial-gradient(circle_at_18%_82%,_rgba(127,29,29,0.18),_transparent_28%),radial-gradient(circle_at_80%_18%,_rgba(91,12,24,0.15),_transparent_22%),linear-gradient(180deg,_#040404_0%,_#080808_52%,_#010101_100%)]" />
-      <div className="absolute left-1/2 top-18 h-52 w-52 -translate-x-1/2 rounded-full bg-[#DC143C]/18 blur-[120px] sm:h-72 sm:w-72 sm:blur-[150px]" />
-      <div className="absolute bottom-0 left-0 h-72 w-72 bg-[radial-gradient(circle,_rgba(220,20,60,0.16)_0%,_rgba(220,20,60,0)_68%)] blur-2xl sm:h-96 sm:w-96" />
+      <div className="loader-backdrop" />
+      <div className="loader-glow loader-glow--center" />
+      <div className="loader-glow loader-glow--corner" />
 
-      <p className="font-ui loader-name absolute left-1/2 top-5 -translate-x-1/2 text-center text-[0.7rem] font-medium uppercase tracking-[0.3em] text-[rgba(148,163,184,0.75)] sm:left-auto sm:right-8 sm:top-8 sm:translate-x-0 sm:text-xs sm:tracking-[0.42em]">
+      <p className="font-ui loader-name">
         Millat Hossain
       </p>
 
-      <div className="loader-stage">
-        <div className="loader-marquee pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 overflow-hidden flex items-center justify-center">
-          <div
-            className={`loader-marquee__track ${isComplete ? 'loader-marquee__track--fade' : ''}`}
-          >
-            {[...marqueeItems, ...marqueeItems].map((item, index) => (
-              <span
-                key={`${item}-${index}`}
-                className="font-display mx-3 inline-flex items-center gap-3 whitespace-nowrap text-[1.75rem] font-semibold uppercase leading-none tracking-[0.08em] text-white/18 xs:text-[2.35rem] sm:mx-8 sm:gap-6 sm:text-[4.2rem] md:text-[6rem] lg:text-[7rem]"
-              >
-                <span>{item}</span>
-                <span className="text-[#DC143C]/45">•</span>
-              </span>
-            ))}
-          </div>
+      <div className="loader-marquee" aria-hidden="true">
+        <div
+          className={`loader-marquee__track ${isComplete ? 'loader-marquee__track--fade' : ''}`}
+        >
+          {marqueeGroups.map((groupIndex) => (
+            <div className="loader-marquee__group" key={groupIndex}>
+              {marqueeItems.map((item) => (
+                <span
+                  key={`${groupIndex}-${item}`}
+                  className="font-display loader-marquee__item"
+                >
+                  <span>{item}</span>
+                  <span className="loader-marquee__dot">•</span>
+                </span>
+              ))}
+            </div>
+          ))}
         </div>
+      </div>
 
-        <div className="loader-center">
+      <div className="loader-core">
+        <div className="loader-stack">
           <div
             className={`loader-pill ${isWelcomeExpanding ? 'loader-pill--fade' : ''} ${
               isComplete ? 'loader-pill--complete' : ''
@@ -107,8 +112,8 @@ export default function Loader({ onRevealStart, onComplete }) {
           <p
             className={`font-ui loader-subtitle ${
               isComplete || isWelcomeExpanding
-                ? 'opacity-0 blur-sm'
-                : 'opacity-100 blur-0'
+                ? 'loader-subtitle--hidden'
+                : ''
             }`}
           >
             Loading Portfolio Experience

@@ -1,63 +1,15 @@
-import { useLayoutEffect, useRef } from 'react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useRef } from 'react'
 import { PROJECTS } from '../../constants'
 import ProjectRail from './ProjectRail'
-import useProjectsAnimations, {
-  getProjectsTravelDistance,
-} from './useProjectsAnimations'
+import useProjectsAnimations from './useProjectsAnimations'
 import './Projects.css'
 
 export default function Projects() {
   const sectionRef = useRef(null)
   const pinRef = useRef(null)
   const trackRef = useRef(null)
-  const pinSpacerRef = useRef(null)
 
-  useLayoutEffect(() => {
-    const track = trackRef.current
-    const pinSpacer = pinSpacerRef.current
-
-    if (!track || !pinSpacer) {
-      return undefined
-    }
-
-    let refreshFrameId = null
-
-    const updateSpacer = () => {
-      const nextHeight = `${getProjectsTravelDistance(track)}px`
-
-      if (pinSpacer.style.height === nextHeight) {
-        return
-      }
-
-      pinSpacer.style.height = nextHeight
-
-      if (refreshFrameId !== null) {
-        window.cancelAnimationFrame(refreshFrameId)
-      }
-
-      refreshFrameId = window.requestAnimationFrame(() => {
-        refreshFrameId = null
-        ScrollTrigger.refresh()
-      })
-    }
-
-    const resizeObserver = new ResizeObserver(updateSpacer)
-    resizeObserver.observe(track)
-    window.addEventListener('resize', updateSpacer)
-    updateSpacer()
-
-    return () => {
-      resizeObserver.disconnect()
-      window.removeEventListener('resize', updateSpacer)
-
-      if (refreshFrameId !== null) {
-        window.cancelAnimationFrame(refreshFrameId)
-      }
-    }
-  }, [])
-
-  useProjectsAnimations({ sectionRef, trackRef })
+  useProjectsAnimations({ sectionRef, pinRef, trackRef })
 
   return (
     <section
@@ -90,12 +42,6 @@ export default function Projects() {
 
         <ProjectRail projects={PROJECTS} trackRef={trackRef} />
       </div>
-
-      <div
-        ref={pinSpacerRef}
-        aria-hidden="true"
-        className="pointer-events-none w-full"
-      />
     </section>
   )
 }

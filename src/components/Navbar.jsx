@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import navLogo from '../assets/Image/Nav-Logo.svg'
 import resumePdf from '../assets/Resume/resumeMillathossain.pdf'
 
@@ -9,14 +9,35 @@ const navItems = [
 ]
 
 const NAV_AUTO_HIDE_DELAY = 1500
+const NAV_TOP_HOVER_HEIGHT = 24
 
 export default function Navbar({ onNavigate }) {
-  const [activeSection, setActiveSection] = useState('about')
+  const [activeSection, setActiveSection] = useState('hero')
   const [isNavVisible, setIsNavVisible] = useState(true)
+  const [navHeight, setNavHeight] = useState(0)
+  const navRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const nav = navRef.current
+
+    if (!nav) {
+      return undefined
+    }
+
+    const syncNavHeight = () => {
+      setNavHeight(nav.offsetHeight)
+    }
+
+    const resizeObserver = new ResizeObserver(syncNavHeight)
+    resizeObserver.observe(nav)
+    syncNavHeight()
+
+    return () => resizeObserver.disconnect()
+  }, [])
 
   useEffect(() => {
-    const sections = navItems
-      .map(({ sectionId }) => document.getElementById(sectionId))
+    const sections = ['hero', ...navItems.map(({ sectionId }) => sectionId)]
+      .map((sectionId) => document.getElementById(sectionId))
       .filter(Boolean)
 
     if (!sections.length) {
@@ -75,14 +96,24 @@ export default function Navbar({ onNavigate }) {
       }, NAV_AUTO_HIDE_DELAY)
     }
 
-    const holdVisibleWhileScrollingUp = () => {
+    const holdVisibleDuringIntent = () => {
       if (Date.now() >= showIntentUntil) {
         holdFrameId = null
         return
       }
 
       setIsNavVisible(true)
-      holdFrameId = window.requestAnimationFrame(holdVisibleWhileScrollingUp)
+      holdFrameId = window.requestAnimationFrame(holdVisibleDuringIntent)
+    }
+
+    const showForAutoHideDuration = () => {
+      showIntentUntil = Date.now() + NAV_AUTO_HIDE_DELAY
+      setIsNavVisible(true)
+      scheduleAutoHide()
+
+      if (holdFrameId === null) {
+        holdVisibleDuringIntent()
+      }
     }
 
     const applyScrollDirection = (deltaY) => {
@@ -99,13 +130,16 @@ export default function Navbar({ onNavigate }) {
         clearHideTimeout()
         setIsNavVisible(false)
       } else if (deltaY < -1) {
-        showIntentUntil = Date.now() + NAV_AUTO_HIDE_DELAY
-        setIsNavVisible(true)
-        scheduleAutoHide()
+        showForAutoHideDuration()
+      }
+    }
 
-        if (holdFrameId === null) {
-          holdVisibleWhileScrollingUp()
-        }
+    const handlePointerMove = (event) => {
+      if (
+        event.pointerType === 'mouse' &&
+        event.clientY <= NAV_TOP_HOVER_HEIGHT
+      ) {
+        showForAutoHideDuration()
       }
     }
 
@@ -198,6 +232,9 @@ export default function Navbar({ onNavigate }) {
       capture: true,
       passive: true,
     })
+    document.addEventListener('pointermove', handlePointerMove, {
+      passive: true,
+    })
     waitForLenis()
 
     return () => {
@@ -211,6 +248,7 @@ export default function Navbar({ onNavigate }) {
       window.removeEventListener('touchmove', handleTouchMove, {
         capture: true,
       })
+      document.removeEventListener('pointermove', handlePointerMove)
 
       if (frameId !== null) {
         window.cancelAnimationFrame(frameId)
@@ -244,54 +282,60 @@ export default function Navbar({ onNavigate }) {
   }
 
   return (
-    <nav
-      className={`sticky top-0 z-[70] w-full bg-transparent px-4 py-5 text-white transition-transform duration-300 ease-out will-change-transform sm:px-6 md:px-12 ${
-        isNavVisible ? 'translate-y-0' : 'pointer-events-none -translate-y-full'
-      }`}
-    >
-      <div className="soft-reveal delay-5 flex w-full flex-col items-center justify-between gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
-        <a
-          href="/"
-          onClick={(event) => handleNavClick(event, 'hero')}
-          className="transition-opacity duration-200 hover:opacity-80"
-        >
-          <img
-            src={navLogo}
-            alt="Millat Hossain home"
-            className="h-8 w-auto sm:h-11 md:h-12"
-          />
-        </a>
-
-        <div className="font-ui flex flex-wrap items-center justify-center gap-3 text-[0.65rem] font-medium uppercase tracking-[0.24em] sm:gap-5 sm:text-xs sm:tracking-[0.32em] md:gap-8 md:text-sm md:tracking-[0.42em]">
-          {navItems.map(({ label, sectionId }) => {
-            const isActive = activeSection === sectionId
-
-            return (
-              <a
-                key={sectionId}
-                href="/"
-                onClick={(event) => handleNavClick(event, sectionId)}
-                className={`transition-colors duration-200 ${
-                  isActive
-                    ? 'text-[#DC143C]'
-                    : 'text-[rgba(148,163,184,0.75)] hover:text-[#DC143C]'
-                }`}
-              >
-                {label}
-              </a>
-            )
-          })}
-
+    <>
+      <div aria-hidden="true" style={{ height: `${navHeight}px` }} />
+      <nav
+        ref={navRef}
+        className={`fixed inset-x-0 top-0 z-[70] w-full bg-transparent px-4 py-5 text-white transition-transform duration-300 ease-out will-change-transform sm:px-6 md:px-12 ${
+          isNavVisible
+            ? 'translate-y-0'
+            : 'pointer-events-none -translate-y-full'
+        }`}
+      >
+        <div className="soft-reveal delay-5 flex w-full flex-col items-center justify-between gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
           <a
-            href={resumePdf}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-full border border-[#DC143C] px-3 py-2 text-[0.65rem] uppercase tracking-[0.24em] text-[rgba(148,163,184,0.75)] transition-colors duration-200 hover:text-[#DC143C] sm:px-4 sm:text-xs sm:tracking-[0.32em] md:text-sm md:tracking-[0.42em]"
+            href="/"
+            onClick={(event) => handleNavClick(event, 'hero')}
+            className="transition-opacity duration-200 hover:opacity-80"
           >
-            Resume
+            <img
+              src={navLogo}
+              alt="Millat Hossain home"
+              className="h-8 w-auto sm:h-11 md:h-12"
+            />
           </a>
+
+          <div className="font-ui flex flex-wrap items-center justify-center gap-3 text-[0.65rem] font-medium uppercase tracking-[0.24em] sm:gap-5 sm:text-xs sm:tracking-[0.32em] md:gap-8 md:text-sm md:tracking-[0.42em]">
+            {navItems.map(({ label, sectionId }) => {
+              const isActive = activeSection === sectionId
+
+              return (
+                <a
+                  key={sectionId}
+                  href="/"
+                  onClick={(event) => handleNavClick(event, sectionId)}
+                  className={`transition-colors duration-200 ${
+                    isActive
+                      ? 'text-[#DC143C]'
+                      : 'text-[rgba(148,163,184,0.75)] hover:text-[#DC143C]'
+                  }`}
+                >
+                  {label}
+                </a>
+              )
+            })}
+
+            <a
+              href={resumePdf}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full border border-[#DC143C] px-3 py-2 text-[0.65rem] uppercase tracking-[0.24em] text-[rgba(148,163,184,0.75)] transition-colors duration-200 hover:text-[#DC143C] sm:px-4 sm:text-xs sm:tracking-[0.32em] md:text-sm md:tracking-[0.42em]"
+            >
+              Resume
+            </a>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   )
 }
