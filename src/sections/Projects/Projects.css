@@ -2,6 +2,34 @@
   overflow: visible;
 }
 
+.proj-track {
+  padding-left: max(1.5rem, calc((100vw - 72rem) / 2 + 1.5rem));
+}
+
+@media (max-width: 639px) {
+  .projects-section .proj-pin {
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .projects-rail {
+    overflow: visible;
+  }
+
+  .proj-track {
+    width: 100%;
+    flex-direction: column;
+    padding-inline: 1.5rem;
+    padding-right: 1.5rem;
+    will-change: auto;
+  }
+
+  .proj-track .proj-card-shell {
+    width: 100%;
+    max-width: none;
+  }
+}
+
 .projects-section::after {
   content: '';
   position: absolute;

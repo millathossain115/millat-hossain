@@ -44,8 +44,8 @@ export default function useProjectsAnimations({
 
     let refreshFrameId = null
 
+    const desktopMedia = gsap.matchMedia()
     const ctx = gsap.context(() => {
-      gsap.set(track, { x: 0 })
 
       const headingEl = section.querySelector('.proj-heading')
       if (headingEl) {
@@ -86,21 +86,25 @@ export default function useProjectsAnimations({
         )
       }
 
-      gsap.to(track, {
-        x: () => -getProjectsTravelDistance(track),
-        ease: 'none',
-        scrollTrigger: {
-          id: 'projects-horizontal',
-          trigger: section,
-          start: 'top top',
-          end: () => `+=${getProjectsTravelDistance(track)}`,
-          pin,
-          pinSpacing: true,
-          scrub: 0.6,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          refreshPriority: -2,
-        },
+      desktopMedia.add('(min-width: 640px)', () => {
+        gsap.set(track, { x: 0 })
+
+        gsap.to(track, {
+          x: () => -getProjectsTravelDistance(track),
+          ease: 'none',
+          scrollTrigger: {
+            id: 'projects-horizontal',
+            trigger: section,
+            start: 'top top',
+            end: () => `+=${getProjectsTravelDistance(track)}`,
+            pin,
+            pinSpacing: true,
+            scrub: 0.6,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            refreshPriority: -2,
+          },
+        })
       })
 
       refreshFrameId = window.requestAnimationFrame(() => {
@@ -114,6 +118,7 @@ export default function useProjectsAnimations({
         window.cancelAnimationFrame(refreshFrameId)
       }
 
+      desktopMedia.revert()
       ctx.revert()
     }
   }, [pinRef, sectionRef, trackRef])
