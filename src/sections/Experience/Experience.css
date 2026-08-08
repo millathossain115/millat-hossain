@@ -7,6 +7,7 @@
 }
 
 .theme-section.exp-section {
+  display: block;
   overflow: visible;
 }
 
@@ -27,7 +28,15 @@
 }
 
 .theme-section.exp-section > .exp-shell {
-  position: sticky;
+  position: relative;
+}
+
+.exp-section.exp-section--natural-outro {
+  min-height: 100svh;
+}
+
+.theme-section.exp-section.exp-section--natural-outro > .exp-shell {
+  position: relative;
 }
 
 .exp-heading-zone {
@@ -95,5 +104,15 @@
 @media (min-width: 1024px) {
   .exp-list {
     margin-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exp-section {
+    min-height: 100svh;
+  }
+
+  .theme-section.exp-section > .exp-shell {
+    position: relative;
   }
 }

@@ -5,6 +5,8 @@ import useNearViewport from '../../hooks/useNearViewport'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const OUTRO_DISTANCE_RATIO = 0.3
+
 export default function useExperienceAnimations({
   sectionRef,
   headingRef,
@@ -169,11 +171,16 @@ export default function useExperienceAnimations({
   }, [cardRefs, headingRef, isNearViewport, listRef, sectionRef])
 
   useEffect(() => {
+    if (!isNearViewport) {
+      return undefined
+    }
+
+    const section = sectionRef.current
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     ).matches
 
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || !section) {
       return undefined
     }
 
@@ -183,17 +190,89 @@ export default function useExperienceAnimations({
         : gsap.utils.toArray('.exp-work-item', sectionRef.current)
 
     const ctx = gsap.context(() => {
-      const cards = getCards()
+      const shell = section.querySelector('.exp-shell')
+      const projects = document.getElementById('projects')
+
+      if (!shell || !projects) {
+        return undefined
+      }
+
+      let resizeFrame = 0
+
+      const canPinOutro = () => shell.scrollHeight <= window.innerHeight + 1
+
+      const syncOutroLayoutMode = () => {
+        section.classList.toggle('exp-section--natural-outro', !canPinOutro())
+      }
+
+      const clearShellPin = () => {
+        gsap.set(shell, {
+          clearProps: 'position,top,bottom,left,right,width,zIndex',
+        })
+      }
+
+      const pinShellToViewport = () => {
+        const sectionRect = section.getBoundingClientRect()
+        const styles = window.getComputedStyle(section)
+        const paddingLeft = Number.parseFloat(styles.paddingLeft) || 0
+        const paddingRight = Number.parseFloat(styles.paddingRight) || 0
+
+        gsap.set(shell, {
+          position: 'fixed',
+          top: 0,
+          bottom: 'auto',
+          left: sectionRect.left + paddingLeft,
+          right: 'auto',
+          width: Math.max(sectionRect.width - paddingLeft - paddingRight, 0),
+          zIndex: 1,
+        })
+      }
+
+      const dockShellAfterOutro = () => {
+        gsap.set(shell, {
+          position: 'absolute',
+          top: 'auto',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          width: '100%',
+          zIndex: 1,
+        })
+      }
 
       const syncOutro = () => {
-        const section = sectionRef.current
-        const start = section.offsetTop + window.innerHeight * 0.06
-        const end = start + window.innerHeight * 0.3
+        const cards = getCards()
+        syncOutroLayoutMode()
+
+        if (!canPinOutro()) {
+          clearShellPin()
+          gsap.set(headingRef.current, { autoAlpha: 1, y: 0 })
+          gsap.set(cards, { autoAlpha: 1, y: 0 })
+          gsap.set(listRef.current, {
+            '--exp-line-scale': 1,
+            '--exp-overlay-line-scale': 1,
+          })
+          return
+        }
+
+        const projectsTop = projects.getBoundingClientRect().top
+        const sectionTop = section.getBoundingClientRect().top
+        const start = window.innerHeight * (1 + OUTRO_DISTANCE_RATIO)
+        const end = window.innerHeight
         const progress = gsap.utils.clamp(
           0,
           1,
-          (window.scrollY - start) / Math.max(end - start, 1)
+          (start - projectsTop) / Math.max(start - end, 1)
         )
+        const shouldPin = sectionTop <= 0 && projectsTop >= end
+
+        if (shouldPin) {
+          pinShellToViewport()
+        } else if (projectsTop < end) {
+          dockShellAfterOutro()
+        } else {
+          clearShellPin()
+        }
 
         gsap.set(headingRef.current, {
           autoAlpha: 1 - progress,
@@ -209,20 +288,49 @@ export default function useExperienceAnimations({
         })
       }
 
+      const syncOutroMode = () => {
+        const wasNatural = section.classList.contains(
+          'exp-section--natural-outro'
+        )
+
+        syncOutroLayoutMode()
+
+        const isNatural = section.classList.contains(
+          'exp-section--natural-outro'
+        )
+
+        if (isNatural === wasNatural) {
+          return
+        }
+
+        syncOutro()
+        ScrollTrigger.refresh()
+      }
+
+      const scheduleOutroModeSync = () => {
+        window.cancelAnimationFrame(resizeFrame)
+        resizeFrame = window.requestAnimationFrame(syncOutroMode)
+      }
+
       syncOutro()
+      gsap.ticker.add(syncOutro)
       window.addEventListener('scroll', syncOutro, { passive: true })
-      window.addEventListener('resize', syncOutro)
+      window.addEventListener('resize', scheduleOutroModeSync)
       ScrollTrigger.addEventListener('refresh', syncOutro)
 
       return () => {
+        window.cancelAnimationFrame(resizeFrame)
+        gsap.ticker.remove(syncOutro)
         window.removeEventListener('scroll', syncOutro)
-        window.removeEventListener('resize', syncOutro)
+        window.removeEventListener('resize', scheduleOutroModeSync)
         ScrollTrigger.removeEventListener('refresh', syncOutro)
+        clearShellPin()
+        section.classList.remove('exp-section--natural-outro')
       }
     }, sectionRef)
 
     return () => {
       ctx.revert()
     }
-  }, [cardRefs, headingRef, listRef, sectionRef])
+  }, [cardRefs, headingRef, isNearViewport, listRef, sectionRef])
 }
