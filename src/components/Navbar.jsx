@@ -15,6 +15,8 @@ const NAV_TOP_HOVER_HEIGHT = 24
 export default function Navbar({ onNavigate }) {
   const [activeSection, setActiveSection] = useState('hero')
   const [isNavVisible, setIsNavVisible] = useState(true)
+  const [isDesktopNavSurfaceVisible, setIsDesktopNavSurfaceVisible] =
+    useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [navHeight, setNavHeight] = useState(0)
   const navRef = useRef(null)
@@ -154,6 +156,7 @@ export default function Navbar({ onNavigate }) {
         if (!isMobileMenuOpenRef.current && window.scrollY > 24) {
           showIntentUntil = 0
           setIsNavVisible(false)
+          setIsDesktopNavSurfaceVisible(false)
         }
         hideTimeoutId = null
       }, NAV_AUTO_HIDE_DELAY)
@@ -172,6 +175,7 @@ export default function Navbar({ onNavigate }) {
     const showForAutoHideDuration = () => {
       showIntentUntil = Date.now() + NAV_AUTO_HIDE_DELAY
       setIsNavVisible(true)
+      setIsDesktopNavSurfaceVisible(window.scrollY > 24)
       scheduleAutoHide()
 
       if (holdFrameId === null) {
@@ -185,12 +189,14 @@ export default function Navbar({ onNavigate }) {
       if (isMobileMenuOpenRef.current) {
         clearHideTimeout()
         setIsNavVisible(true)
+        setIsDesktopNavSurfaceVisible(currentScrollY > 24)
         return
       }
 
       if (currentScrollY <= 24) {
         clearHideTimeout()
         setIsNavVisible(true)
+        setIsDesktopNavSurfaceVisible(false)
       } else if (deltaY > 1) {
         if (Date.now() < showIntentUntil) {
           return
@@ -198,6 +204,7 @@ export default function Navbar({ onNavigate }) {
 
         clearHideTimeout()
         setIsNavVisible(false)
+        setIsDesktopNavSurfaceVisible(false)
       } else if (deltaY < -1) {
         showForAutoHideDuration()
       }
@@ -342,6 +349,7 @@ export default function Navbar({ onNavigate }) {
     isMobileMenuOpenRef.current = false
     setIsMobileMenuOpen(false)
     setIsNavVisible(true)
+    setIsDesktopNavSurfaceVisible(targetId !== 'hero' || window.scrollY > 24)
 
     Promise.resolve(onNavigate?.(targetId)).then((didNavigate) => {
       if (didNavigate !== false) {
@@ -349,6 +357,7 @@ export default function Navbar({ onNavigate }) {
       }
 
       setIsNavVisible(true)
+      setIsDesktopNavSurfaceVisible(targetId !== 'hero' && window.scrollY > 24)
     })
   }
 
@@ -377,6 +386,8 @@ export default function Navbar({ onNavigate }) {
       <nav
         ref={navRef}
         className={`site-nav fixed inset-x-0 top-0 z-[70] w-full bg-transparent px-3 py-3 text-white transition-transform duration-300 ease-out will-change-transform sm:px-6 sm:py-5 md:px-12 ${
+          isDesktopNavSurfaceVisible ? 'site-nav--surface' : ''
+        } ${
           isNavVisible
             ? 'translate-y-0'
             : 'pointer-events-none -translate-y-full'
