@@ -385,7 +385,7 @@ export default function Navbar({ onNavigate }) {
       <div aria-hidden="true" style={{ height: `${navHeight}px` }} />
       <nav
         ref={navRef}
-        className={`site-nav fixed inset-x-0 top-0 z-[70] w-full bg-transparent px-3 py-3 text-white transition-transform duration-300 ease-out will-change-transform sm:px-6 sm:py-5 md:px-12 ${
+        className={`site-nav fixed inset-x-0 top-0 z-[70] w-full bg-transparent px-3 py-2 text-white transition-transform duration-300 ease-out will-change-transform sm:px-6 sm:py-3 md:px-12 ${
           isDesktopNavSurfaceVisible ? 'site-nav--surface' : ''
         } ${
           isNavVisible
@@ -482,7 +482,7 @@ export default function Navbar({ onNavigate }) {
             <img
               src={navLogo}
               alt="Millat Hossain home"
-              className="h-11 w-auto md:h-12"
+              className="h-9 w-auto md:h-10"
             />
           </a>
 
@@ -510,7 +510,7 @@ export default function Navbar({ onNavigate }) {
               href={resumePdf}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-[#DC143C] px-3 py-2 text-[0.65rem] uppercase tracking-[0.24em] text-[rgba(148,163,184,0.75)] transition-colors duration-200 hover:text-[#DC143C] sm:px-4 sm:text-xs sm:tracking-[0.32em] md:text-sm md:tracking-[0.42em]"
+              className="rounded-full border border-[#DC143C] px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.24em] text-[rgba(148,163,184,0.75)] transition-colors duration-200 hover:text-[#DC143C] sm:px-4 sm:text-xs sm:tracking-[0.32em] md:text-sm md:tracking-[0.42em]"
             >
               Resume
             </a>
