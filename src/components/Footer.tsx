@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 
 const formatBdTime = () =>
   new Intl.DateTimeFormat('en-US', {
@@ -10,16 +10,17 @@ const formatBdTime = () =>
     hour12: true,
   }).format(new Date());
 
+function subscribeBdTime(callback: () => void) {
+  const timer = window.setInterval(callback, 30000);
+  return () => window.clearInterval(timer);
+}
+
 export default function Footer() {
-  const [bdTime, setBdTime] = useState(formatBdTime);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setBdTime(formatBdTime());
-    }, 30000);
-
-    return () => window.clearInterval(timer);
-  }, []);
+  const bdTime = useSyncExternalStore(
+    subscribeBdTime,
+    formatBdTime,
+    () => null // Server-side snapshot to avoid SSR hydration mismatch
+  );
 
   return (
     <footer className="border-t border-white/8 bg-[#040404] pt-4 pb-24 sm:py-4 text-center text-xs text-slate-400 sm:text-sm">
@@ -29,7 +30,7 @@ export default function Footer() {
         </p>
 
         <p className="shrink-0 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-slate-500 sm:text-xs">
-          BD Local {bdTime}
+          BD Local {bdTime ?? '—'}
         </p>
       </div>
     </footer>
