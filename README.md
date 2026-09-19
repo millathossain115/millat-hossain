@@ -2,7 +2,7 @@
 
 Modern portfolio website for Millat Hossain, built with Vite, React, Tailwind CSS, GSAP, and Lenis. The site presents profile details, education, experience, selected projects, skills, resume access, contact links, and production SEO metadata for deployment on Vercel.
 
-**Live site:** [millathossain.vercel.app](https://millathossain.vercel.app/)
+**Live site:** [www.millathossain.me](https://www.millathossain.me/)
 
 ## Preview
 
@@ -156,7 +156,7 @@ Recommended Vercel settings:
 | Output directory | `dist` |
 | Environment variables | Add the same public `VITE_*` values from `.env.example`. |
 
-After the first production deploy, create a Google Search Console URL-prefix property for `https://millathossain.vercel.app/`, add the HTML-tag token to `VITE_GOOGLE_SITE_VERIFICATION`, redeploy, verify ownership, and submit `sitemap.xml`.
+After the first production deploy, create a Google Search Console URL-prefix property for `https://www.millathossain.me/`, add the HTML-tag token to `VITE_GOOGLE_SITE_VERIFICATION`, redeploy, verify ownership, and submit `sitemap.xml`.
 
 ## GitHub Push Checklist
 

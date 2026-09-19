@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://millathossain.vercel.app/sitemap.xml
+Sitemap: https://www.millathossain.me/sitemap.xml

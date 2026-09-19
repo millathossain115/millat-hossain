@@ -3,7 +3,7 @@ import path from 'node:path'
 
 const rootDir = process.cwd()
 const distDir = path.join(rootDir, 'dist')
-const expectedUrl = 'https://millathossain.vercel.app'
+const expectedUrl = 'https://www.millathossain.me'
 const errors = []
 
 const read = (relativePath) => {
