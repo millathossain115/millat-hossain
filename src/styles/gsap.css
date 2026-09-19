@@ -1,0 +1,27 @@
+.gsap-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.gsap-word-inner {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.gsap-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.gsap-ken-burns img {
+  will-change: transform;
+}
+
+.section-glow-orb {
+  pointer-events: none;
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  will-change: transform;
+}

@@ -1,0 +1,72 @@
+.theme-section.projects-section {
+  overflow: visible;
+}
+
+.proj-track {
+  padding-left: max(1.5rem, calc((100vw - 72rem) / 2 + 1.5rem));
+}
+
+@media (max-width: 639px) {
+  .projects-section .proj-pin {
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .projects-rail {
+    overflow: visible;
+  }
+
+  .proj-track {
+    width: 100%;
+    flex-direction: column;
+    padding-inline: 1.5rem;
+    padding-right: 1.5rem;
+    will-change: auto;
+  }
+
+  .proj-track .proj-card-shell {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.projects-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(
+        180deg,
+        #020202 0%,
+        rgba(2, 2, 2, 0.86) 34%,
+        rgba(2, 2, 2, 0) 100%
+      )
+      top / 100% clamp(5rem, 14svh, 9rem) no-repeat,
+    linear-gradient(
+        0deg,
+        #020202 0%,
+        #020202 28%,
+        rgba(2, 2, 2, 0.94) 50%,
+        rgba(2, 2, 2, 0.58) 78%,
+        rgba(2, 2, 2, 0) 100%
+      )
+      bottom / 100% clamp(9rem, 24svh, 15rem) no-repeat;
+}
+
+#skills::before {
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    #020202 0%,
+    #020202 26%,
+    rgba(2, 2, 2, 0.94) 48%,
+    rgba(2, 2, 2, 0.58) 76%,
+    rgba(2, 2, 2, 0) 100%
+  );
+  background-size: 100% clamp(9rem, 24svh, 15rem);
+  background-repeat: no-repeat;
+  background-position: top;
+}
