@@ -17,7 +17,7 @@ export default function Contact() {
       id="contact"
       className="theme-section scroll-mt-16 flex min-h-screen items-center justify-center px-5 py-16 sm:px-6 sm:py-24"
     >
-      <div className="relative mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[0.74fr_1.26fr] lg:items-center">
+      <div className="relative mx-auto grid w-full max-w-2xl gap-10 md:gap-12 lg:max-w-6xl lg:grid-cols-[0.74fr_1.26fr] lg:items-center">
         <ContactProfileCard />
         <ContactForm />
       </div>
