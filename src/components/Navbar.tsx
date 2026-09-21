@@ -398,7 +398,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
       <div aria-hidden="true" style={{ height: `${navHeight}px` }} />
       <nav
         ref={navRef}
-        className={`site-nav fixed inset-x-0 top-0 z-[70] w-full bg-transparent px-3 py-2 text-white transition-transform duration-300 ease-out will-change-transform sm:px-6 sm:py-3 md:px-12 ${
+        className={`site-nav fixed inset-x-0 top-0 z-[70] w-full px-3 py-2 text-white will-change-transform sm:px-6 sm:py-3 md:px-12 ${
           isDesktopNavSurfaceVisible ? 'site-nav--surface' : ''
         } ${
           isNavVisible

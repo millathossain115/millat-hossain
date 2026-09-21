@@ -1,11 +1,4 @@
-.site-nav {
-  transition:
-    transform 300ms ease-out,
-    background 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease,
-    backdrop-filter 220ms ease;
-}
+
 
 .mobile-top-brand {
   position: relative;
@@ -233,20 +226,28 @@
   }
 }
 
+.site-nav {
+  transition:
+    transform 340ms cubic-bezier(0.16, 1, 0.3, 1),
+    background 340ms ease,
+    box-shadow 340ms ease,
+    backdrop-filter 340ms ease,
+    -webkit-backdrop-filter 340ms ease;
+  border-bottom: none;
+}
+
 @media (min-width: 640px) {
   .site-nav--surface {
     background: linear-gradient(
       180deg,
-      rgba(6, 6, 8, 0.88) 0%,
-      rgba(4, 4, 6, 0.72) 75%,
-      rgba(2, 2, 4, 0.4) 100%
+      rgba(4, 4, 6, 0.88) 0%,
+      rgba(4, 4, 6, 0.6) 65%,
+      rgba(4, 4, 6, 0) 100%
     );
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.65);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
-    backdrop-filter: blur(20px) saturate(150%);
-    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    border-bottom: none;
+    box-shadow: none;
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
   }
 }
 
