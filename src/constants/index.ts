@@ -1,5 +1,10 @@
 import { StaticImageData } from 'next/image';
-import zadexBanner from '../assets/Projects/Zadex-banner-portfolio.png';
+import zadexBanner from '../assets/Projects/zadex-banner-mockup.jpg';
+import telosBanner from '../assets/Projects/telos-banner-mockup.jpg';
+import artisaneBanner from '../assets/Projects/artisane-banner-mockup.jpg';
+import telosDigitalBanner from '../assets/Projects/telos-digital-banner.jpg';
+import threadviewBanner from '../assets/Projects/threadview-banner-mockup.jpg';
+import iotBanner from '../assets/Projects/iot-banner-mockup.jpg';
 
 export interface Project {
   title: string;
@@ -39,34 +44,33 @@ export interface EducationItem {
 
 export const PROJECTS: Project[] = [
   {
-    title: 'Artisane - Art Marketplace',
-    category: 'Architecture Concept',
-    status: 'concept',
-    focus: 'Architecture & APIs',
-    monogram: 'EC',
+    title: 'Telos Digital Ecommerce',
+    category: 'Full-Stack Platform',
+    status: 'live',
+    focus: 'E-Commerce & Payments',
+    monogram: 'TE',
     description:
-      'An architecture study exploring event-driven commerce, resilient services, and containerized deployment for high-throughput order processing.',
-    tags: ['NestJS', 'Go', 'Kafka', 'Docker', 'Kubernetes'],
+      'Modern digital electronics e-commerce store with catalog filtering, shopping cart state, secure checkout, and responsive design.',
+    tags: ['React', 'Next.js', 'Tailwind CSS', 'TypeScript', 'Redux'],
+    github:
+      'https://github.com/millathossain115/Telos-Digital-Ecommerce-Frontend',
+    live: 'https://www.teloscart.website/',
+    liveLabel: 'Live Site',
+    image: telosBanner,
   },
   {
-    title: 'AI-Powered Analytics Dashboard',
-    category: 'Product Concept',
-    status: 'concept',
-    focus: 'Data & Experience',
-    monogram: 'AI',
+    title: 'Artisane - Craft Marketplace',
+    category: 'Full-Stack Platform',
+    status: 'live',
+    focus: 'Marketplace & Creators',
+    monogram: 'AR',
     description:
-      'A product concept for turning live datasets into configurable charts, focused workflows, and AI-assisted insights.',
-    tags: ['React', 'Tailwind CSS', 'Vite', 'OpenAI', 'Chart.js'],
-  },
-  {
-    title: 'Decentralized Voting System',
-    category: 'Web3 Concept',
-    status: 'concept',
-    focus: 'Contracts & Trust',
-    monogram: 'DV',
-    description:
-      'A Web3 architecture study for transparent ballots, verifiable results, and tamper-resistant voting through smart contracts.',
-    tags: ['Solidity', 'React', 'Web3.js', 'Truffle'],
+      'Curated artisan marketplace connecting independent craft makers with buyers, featuring category exploration, seller spotlights, and smooth checkout.',
+    tags: ['React', 'Tailwind CSS', 'Node.js', 'Express.js', 'MongoDB'],
+    github: 'https://github.com/millathossain115/Artisane_Client',
+    live: 'https://artisane-client.vercel.app/',
+    liveLabel: 'Live Site',
+    image: artisaneBanner,
   },
   {
     title: 'ZaDEX Logistics Platform',
@@ -79,8 +83,22 @@ export const PROJECTS: Project[] = [
     tags: ['React', 'Tailwind CSS', 'Node.js', 'Express.js', 'MongoDB'],
     github: 'https://github.com/millathossain115/ZaDEX-Client',
     live: 'https://zadex-puce.vercel.app',
-    liveLabel: 'Live Demo',
+    liveLabel: 'Live Site',
     image: zadexBanner,
+  },
+  {
+    title: 'Telos Digital Agency',
+    category: 'Software & Product Studio',
+    status: 'live',
+    focus: 'Engineering & Interfaces',
+    monogram: 'TD',
+    description:
+      'Agency platform engineering scalable software and interfaces, mission-critical React applications, mobile cores, and refined digital experiences.',
+    tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    github: 'https://github.com/millathossain115/telos-digital',
+    live: 'https://telos-digital.vercel.app/',
+    liveLabel: 'Live Site',
+    image: telosDigitalBanner,
   },
   {
     title: 'ThreadView Forum',
@@ -94,8 +112,7 @@ export const PROJECTS: Project[] = [
     github: 'https://github.com/millathossain115/ThreadView',
     live: 'https://thread-view-rust.vercel.app',
     liveLabel: 'Live Demo',
-    image:
-      'https://github.com/millathossain115/ThreadView/assets/49544603/499403bd-beb5-45e2-9ecc-02c094216058',
+    image: threadviewBanner,
   },
   {
     title: 'IoT Home Automation & Security',
@@ -110,8 +127,7 @@ export const PROJECTS: Project[] = [
       'https://github.com/millathossain115/IOT-based-Home-Automation-Security-Control',
     live: 'https://www.youtube.com/watch?v=9_pd3rIbLUc',
     liveLabel: 'Demo',
-    image:
-      'https://opengraph.githubassets.com/50ca25ff54594831e05f9bcbb07b7841f8e34be0c6a830b79822a9d72e7d7217/millathossain115/IOT-based-Home-Automation-Security-Control',
+    image: iotBanner,
   },
 ];
 

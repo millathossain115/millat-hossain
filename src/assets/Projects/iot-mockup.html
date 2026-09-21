@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IoT Home Automation Mockup Banner</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+  body {
+    width: 1600px;
+    height: 900px;
+    background: #090d16;
+    overflow: hidden;
+    position: relative;
+    color: #f8fafc;
+  }
+
+  /* Cyber & Amber IoT Ambient Glow */
+  .glow-cyan {
+    position: absolute;
+    top: -120px;
+    right: 18%;
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .glow-amber {
+    position: absolute;
+    bottom: -150px;
+    left: 15%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Top Navigation */
+  .navbar {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+    background: rgba(9, 13, 22, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 26px;
+    font-weight: 850;
+    letter-spacing: -0.5px;
+  }
+  .brand-icon {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #06b6d4, #0284c7);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 4px 16px rgba(6, 182, 212, 0.4);
+  }
+  .brand-text span {
+    color: #38bdf8;
+  }
+  .nav-links {
+    display: flex;
+    gap: 34px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #94a3b8;
+  }
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #34d399;
+  }
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 10px #10b981;
+  }
+
+  /* Main Container */
+  .container {
+    display: flex;
+    height: calc(900px - 80px);
+    padding: 40px 80px;
+    gap: 60px;
+    align-items: center;
+  }
+
+  /* Left Column */
+  .left-col {
+    flex: 1.05;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    z-index: 1;
+  }
+  .badge {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border-radius: 30px;
+    background: rgba(6, 182, 212, 0.15);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    color: #67e8f9;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22d3ee;
+    box-shadow: 0 0 8px #22d3ee;
+  }
+  .headline {
+    font-size: 54px;
+    font-weight: 850;
+    line-height: 1.1;
+    letter-spacing: -1.6px;
+    color: #ffffff;
+  }
+  .headline span {
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtext {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #94a3b8;
+    max-width: 520px;
+  }
+
+  .sensors-row {
+    display: flex;
+    gap: 10px;
+  }
+  .sensor-tag {
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #cbd5e1;
+  }
+
+  /* Metrics Grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 10px;
+  }
+  .metric-card {
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    padding: 18px 20px;
+    border-radius: 16px;
+  }
+  .metric-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .metric-val {
+    font-size: 26px;
+    font-weight: 850;
+    color: #ffffff;
+    margin-top: 4px;
+  }
+  .metric-sub {
+    font-size: 12px;
+    font-weight: 600;
+    color: #38bdf8;
+    margin-top: 2px;
+  }
+
+  /* Right Embedded Hub Dashboard Mockup */
+  .right-col {
+    flex: 1.35;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .hub-window {
+    width: 760px;
+    background: #030712;
+    border-radius: 20px;
+    padding: 12px;
+    box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.7), 0 20px 40px -10px rgba(6, 182, 212, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .window-screen {
+    background: #0b1120;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+  }
+  .screen-bar {
+    height: 42px;
+    background: #0f172a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    justify-content: space-between;
+  }
+  .dots { display: flex; gap: 7px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .hub-addr {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 4px 18px;
+    border-radius: 6px;
+    font-size: 11px;
+    color: #38bdf8;
+    font-weight: 600;
+  }
+
+  .hub-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+  .hub-sidebar {
+    width: 170px;
+    background: #070a14;
+    padding: 22px 14px;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .hub-link {
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #94a3b8;
+  }
+  .hub-link.active {
+    background: rgba(6, 182, 212, 0.15);
+    color: #67e8f9;
+    font-weight: 700;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+  }
+
+  .hub-panel {
+    flex: 1;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .panel-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #ffffff;
+  }
+  .armed-tag {
+    font-size: 11px;
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid #10b981;
+    padding: 4px 12px;
+    border-radius: 12px;
+    color: #34d399;
+    font-weight: 700;
+  }
+
+  /* Node Controls 4-grid */
+  .nodes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .node-box {
+    background: #111a2e;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .node-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .node-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #f1f5f9;
+  }
+  .node-sub {
+    font-size: 11px;
+    color: #64748b;
+  }
+  .switch-on {
+    width: 38px;
+    height: 22px;
+    background: #06b6d4;
+    border-radius: 12px;
+    position: relative;
+  }
+  .switch-on::after {
+    content: '';
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+  }
+
+  /* Sensor Readout */
+  .readout-box {
+    background: #0e1526;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .sensor-read {
+    text-align: center;
+  }
+  .sensor-val {
+    font-size: 18px;
+    font-weight: 850;
+    color: #38bdf8;
+  }
+  .sensor-name {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
+
+  /* Floating Security Alert badge */
+  .alert-card {
+    position: absolute;
+    right: -24px;
+    bottom: -22px;
+    width: 250px;
+    background: #172033;
+    border: 1px solid rgba(6, 182, 212, 0.4);
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .alert-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #38bdf8;
+  }
+  .alert-body {
+    font-size: 12px;
+    color: #cbd5e1;
+    line-height: 1.4;
+  }
+  .alert-state {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 6px;
+    align-self: flex-start;
+  }
+</style>
+</head>
+<body>
+  <div class="glow-cyan"></div>
+  <div class="glow-amber"></div>
+
+  <div class="navbar">
+    <div class="brand">
+      <div class="brand-icon">⚡</div>
+      <div class="brand-text">Home<span>Control</span></div>
+    </div>
+    <div class="nav-links">
+      <span>Appliance Control</span>
+      <span>Motion Sensors</span>
+      <span>Telemetry</span>
+      <span>Security Logs</span>
+    </div>
+    <div class="status-badge">
+      <div class="pulse-dot"></div>
+      Gateway Online
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="left-col">
+      <div class="badge">
+        <div class="badge-dot"></div>
+        Embedded Automation & Telemetry
+      </div>
+      <h1 class="headline">
+        Intelligent sensing & <span>appliance automation</span>
+      </h1>
+      <p class="subtext">
+        Microcontroller-driven smart home system featuring real-time environmental telemetry, PIR motion defense, ultrasonic range monitoring, and wireless relays.
+      </p>
+
+      <div class="sensors-row">
+        <div class="sensor-tag">#Arduino</div>
+        <div class="sensor-tag">#PIR_Motion</div>
+        <div class="sensor-tag">#DHT11</div>
+        <div class="sensor-tag">#RelayModule</div>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">Latency</div>
+          <div class="metric-val">&lt; 15ms</div>
+          <div class="metric-sub">Relay Response</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Sensors</div>
+          <div class="metric-val">8 Nodes</div>
+          <div class="metric-sub">Real-Time Polling</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Uptime</div>
+          <div class="metric-val">99.9%</div>
+          <div class="metric-sub">Local Controller</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-col">
+      <div class="hub-window">
+        <div class="window-screen">
+          <div class="screen-bar">
+            <div class="dots">
+              <div class="dot" style="background:#ef4444"></div>
+              <div class="dot" style="background:#f59e0b"></div>
+              <div class="dot" style="background:#10b981"></div>
+            </div>
+            <div class="hub-addr">iot-gateway.local:8080/dashboard</div>
+            <div></div>
+          </div>
+          <div class="hub-body">
+            <div class="hub-sidebar">
+              <div class="hub-link active">⚡ Appliances</div>
+              <div class="hub-link">🌡️ Telemetry</div>
+              <div class="hub-link">🛡️ Security Area</div>
+              <div class="hub-link">📋 Event Log</div>
+              <div class="hub-link">⚙️ Hardware Config</div>
+            </div>
+            <div class="hub-panel">
+              <div class="panel-head">
+                <div class="panel-title">Relay Control Hub</div>
+                <div class="armed-tag">DEFENSE ARMED</div>
+              </div>
+
+              <div class="nodes-grid">
+                <div class="node-box">
+                  <div class="node-info">
+                    <span class="node-name">Living Room HVAC</span>
+                    <span class="node-sub">Relay 1 • 220V Active</span>
+                  </div>
+                  <div class="switch-on"></div>
+                </div>
+
+                <div class="node-box">
+                  <div class="node-info">
+                    <span class="node-name">Perimeter Night Beam</span>
+                    <span class="node-sub">Relay 2 • Auto PIR</span>
+                  </div>
+                  <div class="switch-on"></div>
+                </div>
+
+                <div class="node-box">
+                  <div class="node-info">
+                    <span class="node-name">Laboratory Exhaust</span>
+                    <span class="node-sub">Relay 3 • Triggered</span>
+                  </div>
+                  <div class="switch-on"></div>
+                </div>
+
+                <div class="node-box">
+                  <div class="node-info">
+                    <span class="node-name">Smart Door Solenoid</span>
+                    <span class="node-sub">Relay 4 • Locked</span>
+                  </div>
+                  <div class="switch-on" style="background:#0284c7;"></div>
+                </div>
+              </div>
+
+              <div class="readout-box">
+                <div class="sensor-read">
+                  <div class="sensor-val">24.2°C</div>
+                  <div class="sensor-name">Ambient Temp</div>
+                </div>
+                <div class="sensor-read">
+                  <div class="sensor-val">52%</div>
+                  <div class="sensor-name">Humidity DHT11</div>
+                </div>
+                <div class="sensor-read">
+                  <div class="sensor-val">0 ppm</div>
+                  <div class="sensor-name">LPG / Smoke MQ2</div>
+                </div>
+                <div class="sensor-read">
+                  <div class="sensor-val">Clear</div>
+                  <div class="sensor-name">PIR Perimeter</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Alert Card -->
+      <div class="alert-card">
+        <div class="alert-head">
+          <span>📡 ESP8266 / Arduino Uno</span>
+        </div>
+        <div class="alert-body">
+          Perimeter ultrasonic radar scans every 200ms. All zones secure.
+        </div>
+        <div class="alert-state">● System Normal</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
