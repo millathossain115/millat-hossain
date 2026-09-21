@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useLayoutEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import profileImg from '../assets/Image/about-profile.webp';
-import useNearViewport from '../hooks/useNearViewport';
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
+import { useLayoutEffect, useRef, useState } from "react";
+import profileImg from "../assets/Image/about-profile.webp";
+import useNearViewport from "../hooks/useNearViewport";
 
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
@@ -15,7 +15,9 @@ export default function About() {
   const aboutRef = useRef<HTMLElement | null>(null);
   const aboutImageRef = useRef<HTMLDivElement | null>(null);
   const aboutContentRef = useRef<HTMLDivElement | null>(null);
-  const [aboutContentHeight, setAboutContentHeight] = useState<number | null>(null);
+  const [aboutContentHeight, setAboutContentHeight] = useState<number | null>(
+    null,
+  );
   const isNearViewport = useNearViewport(aboutRef);
 
   useLayoutEffect(() => {
@@ -25,7 +27,7 @@ export default function About() {
       return undefined;
     }
 
-    const desktopQuery = window.matchMedia('(min-width: 1024px)');
+    const desktopQuery = window.matchMedia("(min-width: 1024px)");
 
     const syncContentHeight = () => {
       setAboutContentHeight(desktopQuery.matches ? image.offsetHeight : null);
@@ -35,22 +37,29 @@ export default function About() {
 
     syncContentHeight();
     resizeObserver.observe(image);
-    desktopQuery.addEventListener('change', syncContentHeight);
-    window.addEventListener('resize', syncContentHeight);
+    desktopQuery.addEventListener("change", syncContentHeight);
+    window.addEventListener("resize", syncContentHeight);
 
     return () => {
       resizeObserver.disconnect();
-      desktopQuery.removeEventListener('change', syncContentHeight);
-      window.removeEventListener('resize', syncContentHeight);
+      desktopQuery.removeEventListener("change", syncContentHeight);
+      window.removeEventListener("resize", syncContentHeight);
     };
   }, []);
 
   useLayoutEffect(() => {
-    if (!isNearViewport || !aboutRef.current || !aboutImageRef.current || !aboutContentRef.current) {
+    if (
+      !isNearViewport ||
+      !aboutRef.current ||
+      !aboutImageRef.current ||
+      !aboutContentRef.current
+    ) {
       return undefined;
     }
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     if (prefersReducedMotion) {
       return undefined;
@@ -58,28 +67,31 @@ export default function About() {
 
     const appContent = aboutRef.current?.parentElement?.parentElement;
     const refreshAfterAppReveal = (event: AnimationEvent) => {
-      if (event.target === appContent && event.animationName === 'appReveal') {
+      if (event.target === appContent && event.animationName === "appReveal") {
         ScrollTrigger.refresh();
       }
     };
 
-    appContent?.addEventListener('animationend', refreshAfterAppReveal as EventListener);
+    appContent?.addEventListener(
+      "animationend",
+      refreshAfterAppReveal as EventListener,
+    );
 
     const context = gsap.context(() => {
-      const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
-      const imageStartX = isDesktop ? '25vw' : 0;
-      const copyStartX = isDesktop ? 'calc(-100% - 4rem)' : 0;
+      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+      const imageStartX = isDesktop ? "25vw" : 0;
+      const copyStartX = isDesktop ? "calc(-100% - 4rem)" : 0;
       const mobileStartY = isDesktop ? 0 : 36;
 
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: aboutRef.current,
-          start: isDesktop ? 'top top' : 'top 82%',
-          end: () => (isDesktop ? `+=${window.innerHeight * 1.25}` : 'top 28%'),
+          start: isDesktop ? "top top" : "top 82%",
+          end: () => (isDesktop ? `+=${window.innerHeight * 1.25}` : "top 28%"),
           scrub: true,
           pin: isDesktop,
           pinSpacing: true,
-          pinType: 'transform',
+          pinType: "transform",
           anticipatePin: isDesktop ? 1 : 0,
           invalidateOnRefresh: true,
         },
@@ -100,14 +112,14 @@ export default function About() {
             opacity: 1,
             scale: 1,
             duration: 1,
-            ease: 'none',
-          }
+            ease: "none",
+          },
         )
         .to(aboutImageRef.current, {
           x: 0,
           y: 0,
           duration: 1.5,
-          ease: 'none',
+          ease: "none",
         })
         .fromTo(
           aboutContentRef.current,
@@ -121,15 +133,18 @@ export default function About() {
             y: 0,
             opacity: 1,
             duration: 1.5,
-            ease: 'none',
+            ease: "none",
             force3D: false,
           },
-          '<0.5'
+          "<0.5",
         );
     }, aboutRef);
 
     return () => {
-      appContent?.removeEventListener('animationend', refreshAfterAppReveal as EventListener);
+      appContent?.removeEventListener(
+        "animationend",
+        refreshAfterAppReveal as EventListener,
+      );
       context.revert();
     };
   }, [isNearViewport]);
@@ -138,13 +153,11 @@ export default function About() {
     <section
       ref={aboutRef}
       id="about"
-      className="theme-section relative flex min-h-screen items-center overflow-hidden bg-[#020202] px-6 py-24 scroll-mt-16 sm:px-8 lg:h-screen lg:px-10"
-    >
+      className="theme-section relative flex min-h-screen items-center overflow-hidden bg-[#020202] px-6 py-24 scroll-mt-16 sm:px-8 lg:h-screen lg:px-10">
       <div className="relative isolate mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-8 md:grid-cols-[0.9fr_1.1fr] md:gap-12 lg:gap-16">
         <div
           ref={aboutImageRef}
-          className="gsap-ken-burns relative z-20 mx-auto w-full max-w-sm overflow-hidden rounded-[2rem]"
-        >
+          className="gsap-ken-burns relative z-20 mx-auto w-full max-w-sm overflow-hidden rounded-[2rem]">
           <div className="absolute -inset-5 rounded-[2rem] bg-[radial-gradient(circle_at_top,_rgba(220,20,60,0.28),_transparent_62%)] blur-2xl" />
           <div className="absolute inset-4 rounded-[2rem] border border-[#DC143C]/28" />
           <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#090909] shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
@@ -165,8 +178,7 @@ export default function About() {
           className="relative z-10 space-y-6 lg:flex lg:flex-col lg:justify-between lg:space-y-0"
           style={{
             height: aboutContentHeight ? `${aboutContentHeight}px` : undefined,
-          }}
-        >
+          }}>
           <p className="about-label font-ui text-xs font-medium uppercase tracking-[0.38em] text-[#DC143C]">
             About Me
           </p>
@@ -174,15 +186,15 @@ export default function About() {
           <div className="space-y-4">
             <h2
               className="about-heading font-display max-w-2xl text-4xl font-semibold uppercase leading-tight text-white sm:text-[2.375rem]"
-              style={{ overflow: 'hidden' }}
-            >
+              style={{ overflow: "hidden" }}>
               Building full-stack products with clean, reliable systems.
             </h2>
 
             <p className="about-body max-w-2xl text-base leading-7 text-slate-300">
-              I&apos;m Millat Hossain, a software engineer and full-stack developer based
-              in Dhaka. I build responsive React interfaces, practical Node.js APIs, and
-              product experiences that stay fast, accessible, and easy to maintain.
+              I&apos;m Millat Hossain, a software engineer and full-stack
+              developer based in Dhaka. I build responsive React interfaces,
+              practical Node.js APIs, and product experiences that stay fast,
+              accessible, and easy to maintain.
             </p>
           </div>
 

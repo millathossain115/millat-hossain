@@ -114,8 +114,13 @@ export default function Home() {
 
   useEffect(() => {
     if (isLoaderVisible) {
-      return undefined;
+      document.body.classList.add('is-loading');
+      return () => {
+        document.body.classList.remove('is-loading');
+      };
     }
+
+    document.body.classList.remove('is-loading');
 
     const lenis = new Lenis({
       duration: 1.0,
