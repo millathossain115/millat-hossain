@@ -14,9 +14,22 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   return (
     <article
       data-project-card
-      className="theme-card group relative isolate flex flex-col h-auto sm:aspect-square w-full overflow-hidden rounded-[1.35rem] p-0 transition-all duration-500 hover:-translate-y-1.5 hover:border-[#DC143C]/30 hover:shadow-[0_28px_70px_rgba(0,0,0,0.55),0_0_38px_rgba(220,20,60,0.12)]"
+      className="proj-glass-card proj-card-shell group relative isolate flex flex-col h-auto sm:aspect-square w-[84vw] max-w-[30.5rem] shrink-0 overflow-hidden rounded-[1.5rem] p-0 cursor-default"
     >
-      <div className="relative min-h-[11rem] sm:h-[47%] overflow-hidden border-b border-white/[0.08] bg-[#09090b]">
+      {/* Liquid light reflection sheen */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-full top-0 z-30 h-full w-full bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent)] transition-all duration-700 ease-out group-hover:left-full"
+      />
+
+      {/* Ambient crimson glow accent from skills card */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_top,_rgba(220,20,60,0.22),_transparent_70%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      />
+
+      {/* Top Banner & Visual Area */}
+      <div className="relative min-h-[11rem] sm:h-[47%] overflow-hidden">
         {project?.image ? (
           typeof project.image === 'string' ? (
             <img
@@ -24,20 +37,20 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               alt={`${project.title} project banner`}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover brightness-[0.68] transition duration-700 ease-out group-hover:scale-[1.045] group-hover:brightness-[0.78] group-hover:saturate-[1.08]"
+              className="h-full w-full object-cover brightness-[0.72] transition duration-700 ease-out group-hover:scale-[1.045] group-hover:brightness-[0.82] group-hover:saturate-[1.08]"
             />
           ) : (
             <Image
               src={project.image}
               alt={`${project.title} project banner`}
               placeholder="blur"
-              className="h-full w-full object-cover brightness-[0.68] transition duration-700 ease-out group-hover:scale-[1.045] group-hover:brightness-[0.78] group-hover:saturate-[1.08]"
+              className="h-full w-full object-cover brightness-[0.72] transition duration-700 ease-out group-hover:scale-[1.045] group-hover:brightness-[0.82] group-hover:saturate-[1.08]"
             />
           )
         ) : (
           <div
             aria-hidden="true"
-            className="absolute inset-0 overflow-hidden bg-[radial-gradient(circle_at_78%_24%,rgba(220,20,60,0.24),transparent_34%),linear-gradient(145deg,#151116_0%,#08090b_62%,#16070b_100%)]"
+            className="absolute inset-0 overflow-hidden"
           >
             <span className="font-display absolute -bottom-5 right-3 text-[7.5rem] font-semibold leading-none tracking-[-0.08em] text-white/[0.035] transition-all duration-700 group-hover:-translate-x-2 group-hover:text-[#DC143C]/[0.09]">
               {project?.monogram || 'PX'}
@@ -46,21 +59,21 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </div>
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-black/20" />
 
-        <div className="absolute inset-x-0 top-0 flex items-center justify-between gap-3 p-5 sm:p-6 lg:p-7">
-          <span className="font-mono text-[0.62rem] font-medium uppercase tracking-[0.2em] text-white/65 sm:text-[0.68rem] lg:text-[0.72rem]">
+        <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-3 p-5 sm:p-6 lg:p-7">
+          <span className="font-mono text-[0.62rem] font-medium uppercase tracking-[0.2em] text-white/70 sm:text-[0.68rem] lg:text-[0.72rem]">
             {project?.category || 'Selected Project'}
           </span>
           {(isConcept || project?.live) && (
-            <span className="flex items-center gap-1.5 font-mono text-[0.58rem] uppercase tracking-[0.18em] text-white/75 sm:text-[0.62rem] lg:text-[0.68rem]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#DC143C] shadow-[0_0_10px_rgba(220,20,60,0.9)]" />
+            <span className="flex items-center gap-1.5 font-mono text-[0.58rem] uppercase tracking-[0.18em] text-white/80 sm:text-[0.62rem] lg:text-[0.68rem]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#DC143C] shadow-[0_0_10px_rgba(220,20,60,0.95)]" />
               {isConcept ? 'Concept Study' : project.liveLabel || 'Live'}
             </span>
           )}
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 lg:p-7">
+        <div className="absolute inset-x-0 bottom-0 z-20 p-5 sm:p-6 lg:p-7">
           <p className="mb-1.5 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[#ff496d] sm:text-[0.68rem] lg:text-[0.72rem]">
             {project?.focus || 'Product Engineering'}
           </p>
@@ -70,8 +83,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col p-5 sm:h-[53%] sm:p-6 lg:p-7">
-        <p className="line-clamp-3 text-[0.8rem] leading-[1.65] text-slate-400 transition-colors duration-300 group-hover:text-slate-300 sm:text-[0.85rem] lg:text-[0.92rem]">
+      {/* Content Area */}
+      <div className="relative z-20 flex flex-1 flex-col p-5 sm:h-[53%] sm:p-6 lg:p-7">
+        <p className="line-clamp-3 text-[0.8rem] leading-[1.65] text-slate-300 transition-colors duration-300 group-hover:text-slate-100 sm:text-[0.85rem] lg:text-[0.92rem]">
           {project?.description || 'Project description goes here.'}
         </p>
 
@@ -79,19 +93,19 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           {visibleTags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-white/[0.09] bg-white/[0.025] px-2.5 py-1 font-mono text-[0.58rem] text-slate-400 transition-colors duration-300 group-hover:border-[#DC143C]/25 group-hover:text-slate-300 sm:text-[0.62rem] lg:text-[0.68rem]"
+              className="rounded-full bg-white/[0.05] px-2.5 py-1 font-mono text-[0.58rem] text-slate-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-md transition-colors duration-300 group-hover:bg-[#DC143C]/15 group-hover:text-white sm:text-[0.62rem] lg:text-[0.68rem]"
             >
               {tag}
             </span>
           ))}
           {remainingTags > 0 && (
-            <span className="font-mono text-[0.58rem] text-slate-600 sm:text-[0.62rem] lg:text-[0.68rem]">
+            <span className="font-mono text-[0.58rem] text-slate-400 sm:text-[0.62rem] lg:text-[0.68rem]">
               +{remainingTags}
             </span>
           )}
         </div>
 
-        <div className="mt-auto flex items-end justify-between border-t border-white/[0.07] pt-3.5 sm:pt-4 lg:pt-5">
+        <div className="mt-auto flex items-end justify-between pt-3.5 sm:pt-4 lg:pt-5">
           {primaryLink ? (
             <a
               href={primaryLink}
@@ -128,7 +142,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Open ${project.title} source code on GitHub`}
-              className="flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-slate-500 transition-colors duration-300 hover:text-white sm:text-[0.65rem] lg:text-[0.7rem]"
+              className="flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-slate-400 transition-colors duration-300 hover:text-white sm:text-[0.65rem] lg:text-[0.7rem]"
             >
               Source
               <svg

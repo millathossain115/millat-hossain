@@ -24,7 +24,7 @@ export default function Projects() {
 
       <div
         ref={pinRef}
-        className="proj-pin flex min-h-[100svh] w-full flex-col justify-center overflow-hidden py-10 sm:py-12 lg:py-14"
+        className="proj-pin flex min-h-[100svh] w-full flex-col justify-center py-10 sm:py-12 lg:py-14"
       >
         <div className="mx-auto w-full max-w-6xl px-6">
           <p className="proj-label font-ui mb-3 text-xs font-medium uppercase tracking-[0.38em] text-[#DC143C]">

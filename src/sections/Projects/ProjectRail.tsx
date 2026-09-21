@@ -9,18 +9,13 @@ interface ProjectRailProps {
 
 export default function ProjectRail({ projects, trackRef }: ProjectRailProps) {
   return (
-    <div className="projects-rail w-full overflow-x-hidden motion-reduce:overflow-x-auto">
+    <div className="projects-rail w-full overflow-visible py-12 -my-12">
       <div
         ref={trackRef}
-        className="proj-track flex w-max gap-5 pr-6 will-change-transform sm:gap-6"
+        className="proj-track flex w-max gap-5 pr-6 will-change-transform sm:gap-6 py-6"
       >
         {projects.map((project) => (
-          <div
-            key={project.title}
-            className="proj-card-shell w-[84vw] max-w-[30.5rem] shrink-0"
-          >
-            <ProjectCard project={project} />
-          </div>
+          <ProjectCard key={project.title} project={project} />
         ))}
       </div>
     </div>
