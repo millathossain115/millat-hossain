@@ -24,4 +24,6 @@
   border-radius: 9999px;
   filter: blur(80px);
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  contain: paint layout;
 }

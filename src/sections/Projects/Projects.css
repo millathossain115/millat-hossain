@@ -4,6 +4,16 @@
 
 .proj-track {
   padding-left: max(1.5rem, calc((100vw - 72rem) / 2 + 1.5rem));
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.proj-track .proj-card-shell {
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  contain: content;
 }
 
 @media (max-width: 639px) {

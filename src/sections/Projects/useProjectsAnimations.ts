@@ -96,11 +96,17 @@ export default function useProjectsAnimations({
       }
 
       desktopMedia.add('(min-width: 640px)', () => {
-        gsap.set(track, { x: 0 });
+        gsap.set(track, {
+          x: 0,
+          willChange: 'transform',
+          force3D: true,
+          backfaceVisibility: 'hidden',
+        });
 
         gsap.to(track, {
           x: () => -getProjectsTravelDistance(track),
           ease: 'none',
+          force3D: true,
           scrollTrigger: {
             id: 'projects-horizontal',
             trigger: section,
@@ -108,9 +114,10 @@ export default function useProjectsAnimations({
             end: () => `+=${getProjectsTravelDistance(track)}`,
             pin,
             pinSpacing: true,
-            scrub: 0.6,
+            scrub: 1,
             anticipatePin: 1,
             invalidateOnRefresh: true,
+            fastScrollEnd: true,
             refreshPriority: -2,
           },
         });

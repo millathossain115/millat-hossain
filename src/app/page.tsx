@@ -123,12 +123,12 @@ export default function Home() {
     document.body.classList.remove('is-loading');
 
     const lenis = new Lenis({
-      duration: 1.0,
+      duration: 0.85,
       smoothWheel: true,
       syncTouch: false,
       touchMultiplier: 1.0,
-      wheelMultiplier: 1.0,
-      easing: (t) => 1 - Math.pow(1 - t, 3),
+      wheelMultiplier: 1.05,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
 
     (window as unknown as { lenis?: Lenis }).lenis = lenis;
@@ -140,7 +140,7 @@ export default function Home() {
     };
 
     gsap.ticker.add(update);
-    gsap.ticker.lagSmoothing(500, 33);
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
       gsap.ticker.remove(update);

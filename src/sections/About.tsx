@@ -87,11 +87,10 @@ export default function About() {
         scrollTrigger: {
           trigger: aboutRef.current,
           start: isDesktop ? "top top" : "top 82%",
-          end: () => (isDesktop ? `+=${window.innerHeight * 1.25}` : "top 28%"),
-          scrub: true,
+          end: () => (isDesktop ? `+=${window.innerHeight * 1.15}` : "top 28%"),
+          scrub: 0.5,
           pin: isDesktop,
           pinSpacing: true,
-          pinType: "transform",
           anticipatePin: isDesktop ? 1 : 0,
           invalidateOnRefresh: true,
         },
@@ -113,6 +112,7 @@ export default function About() {
             scale: 1,
             duration: 1,
             ease: "none",
+            force3D: true,
           },
         )
         .to(aboutImageRef.current, {
@@ -120,6 +120,7 @@ export default function About() {
           y: 0,
           duration: 1.5,
           ease: "none",
+          force3D: true,
         })
         .fromTo(
           aboutContentRef.current,
@@ -134,9 +135,9 @@ export default function About() {
             opacity: 1,
             duration: 1.5,
             ease: "none",
-            force3D: false,
+            force3D: true,
           },
-          "<0.5",
+          "<0.4",
         );
     }, aboutRef);
 
