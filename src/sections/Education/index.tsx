@@ -47,11 +47,11 @@ export default function Education() {
               ref={recordHeadingRef}
               className="edu-record-heading-zone min-w-0"
             >
-              <p className="edu-record-label font-ui mb-5 text-xs font-semibold uppercase tracking-[0.34em] text-[#DC143C]">
+              <p className="edu-record-label font-ui mb-3 text-xs font-medium uppercase tracking-[0.38em] text-[#DC143C]">
                 Academic Record
               </p>
 
-              <h2 className="edu-record-title font-display font-bold uppercase text-[#DC143C]">
+              <h2 className="edu-record-title font-display font-bold uppercase bg-[linear-gradient(180deg,#ff6a70_0%,#dc143c_55%,#ff2f47_100%)] bg-clip-text text-transparent">
                 Education
               </h2>
             </div>

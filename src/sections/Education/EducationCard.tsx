@@ -17,7 +17,7 @@ export default function EducationCard({ edu, Icon }: EducationCardProps) {
               <Icon aria-hidden="true" className="text-sm" />
             </span>
 
-            <h3 className="font-display text-2xl font-bold uppercase tracking-[0.08em] text-[#DC143C] md:text-3xl">
+            <h3 className="font-display text-2xl font-bold uppercase tracking-[0.08em] text-white md:text-3xl">
               {edu.degree}
             </h3>
           </div>

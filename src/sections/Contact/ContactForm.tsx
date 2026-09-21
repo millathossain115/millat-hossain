@@ -69,6 +69,9 @@ export default function ContactForm() {
   return (
     <div className="contact-form-shell flex flex-col justify-center py-4 lg:pl-4">
       <div className="mb-8 space-y-4">
+        <p className="font-ui mb-3 text-xs font-medium uppercase tracking-[0.38em] text-[#DC143C]">
+          Get In Touch
+        </p>
         <h2 className="contact-title font-display text-[2.7rem] font-semibold uppercase leading-[0.9] text-white sm:text-[3.7rem] lg:text-[4.8rem]">
           <span className="block overflow-hidden">
             <span className="contact-title-line block">Let&apos;s</span>

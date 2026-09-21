@@ -30,9 +30,14 @@ export default function Experience() {
           ref={headingRef}
           className="exp-heading-zone min-w-0 lg:sticky lg:top-24"
         >
+          <p className="font-ui mb-3 text-xs font-medium uppercase tracking-[0.38em] text-[#DC143C]">
+            Career History
+          </p>
           <h2 className="exp-heading exp-heading-title">
-            <span>Work</span>
-            <span>Experience</span>
+            <span className="block text-white">Work</span>
+            <span className="block bg-[linear-gradient(180deg,#ff6a70_0%,#dc143c_55%,#ff2f47_100%)] bg-clip-text text-transparent">
+              Experience
+            </span>
           </h2>
         </div>
 
